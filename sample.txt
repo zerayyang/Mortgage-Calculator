@@ -1,0 +1,5 @@
+Income: 85000
+House Price: 400000
+Down Payment: 80000
+Interest Rate: 4.5
+Amortization Years: 25
