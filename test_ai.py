@@ -1,4 +1,5 @@
 import os
+from xmlrpc import client
 from dotenv import load_dotenv
 from openai import OpenAI
 from pdf_reader import extract_pdf_text
@@ -6,50 +7,68 @@ from pydantic import BaseModel
 
 
 # Define what each extracted field should contain
-class ExtractedField(BaseModel):
-    value: float | None
-    evidence: str
-    confidence: float
+
+#Basemodel usegae:
+#1. ORGANIZE the data
+#2. CHECK that the data follows your rules
+
+class ExtractedField(BaseModel):#Basemodel is a class from pydantic that allows us to create a model for the data we want to extract from the PDF
+    value: float | None # so value could be either a number or blank if the LLM could not find it in the PDF
+    evidence: str # make sure LLM did not fabricate the numbers, and if it did, it will be able to show the evidence of where it got the number from
+    confidence: float # a number between 0 and 1 to show how confident the LLM is in its extraction of the number from the PDF. 1 means it is very confident, 0 means it is not confident at all.
 
 
 # Define the complete mortgage extraction structure
-class MortgageExtraction(BaseModel):
+class MortgageExtraction(BaseModel): #Basemodel is a class from pydantic that allows us to create a model for the data we want to extract from the PDF
+
+    #using the defined class ExtractField to define all the information needed for the mortgage calculation
     annual_income: ExtractedField
+
     house_price: ExtractedField
+
     down_payment: ExtractedField
+
     interest_rate: ExtractedField
+
     amortization_years: ExtractedField
 
 
 # Load API key
+# python-dotenv reads the .env file (API key locatation) and loads the API key into the environment
 load_dotenv()
 
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY")
+#From OpenAI library
+CHATGPT = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY") 
 )
-
+#api_key defined by OpenAI library, and os.getenv gets the API key from the environment variable defined in the .env file
 
 # Load extraction agent instructions
-with open("agents/extractor.md", "r") as file:
-    instructions = file.read()
+with open("agents/extractor.md", "r") as file: # named instructions as file
+    instructions_provided = file.read() # used python function to read the file & renaming the texts it reads as instructions_provided for easier reference later on
 
 
-# Extract text from PDF
+# Extract text from PDF using the function defined in pdf_reader.py
+# hard coded the PDF file name for now for testing, but will change it to a variable later on so that the user can input the PDF file name
 pdf_text = extract_pdf_text("sample_mortgage_application.pdf")
 
 
-# Send PDF text to AI and force it into our structure
-response = client.responses.parse(
-    model="gpt-5.6-luna",
-    instructions=instructions,
-    input=pdf_text,
-    text_format=MortgageExtraction
-)
+response = CHATGPT.responses.parse(
 
+    model="gpt-5.6-luna",  # chosen LLM model
+
+    instructions=instructions_provided,  # instructions for extracting the information
+
+    input=pdf_text,  # PDF text that the LLM will analyze
+
+    text_format=MortgageExtraction  # require the response to follow our MortgageExtraction structure
+
+)
 
 # Get the structured result
 mortgage_data = response.output_parsed
-
+#output_parsed is a function from the OpenAI library that allows us to get the result in the class ExtractedField format defined above
 
 # Print the result
-print(mortgage_data.model_dump_json(indent=2)) ## easier formatting to read the output
+print(mortgage_data.model_dump_json(indent=3))
+#Format the JSON using 3 spaces of indentation so people can read it easily.
