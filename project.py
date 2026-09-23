@@ -9,7 +9,7 @@ try:
     with open(filename, "r") as file:
 
         for line in file:
-            
+
             # to see what is being read in the file
             print(line) 
 
@@ -31,6 +31,15 @@ try:
 
             elif parts[0] == "Amortization Years":
                 amortization_years = value
+        
+    mortgage_needed = house_price - down_payment
+
+    maximum_mortgage = income * 4
+    if( mortgage_needed > maximum_mortgage):
+        print("You cannot afford this house.")
+
+    else:
+        print("You can afford this house.")
         
 except FileNotFoundError:
     print(f"Error: The file '{filename}' was not found in this folder.")
