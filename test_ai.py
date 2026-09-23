@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 # Define what each extracted field should contain
 class ExtractedField(BaseModel):
-    value: float
+    value: float | None
     evidence: str
     confidence: float
 
