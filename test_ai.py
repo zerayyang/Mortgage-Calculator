@@ -1,5 +1,4 @@
 import os
-from xmlrpc import client
 from dotenv import load_dotenv
 from openai import OpenAI
 from pdf_reader import extract_pdf_text
@@ -67,7 +66,6 @@ response = CHATGPT.responses.parse(
 
 # Get the structured result
 mortgage_data = response.output_parsed
-#output_parsed is a function from the OpenAI library that allows us to get the result in the class ExtractedField format defined above
 
 # Print the result
 print(mortgage_data.model_dump_json(indent=3))
