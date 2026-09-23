@@ -35,11 +35,12 @@ try:
     mortgage_needed = house_price - down_payment
 
     maximum_mortgage = income * 4
+
     if( mortgage_needed > maximum_mortgage):
-        print("You cannot afford this house.")
+        print("You cannot afford this house. \nThe mortgage needed is: ", mortgage_needed, "\nThe maximum mortgage you can afford is: ", maximum_mortgage)
 
     else:
-        print("You can afford this house.")
+        print("You can afford this house.\nThe mortgage needed is: ", mortgage_needed, "\nThe maximum mortgage you can afford is: ", maximum_mortgage)
         
 except FileNotFoundError:
     print(f"Error: The file '{filename}' was not found in this folder.")
