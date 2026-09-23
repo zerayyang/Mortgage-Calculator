@@ -1,19 +1,22 @@
 import pymupdf
 
-filename = input("Enter PDF filename: ")
 
-pdf = pymupdf.open(filename)
+def extract_pdf_text(filename):
 
-#sets a place for the texts to go to
+    # Open the PDF
+    pdf = pymupdf.open(filename)
 
-full_text = ""
+    # Empty string to store all PDF text
+    full_text = ""
 
-for page in pdf:
-    text = page.get_text()
-    full_text += text
+    # Go through every page
+    for page in pdf:
+        text = page.get_text()
+        full_text += text
 
-# checks if no text was extracted
-if not full_text.strip():
-    print("Error: No text could be extracted from the PDF.")
-else:
-    print(full_text)
+    # Check if any text was actually extracted
+    if not full_text.strip():
+        return None
+
+    # Give the extracted text back to whoever called this function
+    return full_text
