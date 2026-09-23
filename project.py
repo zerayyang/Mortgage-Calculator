@@ -36,11 +36,19 @@ try:
 
     maximum_mortgage = income * 4
 
+    annual_rate = interest_rate / 100
+    monthly_rate = annual_rate / 12
+    number_of_payments = amortization_years * 12
+
+    monthly_payment =( mortgage_needed * (monthly_rate * (1 + monthly_rate) ** number_of_payments)/
+    ((1 + monthly_rate) ** number_of_payments - 1) )
+    monthly_payment = round(monthly_payment, 2)
+
     if( mortgage_needed > maximum_mortgage):
-        print("You cannot afford this house. \nThe mortgage needed is: ", mortgage_needed, "\nThe maximum mortgage you can afford is: ", maximum_mortgage)
+        print("\nYou cannot afford this house. \nThe mortgage needed is: ", mortgage_needed, "\nThe maximum mortgage you can afford is: ", maximum_mortgage,"\nThe monthly payment is: ", monthly_payment)
 
     else:
-        print("You can afford this house.\nThe mortgage needed is: ", mortgage_needed, "\nThe maximum mortgage you can afford is: ", maximum_mortgage)
+        print("\nYou can afford this house.\nThe mortgage needed is: ", mortgage_needed, "\nThe maximum mortgage you can afford is: ", maximum_mortgage,"\nThe monthly payment is: ", monthly_payment)
         
 except FileNotFoundError:
     print(f"Error: The file '{filename}' was not found in this folder.")
