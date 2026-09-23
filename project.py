@@ -8,9 +8,29 @@ filename = input("Enter file name: ")
 try:
     with open(filename, "r") as file:
 
-        content = file.read()
-        print("\n--- File Content Below ---")
-        print(content)
+        for line in file:
+            
+            # to see what is being read in the file
+            print(line) 
+
+            parts=(line.split(":"))
+
+            value = float(parts[1])
+
+            if parts[0] == "Income":
+                income = value
+
+            elif parts[0] == "House Price":
+                house_price = value
+
+            elif parts[0] == "Down Payment":
+                down_payment = value
+
+            elif parts[0] == "Interest Rate":
+                interest_rate = value
+
+            elif parts[0] == "Amortization Years":
+                amortization_years = value
         
 except FileNotFoundError:
     print(f"Error: The file '{filename}' was not found in this folder.")
