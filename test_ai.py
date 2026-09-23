@@ -1,11 +1,17 @@
 import os
 from dotenv import load_dotenv
+from openai import OpenAI
 
-load_dotenv()
+# Load API key from .env
+load_dotenv() 
 
-api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY")
+)
 
-if api_key:
-    print("API key loaded successfully!")
-else:
-    print("API key not found.")
+response = client.responses.create(
+    model="gpt-5.6-luna",
+    input="Say: AI connection successful!"
+)
+
+print(response.output_text)
