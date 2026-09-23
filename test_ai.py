@@ -57,9 +57,9 @@ response = CHATGPT.responses.parse(
 
     model="gpt-5.6-luna",  # chosen LLM model
 
-    instructions=instructions_provided,  # instructions for extracting the information
+    instructions=instructions_provided,  # instructions for extracting the information in extractor.md
 
-    input=pdf_text,  # PDF text that the LLM will analyze
+    input=pdf_text,  # PDF text that the LLM will analyze, recieved from extarct_pdf_text function in pdf_reader.py
 
     text_format=MortgageExtraction  # require the response to follow our MortgageExtraction structure
 
