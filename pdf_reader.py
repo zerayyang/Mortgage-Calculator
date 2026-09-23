@@ -12,4 +12,8 @@ for page in pdf:
     text = page.get_text()
     full_text += text
 
-print(full_text)   
+# checks if no text was extracted
+if not full_text.strip():
+    print("Error: No text could be extracted from the PDF.")
+else:
+    print(full_text)
