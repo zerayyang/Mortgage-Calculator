@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 from pdf_reader import extract_pdf_text
+from validator import validate_mortgage_data
 from pydantic import BaseModel
 
 
@@ -66,6 +67,14 @@ response = CHATGPT.responses.parse(
 
 # Get the structured result
 mortgage_data = response.output_parsed
+
+mortgage_data.interest_rate.value = None #temp tester to see if the validator.py will catch the missing interest rate and return an error message to the user
+
+# setting up the erros for any mistakes in the PDF file 
+errors = validate_mortgage_data(mortgage_data)
+
+#Prints the errors if there are any
+print(errors)
 
 # Print the result
 print(mortgage_data.model_dump_json(indent=3))
