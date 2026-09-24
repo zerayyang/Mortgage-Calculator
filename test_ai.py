@@ -53,17 +53,23 @@ with open("agents/extractor.md", "r") as file: # named instructions as file
 pdf_text = extract_pdf_text("sample_mortgage_application.pdf")
 
 
-response = CHATGPT.responses.parse(
+if pdf_text is None:
+    print("\nError: No readable text could be extracted from the PDF.\n")
+    exit()
 
-    model="gpt-5.6-luna",  # chosen LLM model
+try:
+    response = CHATGPT.responses.parse(
+        model="gpt-5.6-luna",  # chosen LLM model
+        instructions=instructions_provided,  # instructions from extractor.md
+        input=pdf_text,  # extracted PDF text
+        text_format=MortgageExtraction  # require MortgageExtraction structure (class defined above)
+    )
 
-    instructions=instructions_provided,  # instructions for extracting the information in extractor.md
+except Exception as error: #Exception is built into python, tells the user that the AI extraction failed and prints the error message
+    print("\nAI extraction failed:", error)
+    exit()
 
-    input=pdf_text,  # PDF text that the LLM will analyze, recieved from extarct_pdf_text function in pdf_reader.py
 
-    text_format=MortgageExtraction  # require the response to follow our MortgageExtraction structure
-
-)
 
 # Get the structured result
 mortgage_data = response.output_parsed
