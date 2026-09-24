@@ -104,6 +104,117 @@ print(mortgage_data.model_dump_json(indent=3))
 
 # Format the JSON using 3 spaces of indentation so people can read it easily.
 
+def correct_value(mortgage_data):
+
+    print("Which value would you like to correct?")
+
+    print("1. Annual income")
+
+    print("2. House price")
+
+    print("3. Down payment")
+
+    print("4. Interest rate")
+
+    print("5. Amortization years")
+
+    choice = input("\nEnter 1-5: ")
+
+    while choice not in ["1", "2", "3", "4", "5"]:
+
+        print("Invalid choice. Please enter a number from 1-5.")
+
+        choice = input("\nEnter 1-5: ")
+
+    if choice == "1":
+
+        while True:
+
+            try:
+
+                new_value = float(input("Enter the correct annual income: "))
+
+                break
+
+            except ValueError:
+
+                print("Invalid input. Please enter a number.")
+
+        mortgage_data.annual_income.value = new_value
+
+        print(f"Annual income changed to: ${mortgage_data.annual_income.value}")
+
+    elif choice == "2":
+
+        while True:
+
+            try:
+
+                new_value = float(input("Enter the correct house price: "))
+
+                break
+
+            except ValueError:
+
+                print("Invalid input. Please enter a number.")
+
+        mortgage_data.house_price.value = new_value
+
+        print(f"House price changed to: ${mortgage_data.house_price.value}")
+
+    elif choice == "3":
+
+        while True:
+
+            try:
+
+                new_value = float(input("Enter the correct down payment: "))
+
+                break
+
+            except ValueError:
+
+                print("Invalid input. Please enter a number.")
+
+        mortgage_data.down_payment.value = new_value
+
+        print(f"Down payment changed to: ${mortgage_data.down_payment.value}")
+
+    elif choice == "4":
+
+        while True:
+
+            try:
+
+                new_value = float(input("Enter the correct interest rate: "))
+
+                break
+
+            except ValueError:
+
+                print("Invalid input. Please enter a number.")
+
+        mortgage_data.interest_rate.value = new_value
+
+        print(f"Interest rate changed to: {mortgage_data.interest_rate.value}%")
+
+    elif choice == "5":
+
+        while True:
+
+            try:
+
+                new_value = float(input("Enter the correct amortization years: "))
+
+                break
+
+            except ValueError:
+
+                print("Invalid input. Please enter a number.")
+
+        mortgage_data.amortization_years.value = new_value
+
+        print(f"Amortization changed to: {mortgage_data.amortization_years.value} years")
 
 
 answer = input("\nHuman Verification:\nAre the extracted values correct? (yes/no): ")
@@ -126,115 +237,7 @@ elif answer.lower() == "no":
 
         print("Human Verification:")
 
-        print("Which value would you like to correct?")
-
-        print("1. Annual income")
-
-        print("2. House price")
-
-        print("3. Down payment")
-
-        print("4. Interest rate")
-
-        print("5. Amortization years")
-
-        choice = input("\nEnter 1-5: ")
-
-        while choice not in ["1", "2", "3", "4", "5"]:
-
-            print("Invalid choice. Please enter a number from 1-5.")
-
-            choice = input("\nEnter 1-5: ")
-
-        if choice == "1":
-
-            while True:
-
-                try:
-
-                    new_value = float(input("Enter the correct annual income: "))
-
-                    break
-
-                except ValueError:
-
-                    print("Invalid input. Please enter a number.")
-
-            mortgage_data.annual_income.value = new_value
-
-            print(f"Annual income changed to: ${mortgage_data.annual_income.value}")
-
-        elif choice == "2":
-
-            while True:
-
-                try:
-
-                    new_value = float(input("Enter the correct house price: "))
-
-                    break
-
-                except ValueError:
-
-                    print("Invalid input. Please enter a number.")
-
-            mortgage_data.house_price.value = new_value
-
-            print(f"House price changed to: ${mortgage_data.house_price.value}")
-
-        elif choice == "3":
-
-            while True:
-
-                try:
-
-                    new_value = float(input("Enter the correct down payment: "))
-
-                    break
-
-                except ValueError:
-
-                    print("Invalid input. Please enter a number.")
-
-            mortgage_data.down_payment.value = new_value
-
-            print(f"Down payment changed to: ${mortgage_data.down_payment.value}")
-
-        elif choice == "4":
-
-            while True:
-
-                try:
-
-                    new_value = float(input("Enter the correct interest rate: "))
-
-                    break
-
-                except ValueError:
-
-                    print("Invalid input. Please enter a number.")
-
-            mortgage_data.interest_rate.value = new_value
-
-            print(f"Interest rate changed to: {mortgage_data.interest_rate.value}%")
-
-        elif choice == "5":
-
-            while True:
-
-                try:
-
-                    new_value = float(input("Enter the correct amortization years: "))
-
-                    break
-
-                except ValueError:
-
-                    print("Invalid input. Please enter a number.")
-
-            mortgage_data.amortization_years.value = new_value
-
-            print(f"Amortization changed to: {mortgage_data.amortization_years.value} years")
+        correct_value(mortgage_data)
 
         another = input("\nWould you like to correct another value? (yes/no): ")
 
@@ -252,18 +255,27 @@ elif answer.lower() == "no":
 
 errors = validate_mortgage_data(mortgage_data)
 
+while len(errors) > 0:
 
+    # Prints the errors if there are any
 
+    # looped it for a nicer formatting
 
+    total_errors = len(errors)
 
-# Prints the errors if there are any
+    print(f"\nTotal errors (machine check): {total_errors}\n")
 
-# looped it for a nicer formatting
+    for i in range(total_errors):
 
-total_errors = len(errors)
+        print(f"Error[{i + 1}]: {errors[i]}\n")
 
-print(f"\nTotal errors (machine check): {total_errors}\n")
+    print("The mortgage information contains invalid values.")
 
-for i in range(total_errors):
+    print("\nPlease correct the invalid information.")
 
-    print(f"Error[{i + 1}]: {errors[i]}\n")
+    correct_value(mortgage_data)
+
+    # Check the values again after the correction
+    errors = validate_mortgage_data(mortgage_data)
+
+print("\nMortgage information passed machine validation.")
