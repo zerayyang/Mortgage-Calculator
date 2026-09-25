@@ -48,7 +48,7 @@ verify_mortgage_data(mortgage_data)
 validate_until_correct(mortgage_data)
 
 
-mortgage_needed, maximum_mortgage, monthly_payment, ltv, total_interest = calculate_mortgage(mortgage_data)
+mortgage_needed, maximum_mortgage, monthly_payment, ltv, total_interest, amortization_schedule = calculate_mortgage(mortgage_data)
 
 if mortgage_needed > maximum_mortgage:
 
@@ -64,3 +64,11 @@ else:
 print("Loan-to-value (LTV):", round(ltv, 2), "%")
 
 print("Estimated total interest:", round(total_interest, 2))
+
+print(
+    "\nAmortization Schedule - First Payment",
+    "\nPayment number:", amortization_schedule[0]["payment_number"],
+    "\nInterest payment: $", amortization_schedule[0]["interest_payment"],
+    "\nPrincipal payment: $", amortization_schedule[0]["principal_payment"],
+    "\nRemaining balance: $", amortization_schedule[0]["remaining_balance"]
+)

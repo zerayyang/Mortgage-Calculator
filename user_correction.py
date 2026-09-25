@@ -1,3 +1,6 @@
+
+
+
 def correct_value(mortgage_data):
 
     print("Which value would you like to correct?")
@@ -112,6 +115,16 @@ def correct_value(mortgage_data):
 
 
 def verify_mortgage_data(mortgage_data):
+
+    #to show the detected info before prompting human to verify 
+    print(
+    "\nExtracted Mortgage Information:",
+    "\nAnnual income: $", mortgage_data.annual_income.value,
+    "\nHouse price: $", mortgage_data.house_price.value,
+    "\nDown payment: $", mortgage_data.down_payment.value,
+    "\nInterest rate:", mortgage_data.interest_rate.value, "%",
+    "\nAmortization:", mortgage_data.amortization_years.value, "years"
+)
 
     answer = input("\nHuman Verification:\nAre the extracted values correct? (yes/no): ")
 
