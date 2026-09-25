@@ -23,3 +23,11 @@ class MortgageExtraction(BaseModel): #Basemodel is a class from pydantic that al
     interest_rate: ExtractedField
 
     amortization_years: ExtractedField
+
+    property_taxes: ExtractedField
+
+    heating_cost: ExtractedField
+
+    condo_fees: ExtractedField
+    
+    monthly_debt_payments: ExtractedField

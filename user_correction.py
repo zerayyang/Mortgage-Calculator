@@ -14,14 +14,21 @@ def correct_value(mortgage_data):
     print("4. Interest rate")
 
     print("5. Amortization years")
+    
+    print("6. Property taxes")
 
-    choice = input("\nEnter 1-5: ")
+    print("7. Heating cost")
 
-    while choice not in ["1", "2", "3", "4", "5"]:
+    print("8. Condo fees")
 
-        print("Invalid choice. Please enter a number from 1-5.")
+    print("9. Monthly debt payments")
+    choice = input("\nEnter 1-9: ")
 
-        choice = input("\nEnter 1-5: ")
+    while choice not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
+
+        print("Invalid choice. Please enter a number from 1-9.")
+
+        choice = input("\nEnter 1-9: ")
 
     if choice == "1":
 
@@ -112,7 +119,49 @@ def correct_value(mortgage_data):
         mortgage_data.amortization_years.value = new_value
 
         print(f"Amortization changed to: {mortgage_data.amortization_years.value} years")
+    elif choice == "6":
 
+        while True:
+            try:
+                new_value = float(input("Enter the correct property taxes: "))
+                break
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+
+        mortgage_data.property_taxes.value = new_value
+
+    elif choice == "7":
+
+        while True:
+            try:
+                new_value = float(input("Enter the correct heating cost: "))
+                break
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+
+        mortgage_data.heating_cost.value = new_value
+
+    elif choice == "8":
+
+        while True:
+            try:
+                new_value = float(input("Enter the correct condo fees: "))
+                break
+            except ValueError:
+             print("Invalid input. Please enter a number.")
+
+        mortgage_data.condo_fees.value = new_value
+
+    elif choice == "9":
+
+     while True:
+            try:
+                new_value = float(input("Enter the correct monthly debt payments: "))
+                break
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+
+    mortgage_data.monthly_debt_payments.value = new_value
 
 def verify_mortgage_data(mortgage_data):
 
@@ -123,7 +172,11 @@ def verify_mortgage_data(mortgage_data):
     "\nHouse price: $", mortgage_data.house_price.value,
     "\nDown payment: $", mortgage_data.down_payment.value,
     "\nInterest rate:", mortgage_data.interest_rate.value, "%",
-    "\nAmortization:", mortgage_data.amortization_years.value, "years"
+    "\nAmortization:", mortgage_data.amortization_years.value, "years",
+    "\nProperty taxes: $", mortgage_data.property_taxes.value,
+    "\nHeating cost: $", mortgage_data.heating_cost.value,
+    "\nCondo fees: $", mortgage_data.condo_fees.value,
+    "\nMonthly debt payments: $", mortgage_data.monthly_debt_payments.value
 )
 
     answer = input("\nHuman Verification:\nAre the extracted values correct? (yes/no): ")

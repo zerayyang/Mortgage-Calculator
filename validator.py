@@ -1,3 +1,5 @@
+from email import errors
+
 from user_correction import correct_value
 
 
@@ -10,6 +12,10 @@ def validate_mortgage_data(mortgage_data):
     down_payment = mortgage_data.down_payment.value
     interest_rate = mortgage_data.interest_rate.value
     amortization_years = mortgage_data.amortization_years.value
+    property_taxes = mortgage_data.property_taxes.value
+    heating_cost = mortgage_data.heating_cost.value
+    condo_fees = mortgage_data.condo_fees.value
+    monthly_debt_payments = mortgage_data.monthly_debt_payments.value
 
     if income is None:
         errors.append("Annual income is missing.")
@@ -42,6 +48,26 @@ def validate_mortgage_data(mortgage_data):
     if down_payment is not None and house_price is not None:
         if down_payment > house_price:
             errors.append("Down payment cannot be greater than house price.")
+
+    if property_taxes is None:
+        errors.append("Property taxes are missing.")
+    elif property_taxes < 0:
+        errors.append("Property taxes cannot be negative.")
+
+    if heating_cost is None:
+        errors.append("Heating cost is missing.")
+    elif heating_cost < 0:
+        errors.append("Heating cost cannot be negative.")
+
+    if condo_fees is None: 
+        errors.append("Condo fees are missing.")
+    elif condo_fees < 0:
+        errors.append("Condo fees cannot be negative.")
+
+    if monthly_debt_payments is None:
+        errors.append("Monthly debt payments are missing.")
+    elif monthly_debt_payments < 0:
+        errors.append("Monthly debt payments cannot be negative.")
 
     return errors
 

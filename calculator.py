@@ -62,9 +62,67 @@ def calculate_amortization_schedule(
     return schedule
 
 
+#Gross Debt Service (GDS) ratio
+def calculate_gds(
+    annual_income,
+    monthly_payment,
+    property_taxes,
+    heating_cost,
+    condo_fees
+):
+    # Convert annual income into monthly income
+    monthly_income = annual_income / 12
+
+    # Convert annual property taxes into a monthly cost
+    monthly_property_taxes = property_taxes / 12
 
 
+    # Calculate total monthly housing costs
 
+    monthly_housing_costs = (
+        monthly_payment
+        + monthly_property_taxes
+        + heating_cost
+        + (condo_fees * 0.5)
+    )
+
+    # Calculate the percentage of gross monthly income used for housing costs
+    gds = (monthly_housing_costs / monthly_income) * 100
+
+    return gds
+
+
+#TDS (Total Debt Service).
+def calculate_tds(
+    annual_income,
+    monthly_payment,
+    property_taxes,
+    heating_cost,
+    condo_fees,
+    monthly_debt_payments
+):
+
+    # Convert annual income into monthly income
+    monthly_income = annual_income / 12
+
+    # Convert annual property taxes into a monthly cost
+    monthly_property_taxes = property_taxes / 12
+
+    # Calculate total monthly housing costs
+    monthly_housing_costs = (
+        monthly_payment
+        + monthly_property_taxes
+        + heating_cost
+        + (condo_fees * 0.5)
+    )
+
+    # Add other monthly debt payments to the housing costs
+    total_monthly_debt_costs = monthly_housing_costs + monthly_debt_payments
+
+    # Calculate the percentage of gross monthly income used for housing and debt
+    tds = (total_monthly_debt_costs / monthly_income) * 100
+
+    return tds
 
 #main calculator function to calculate the mortgage needed, maximum mortgage, and monthly payment based on the extracted mortgage data
 def calculate_mortgage(mortgage_data):
@@ -80,6 +138,14 @@ def calculate_mortgage(mortgage_data):
     interest_rate = mortgage_data.interest_rate.value
 
     amortization_years = mortgage_data.amortization_years.value
+
+    property_taxes = mortgage_data.property_taxes.value
+
+    heating_cost = mortgage_data.heating_cost.value
+
+    condo_fees = mortgage_data.condo_fees.value
+
+    monthly_debt_payments = mortgage_data.monthly_debt_payments.value
 
 
     # basic mortgage calculation formula to calculate the monthly payment and check if the user can afford the house
@@ -108,6 +174,8 @@ def calculate_mortgage(mortgage_data):
     monthly_payment = round(monthly_payment, 2)
 
 
+
+
     amortization_schedule = calculate_amortization_schedule(
     mortgage_needed,
     monthly_payment,
@@ -119,4 +187,23 @@ def calculate_mortgage(mortgage_data):
 
     total_interest = calculate_total_interest(mortgage_needed, monthly_payment, number_of_payments)
 
-    return mortgage_needed, maximum_mortgage, monthly_payment,ltv,total_interest,amortization_schedule
+
+
+    gds = calculate_gds(
+    income,
+    monthly_payment,
+    property_taxes,
+    heating_cost,
+    condo_fees
+)
+
+    tds = calculate_tds(
+    income,
+    monthly_payment,
+    property_taxes,
+    heating_cost,
+    condo_fees,
+    monthly_debt_payments
+)
+
+    return mortgage_needed, maximum_mortgage, monthly_payment, ltv, total_interest, amortization_schedule, gds, tds
