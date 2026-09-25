@@ -80,7 +80,11 @@ print("Gross Debt Service (GDS):", round(results.gds, 2), "%")
 print("Total Debt Service (TDS):", round(results.tds, 2), "%")
 
 print("\nMortgage Stress Test")
+
 print("Stress test rate:", round(results.stress_test_rate, 2), "%")
+
 print("Stress test monthly payment: $", round(results.stress_monthly_payment, 2))
+
 print("Stress test GDS:", round(results.stress_gds, 2), "%")
+
 print("Stress test TDS:", round(results.stress_tds, 2), "%")
