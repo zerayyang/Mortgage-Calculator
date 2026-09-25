@@ -3,6 +3,7 @@ from pdf_fallback import extract_pdf_with_ai
 from ai_extractor import extract_mortgage_data
 from user_correction import verify_mortgage_data
 from validator import validate_until_correct
+from calculator import calculate_mortgage
 
 
 
@@ -45,3 +46,14 @@ verify_mortgage_data(mortgage_data)
 # Validate the mortgage information and keep correcting until it passes
 
 validate_until_correct(mortgage_data)
+
+mortgage_needed, maximum_mortgage, monthly_payment = calculate_mortgage(mortgage_data)
+
+if mortgage_needed > maximum_mortgage:
+
+    print("\nYou cannot afford this house. \nThe mortgage needed is: ", mortgage_needed, "\nThe maximum mortgage you can afford is: ", maximum_mortgage,"\nThe monthly payment is: ", monthly_payment)
+
+else:
+
+    print("\nYou can afford this house.\nThe mortgage needed is: ", mortgage_needed, "\nThe maximum mortgage you can afford is: ", maximum_mortgage,"\nThe monthly payment is: ", monthly_payment)
+
