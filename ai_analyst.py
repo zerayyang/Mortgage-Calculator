@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
+from models import MortgageAnalysis
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -13,7 +14,6 @@ CHATGPT = OpenAI(
 # Load the instructions for the mortgage analysis agent
 with open("agents/analyst.md", "r") as file:
     analyst_instructions = file.read()
-
 
 def analyze_mortgage(mortgage_data, results, mode):
 
@@ -29,12 +29,17 @@ Calculated Mortgage Results:
 {results.model_dump_json(indent=2)}
 """
 
-    # Send the mortgage information and analyst instructions to the AI
-    response = CHATGPT.responses.create(
+    # Send the mortgage information to the AI and force it to return
+    # the structured MortgageAnalysis format defined in models.py
+    response = CHATGPT.responses.parse(
         model="gpt-5.6-luna",
         instructions=analyst_instructions,
-        input=analysis_input
+        input=analysis_input,
+        text_format=MortgageAnalysis
     )
 
-    # Return the AI's mortgage analysis
-    return response.output_text
+    # Get the structured mortgage analysis from the AI response
+    analysis = response.output_parsed
+
+    # Return the structured analysis
+    return analysis

@@ -35,7 +35,6 @@ class MortgageExtraction(BaseModel): #Basemodel is a class from pydantic that al
 
 class MortgageCalculationResult(BaseModel):
     mortgage_needed: float
-    maximum_mortgage: float
     monthly_payment: float
     ltv: float
     total_interest: float
@@ -46,3 +45,11 @@ class MortgageCalculationResult(BaseModel):
     stress_monthly_payment: float
     stress_gds: float
     stress_tds: float
+
+
+class MortgageAnalysis(BaseModel):
+    summary: str
+    results_explanation: str
+    stress_test_explanation: str
+    risks: list[str]
+    final_analysis: str

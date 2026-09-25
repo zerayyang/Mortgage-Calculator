@@ -52,17 +52,14 @@ validate_until_correct(mortgage_data)
 
 # Calculate the mortgage and store all results in one structured object (defined in models.py)
 results = calculate_mortgage(mortgage_data)
+# Display the basic mortgage calculation results
 
 
-if results.mortgage_needed > results.maximum_mortgage:
-
-    print("\nYou cannot afford this house. \nThe mortgage needed is: ", results.mortgage_needed, "\nThe maximum mortgage you can afford is: ", results.maximum_mortgage,"\nThe monthly payment is: ", results.monthly_payment)
-
-else:
-
-    print("\nYou can afford this house.\nThe mortgage needed is: ", results.mortgage_needed, "\nThe maximum mortgage you can afford is: ", results.maximum_mortgage,"\nThe monthly payment is: ", results.monthly_payment)
-
-
+print(
+    "\nMortgage Calculation Results",
+    "\nMortgage needed: $", results.mortgage_needed,
+    "\nMonthly payment: $", results.monthly_payment
+)
 
 #printing all the values calculated from calculator.py
 print("Loan-to-value (LTV):", round(results.ltv, 2), "%")
@@ -115,6 +112,21 @@ analysis = analyze_mortgage(
     analysis_mode
 )
 
-# Display the AI mortgage analysis
-print("\nAI Mortgage Analysis:\n")
-print(analysis)
+# Display the structured AI mortgage analysis
+print("\nAI Mortgage Analysis")
+
+print("\nSummary:")
+print(analysis.summary)
+
+print("\nResults Explanation:")
+print(analysis.results_explanation)
+
+print("\nStress Test Explanation:")
+print(analysis.stress_test_explanation)
+
+print("\nRisks:")
+for risk in analysis.risks:
+    print("-", risk)
+
+print("\nFinal Analysis:")
+print(analysis.final_analysis)
