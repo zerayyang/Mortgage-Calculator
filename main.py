@@ -48,7 +48,21 @@ verify_mortgage_data(mortgage_data)
 validate_until_correct(mortgage_data)
 
 
-mortgage_needed, maximum_mortgage, monthly_payment, ltv, total_interest, amortization_schedule, gds, tds  = calculate_mortgage(mortgage_data)
+(
+    mortgage_needed,
+    maximum_mortgage,
+    monthly_payment,
+    ltv,
+    total_interest,
+    amortization_schedule,
+    gds,
+    tds,
+    stress_test_rate,
+    stress_monthly_payment,
+    stress_gds,
+    stress_tds
+) = calculate_mortgage(mortgage_data)
+
 
 if mortgage_needed > maximum_mortgage:
 
@@ -75,3 +89,9 @@ print(
 print("Gross Debt Service (GDS):", round(gds, 2), "%")
 
 print("Total Debt Service (TDS):", round(tds, 2), "%")
+
+print("\nMortgage Stress Test")
+print("Stress test rate:", round(stress_test_rate, 2), "%")
+print("Stress test monthly payment: $", round(stress_monthly_payment, 2))
+print("Stress test GDS:", round(stress_gds, 2), "%")
+print("Stress test TDS:", round(stress_tds, 2), "%")
