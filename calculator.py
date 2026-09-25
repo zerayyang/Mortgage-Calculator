@@ -16,6 +16,17 @@ def calculate_ltv(mortgage_needed, house_price):
     return ltv #Loan-to-Value ratio.
 
 
+def calculate_total_interest(mortgage_needed, monthly_payment, number_of_payments):
+
+    # Calculate the total amount paid over the entire amortization
+    total_paid = monthly_payment * number_of_payments
+
+    # Subtract the original mortgage to find the total interest paid
+    total_interest = total_paid - mortgage_needed
+
+    return total_interest
+
+
 #main calculator function to calculate the mortgage needed, maximum mortgage, and monthly payment based on the extracted mortgage data
 def calculate_mortgage(mortgage_data):
 
@@ -57,4 +68,6 @@ def calculate_mortgage(mortgage_data):
 
     monthly_payment = round(monthly_payment, 2)
 
-    return mortgage_needed, maximum_mortgage, monthly_payment,ltv
+    total_interest = calculate_total_interest(mortgage_needed, monthly_payment, number_of_payments)
+
+    return mortgage_needed, maximum_mortgage, monthly_payment,ltv,total_interest

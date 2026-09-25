@@ -48,7 +48,7 @@ verify_mortgage_data(mortgage_data)
 validate_until_correct(mortgage_data)
 
 
-mortgage_needed, maximum_mortgage, monthly_payment,ltv = calculate_mortgage(mortgage_data)
+mortgage_needed, maximum_mortgage, monthly_payment, ltv, total_interest = calculate_mortgage(mortgage_data)
 
 if mortgage_needed > maximum_mortgage:
 
@@ -58,3 +58,9 @@ else:
 
     print("\nYou can afford this house.\nThe mortgage needed is: ", mortgage_needed, "\nThe maximum mortgage you can afford is: ", maximum_mortgage,"\nThe monthly payment is: ", monthly_payment)
 
+
+
+#printing all the values calculated from calculator.py
+print("Loan-to-value (LTV):", round(ltv, 2), "%")
+
+print("Estimated total interest:", round(total_interest, 2))
