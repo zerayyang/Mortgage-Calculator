@@ -1,12 +1,12 @@
 from pdf_reader import extract_pdf_text
 
-from validator import validate_mortgage_data
+from validator import validate_until_correct
 
 from pdf_fallback import extract_pdf_with_ai
 
 from ai_extractor import extract_mortgage_data
 
-from user_correction import correct_value
+from user_correction import correct_value, verify_mortgage_data
 
 
 
@@ -73,66 +73,15 @@ print(mortgage_data.model_dump_json(indent=3))
 
 
 
-answer = input("\nHuman Verification:\nAre the extracted values correct? (yes/no): ")
 
-while answer.lower() not in ["yes", "no"]:
 
-    print("Invalid input. Please enter yes or no.")
 
-    answer = input("Are the extracted values correct? (yes/no): ")
+verify_mortgage_data(mortgage_data)
 
-if answer.lower() == "yes":
 
-    print("\nMortgage information confirmed by user.\n")
 
-elif answer.lower() == "no":
 
-    correcting = True
 
-    while correcting:
-
-        print("Human Verification:")
-
-        correct_value(mortgage_data)
-
-        another = input("\nWould you like to correct another value? (yes/no): ")
-
-        while another.lower() not in ["yes", "no"]:
-
-            print("Invalid input. Please enter yes or no.")
-
-            another = input("\nWould you like to correct another value? (yes/no): ")
-
-        if another.lower() == "no":
-
-            correcting = False
 
 # setting up the erros for any mistakes in the PDF file
-
-errors = validate_mortgage_data(mortgage_data)
-
-while len(errors) > 0:
-
-    # Prints the errors if there are any
-
-    # looped it for a nicer formatting
-
-    total_errors = len(errors)
-
-    print(f"\nTotal errors (machine check): {total_errors}\n")
-
-    for i in range(total_errors):
-
-        print(f"Error[{i + 1}]: {errors[i]}\n")
-
-    print("The mortgage information contains invalid values.")
-
-    print("\nPlease correct the invalid information.")
-
-    correct_value(mortgage_data)
-
-    # Check the values again after the correction
-
-    errors = validate_mortgage_data(mortgage_data)
-
-print("\nMortgage information passed machine validation.")
+validate_until_correct(mortgage_data)

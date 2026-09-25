@@ -110,3 +110,39 @@ def correct_value(mortgage_data):
 
         print(f"Amortization changed to: {mortgage_data.amortization_years.value} years")
 
+
+def verify_mortgage_data(mortgage_data):
+
+    answer = input("\nHuman Verification:\nAre the extracted values correct? (yes/no): ")
+
+    while answer.lower() not in ["yes", "no"]:
+
+        print("Invalid input. Please enter yes or no.")
+
+        answer = input("Are the extracted values correct? (yes/no): ")
+
+    if answer.lower() == "yes":
+
+        print("\nMortgage information confirmed by user.\n")
+
+    elif answer.lower() == "no":
+
+        correcting = True
+
+        while correcting:
+
+            print("Human Verification:")
+
+            correct_value(mortgage_data)
+
+            another = input("\nWould you like to correct another value? (yes/no): ")
+
+            while another.lower() not in ["yes", "no"]:
+
+                print("Invalid input. Please enter yes or no.")
+
+                another = input("\nWould you like to correct another value? (yes/no): ")
+
+            if another.lower() == "no":
+
+                correcting = False
