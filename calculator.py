@@ -10,6 +10,13 @@ def calculate_monthly_rate(interest_rate):
 
     return monthly_rate
 
+def calculate_ltv(mortgage_needed, house_price):
+     # Calculate what percentage of the house price is financed by the mortgage
+    ltv = (mortgage_needed / house_price) * 100
+    return ltv #Loan-to-Value ratio.
+
+
+#main calculator function to calculate the mortgage needed, maximum mortgage, and monthly payment based on the extracted mortgage data
 def calculate_mortgage(mortgage_data):
 
     # Get the mortgage values from the extracted mortgage data
@@ -28,6 +35,8 @@ def calculate_mortgage(mortgage_data):
     # basic mortgage calculation formula to calculate the monthly payment and check if the user can afford the house
 
     mortgage_needed = house_price - down_payment
+
+    ltv = calculate_ltv(mortgage_needed, house_price)  # Calculate the loan-to-value percentage
 
     maximum_mortgage = income * 4
 
@@ -48,4 +57,4 @@ def calculate_mortgage(mortgage_data):
 
     monthly_payment = round(monthly_payment, 2)
 
-    return mortgage_needed, maximum_mortgage, monthly_payment
+    return mortgage_needed, maximum_mortgage, monthly_payment,ltv

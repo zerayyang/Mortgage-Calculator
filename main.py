@@ -47,7 +47,8 @@ verify_mortgage_data(mortgage_data)
 
 validate_until_correct(mortgage_data)
 
-mortgage_needed, maximum_mortgage, monthly_payment = calculate_mortgage(mortgage_data)
+
+mortgage_needed, maximum_mortgage, monthly_payment,ltv = calculate_mortgage(mortgage_data)
 
 if mortgage_needed > maximum_mortgage:
 
