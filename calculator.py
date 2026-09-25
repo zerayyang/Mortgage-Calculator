@@ -1,3 +1,6 @@
+from models import MortgageCalculationResult
+
+
 def calculate_monthly_rate(interest_rate):
     # Convert the percentage into decimal form
     annual_rate = interest_rate / 100
@@ -246,17 +249,21 @@ def calculate_mortgage(mortgage_data):
         monthly_debt_payments
     )
 
-    return (
-        mortgage_needed,
-        maximum_mortgage,
-        monthly_payment,
-        ltv,
-        total_interest,
-        amortization_schedule,
-        gds,
-        tds,
-        stress_test_rate,
-        stress_monthly_payment,
-        stress_gds,
-        stress_tds
-    )
+    # Store all calculated mortgage results in one structured object
+    results = MortgageCalculationResult(
+        mortgage_needed=mortgage_needed,
+        maximum_mortgage=maximum_mortgage,
+        monthly_payment=monthly_payment,
+        ltv=ltv,
+        total_interest=total_interest,
+        amortization_schedule=amortization_schedule,
+        gds=gds,
+        tds=tds,
+        stress_test_rate=stress_test_rate,
+        stress_monthly_payment=stress_monthly_payment,
+        stress_gds=stress_gds,
+        stress_tds=stress_tds
+)
+
+    # Return all mortgage calculation results together
+    return results

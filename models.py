@@ -29,5 +29,20 @@ class MortgageExtraction(BaseModel): #Basemodel is a class from pydantic that al
     heating_cost: ExtractedField
 
     condo_fees: ExtractedField
-    
+
     monthly_debt_payments: ExtractedField
+
+
+class MortgageCalculationResult(BaseModel):
+    mortgage_needed: float
+    maximum_mortgage: float
+    monthly_payment: float
+    ltv: float
+    total_interest: float
+    amortization_schedule: list
+    gds: float
+    tds: float
+    stress_test_rate: float
+    stress_monthly_payment: float
+    stress_gds: float
+    stress_tds: float

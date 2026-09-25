@@ -48,50 +48,39 @@ verify_mortgage_data(mortgage_data)
 validate_until_correct(mortgage_data)
 
 
-(
-    mortgage_needed,
-    maximum_mortgage,
-    monthly_payment,
-    ltv,
-    total_interest,
-    amortization_schedule,
-    gds,
-    tds,
-    stress_test_rate,
-    stress_monthly_payment,
-    stress_gds,
-    stress_tds
-) = calculate_mortgage(mortgage_data)
+
+# Calculate the mortgage and store all results in one structured object (defined in models.py)
+results = calculate_mortgage(mortgage_data)
 
 
-if mortgage_needed > maximum_mortgage:
+if results.mortgage_needed > results.maximum_mortgage:
 
-    print("\nYou cannot afford this house. \nThe mortgage needed is: ", mortgage_needed, "\nThe maximum mortgage you can afford is: ", maximum_mortgage,"\nThe monthly payment is: ", monthly_payment)
+    print("\nYou cannot afford this house. \nThe mortgage needed is: ", results.mortgage_needed, "\nThe maximum mortgage you can afford is: ", results.maximum_mortgage,"\nThe monthly payment is: ", results.monthly_payment)
 
 else:
 
-    print("\nYou can afford this house.\nThe mortgage needed is: ", mortgage_needed, "\nThe maximum mortgage you can afford is: ", maximum_mortgage,"\nThe monthly payment is: ", monthly_payment)
+    print("\nYou can afford this house.\nThe mortgage needed is: ", results.mortgage_needed, "\nThe maximum mortgage you can afford is: ", results.maximum_mortgage,"\nThe monthly payment is: ", results.monthly_payment)
 
 
 
 #printing all the values calculated from calculator.py
-print("Loan-to-value (LTV):", round(ltv, 2), "%")
+print("Loan-to-value (LTV):", round(results.ltv, 2), "%")
 
-print("Estimated total interest:", round(total_interest, 2))
+print("Estimated total interest:", round(results.total_interest, 2))
 
 print(
     "\nAmortization Schedule - First Payment",
-    "\nPayment number:", amortization_schedule[0]["payment_number"],
-    "\nInterest payment: $", amortization_schedule[0]["interest_payment"],
-    "\nPrincipal payment: $", amortization_schedule[0]["principal_payment"],
-    "\nRemaining balance: $", amortization_schedule[0]["remaining_balance"]
+    "\nPayment number:", results.amortization_schedule[0]["payment_number"],
+    "\nInterest payment: $", results.amortization_schedule[0]["interest_payment"],
+    "\nPrincipal payment: $", results.amortization_schedule[0]["principal_payment"],
+    "\nRemaining balance: $", results.amortization_schedule[0]["remaining_balance"]
 )
-print("Gross Debt Service (GDS):", round(gds, 2), "%")
+print("Gross Debt Service (GDS):", round(results.gds, 2), "%")
 
-print("Total Debt Service (TDS):", round(tds, 2), "%")
+print("Total Debt Service (TDS):", round(results.tds, 2), "%")
 
 print("\nMortgage Stress Test")
-print("Stress test rate:", round(stress_test_rate, 2), "%")
-print("Stress test monthly payment: $", round(stress_monthly_payment, 2))
-print("Stress test GDS:", round(stress_gds, 2), "%")
-print("Stress test TDS:", round(stress_tds, 2), "%")
+print("Stress test rate:", round(results.stress_test_rate, 2), "%")
+print("Stress test monthly payment: $", round(results.stress_monthly_payment, 2))
+print("Stress test GDS:", round(results.stress_gds, 2), "%")
+print("Stress test TDS:", round(results.stress_tds, 2), "%")
