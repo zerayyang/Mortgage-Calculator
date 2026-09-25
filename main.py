@@ -4,6 +4,7 @@ from ai_extractor import extract_mortgage_data
 from user_correction import verify_mortgage_data
 from validator import validate_until_correct
 from calculator import calculate_mortgage
+from ai_analyst import analyze_mortgage
 
 
 
@@ -88,3 +89,32 @@ print("Stress test monthly payment: $", round(results.stress_monthly_payment, 2)
 print("Stress test GDS:", round(results.stress_gds, 2), "%")
 
 print("Stress test TDS:", round(results.stress_tds, 2), "%")
+
+# Ask the user which type of AI mortgage analysis they want
+print("\nAI Mortgage Analysis")
+print("1. Serious Mode")
+print("2. Surprise Mode")
+
+mode_choice = input("\nChoose analysis mode (1 or 2): ")
+
+# Make sure the user enters a valid choice
+while mode_choice not in ["1", "2"]:
+    print("Invalid choice. Please enter 1 or 2.")
+    mode_choice = input("\nChoose analysis mode (1 or 2): ")
+
+# Convert the user's choice into the analysis mode sent to the AI
+if mode_choice == "1":
+    analysis_mode = "Serious Mode"
+else:
+    analysis_mode = "Surprise Mode"
+
+# Send the verified mortgage data and calculated results to the AI analysis agent
+analysis = analyze_mortgage(
+    mortgage_data,
+    results,
+    analysis_mode
+)
+
+# Display the AI mortgage analysis
+print("\nAI Mortgage Analysis:\n")
+print(analysis)
