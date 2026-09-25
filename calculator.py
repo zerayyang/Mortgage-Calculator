@@ -1,4 +1,14 @@
+def calculate_monthly_rate(interest_rate):
+    # Convert the percentage into decimal form
+    annual_rate = interest_rate / 100
 
+    # Canadian fixed mortgage rates are compounded semi-annually
+    semi_annual_rate = annual_rate / 2
+
+    # Convert the semi-annual rate into an equivalent monthly rate
+    monthly_rate = (1 + semi_annual_rate) ** (1 / 6) - 1
+
+    return monthly_rate
 
 def calculate_mortgage(mortgage_data):
 
@@ -21,9 +31,7 @@ def calculate_mortgage(mortgage_data):
 
     maximum_mortgage = income * 4
 
-    annual_rate = interest_rate / 100
-
-    monthly_rate = annual_rate / 12
+    monthly_rate = calculate_monthly_rate(interest_rate)  # Calling the function above to calculate the monthly rate using a more accurate Canadian mortgage model
 
     number_of_payments = amortization_years * 12
 
