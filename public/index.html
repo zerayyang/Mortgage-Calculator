@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mortgage Analysis Assistant</title>
+</head>
+
+<body>
+
+    <h1>Mortgage Analysis Assistant</h1>
+
+    <p>Upload your mortgage document to begin.</p>
+
+    <input type="file" id="mortgageFile" accept=".pdf">
+
+    <button id="uploadButton">Upload PDF</button>
+
+    <p id="status"></p>
+
+
+    <script>
+        // Get the PDF input and upload button from the page
+        const mortgageFile = document.getElementById("mortgageFile");
+        const uploadButton = document.getElementById("uploadButton");
+        const status = document.getElementById("status");
+
+        // Run this code when the user clicks Upload PDF
+        uploadButton.addEventListener("click", async () => {
+
+            // Make sure the user selected a PDF
+            if (mortgageFile.files.length === 0) {
+                alert("Please select a PDF first.");
+                return;
+            }
+
+            // Get the selected PDF
+            const file = mortgageFile.files[0];
+
+            // Create form data that can contain the PDF
+            const formData = new FormData();
+            formData.append("mortgageFile", file);
+
+
+
+            // Tell the user that the PDF is being processed
+            status.textContent = "Processing mortgage document...";
+
+            // Send the PDF to the Node server
+            const response = await fetch("/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            // Read the response from the server
+            const result = await response.json();
+
+            // Show the result to the user
+            status.textContent = result.message;
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,2 +1,9 @@
 .DS_Store
 .env
+__pycache__/
+node_modules/
+uploads/
+
+
+
+#files to be ignored by main git branch
