@@ -54,57 +54,86 @@ const upload = multer({
 // Upload + Extract Mortgage PDF
 // --------------------------------------------------
 
-app.post("/upload", upload.single("mortgagePdf"), (req, res) => {
+app.post(
+    "/upload",
+    upload.single("mortgagePdf"),
+    (req, res) => {
 
-    if (!req.file) {
-        return res.status(400).json({
-            error: "No PDF was uploaded."
-        });
-    }
+        if (!req.file) {
 
-    const pdfPath = req.file.path;
-
-    execFile(
-        "python3",
-        ["web_processor.py", pdfPath],
-        {
-            maxBuffer: 1024 * 1024 * 10
-        },
-        (error, stdout, stderr) => {
-
-            if (error) {
-
-                console.error(stderr);
-
-                return res.status(500).json({
-                    error: "Mortgage document processing failed."
-                });
-            }
-
-            try {
-
-                const mortgageData = JSON.parse(stdout);
-
-                res.json({
-                    message: "Mortgage document processed successfully.",
-                    mortgageData: mortgageData
-                });
-
-            } catch (parseError) {
-
-                console.error("Python output:", stdout);
-                console.error(parseError);
-
-                res.status(500).json({
-                    error: "Could not read the mortgage extraction results."
-                });
-            }
-
-            // Remove temporary uploaded PDF after processing
-            fs.unlink(pdfPath, () => {});
+            return res.status(400).json({
+                error: "No PDF was uploaded."
+            });
         }
-    );
-});
+
+
+        const pdfPath = req.file.path;
+
+
+        execFile(
+            "python3",
+            ["web_processor.py", pdfPath],
+            {
+                maxBuffer: 1024 * 1024 * 10
+            },
+            (error, stdout, stderr) => {
+
+                // Remove temporary uploaded PDF
+                fs.unlink(pdfPath, () => {});
+
+
+                if (error) {
+
+                    console.error(stderr);
+
+                    // If Python intentionally rejected the document,
+                    // send its error message to the browser.
+                    const pythonError =
+                        stderr.trim();
+
+                    return res.status(400).json({
+                        error:
+                            pythonError ||
+                            "Mortgage document processing failed."
+                    });
+                }
+
+
+                try {
+
+                    const mortgageData =
+                        JSON.parse(stdout);
+
+
+                    res.json({
+                        message:
+                            "Mortgage document processed successfully.",
+
+                        mortgageData:
+                            mortgageData
+                    });
+
+                } catch (parseError) {
+
+                    console.error(
+                        "Python output:",
+                        stdout
+                    );
+
+                    console.error(
+                        parseError
+                    );
+
+
+                    res.status(500).json({
+                        error:
+                            "Could not read the mortgage extraction results."
+                    });
+                }
+            }
+        );
+    }
+);
 
 
 // --------------------------------------------------
@@ -118,54 +147,97 @@ app.post("/calculate", (req, res) => {
         ["web_calculator.py"]
     );
 
+
     let output = "";
     let errorOutput = "";
 
-    python.stdout.on("data", (data) => {
-        output += data.toString();
-    });
 
-    python.stderr.on("data", (data) => {
-        errorOutput += data.toString();
-    });
+    python.stdout.on(
+        "data",
+        (data) => {
 
-    python.on("close", (code) => {
-
-        if (code !== 0) {
-
-            console.error(errorOutput);
-
-            return res.status(500).json({
-                error: "Mortgage calculation failed."
-            });
+            output +=
+                data.toString();
         }
+    );
 
-        try {
 
-            const calculationResults = JSON.parse(output);
+    python.stderr.on(
+        "data",
+        (data) => {
 
-            res.json({
-                message: "Mortgage calculated successfully.",
-                calculationResults: calculationResults
-            });
-
-        } catch (error) {
-
-            console.error("Python output:", output);
-
-            res.status(500).json({
-                error: "Could not read mortgage calculation results."
-            });
+            errorOutput +=
+                data.toString();
         }
-    });
+    );
 
-    python.stdin.write(JSON.stringify(req.body));
+
+    python.on(
+        "close",
+        (code) => {
+
+            if (code !== 0) {
+
+                console.error(
+                    errorOutput
+                );
+
+
+                return res.status(500).json({
+                    error:
+                        "Mortgage calculation failed."
+                });
+            }
+
+
+            try {
+
+                const calculationResults =
+                    JSON.parse(output);
+
+
+                res.json({
+                    message:
+                        "Mortgage calculated successfully.",
+
+                    calculationResults:
+                        calculationResults
+                });
+
+            } catch (error) {
+
+                console.error(
+                    "Python output:",
+                    output
+                );
+
+                console.error(
+                    error
+                );
+
+
+                res.status(500).json({
+                    error:
+                        "Could not read mortgage calculation results."
+                });
+            }
+        }
+    );
+
+
+    python.stdin.write(
+        JSON.stringify(
+            req.body
+        )
+    );
+
+
     python.stdin.end();
 });
 
 
 // --------------------------------------------------
-// AI Mortgage Analysis
+// Mortgage Analysis
 // --------------------------------------------------
 
 app.post("/analyze", (req, res) => {
@@ -175,49 +247,91 @@ app.post("/analyze", (req, res) => {
         ["web_analyst.py"]
     );
 
+
     let output = "";
     let errorOutput = "";
 
-    python.stdout.on("data", (data) => {
-        output += data.toString();
-    });
 
-    python.stderr.on("data", (data) => {
-        errorOutput += data.toString();
-    });
+    python.stdout.on(
+        "data",
+        (data) => {
 
-    python.on("close", (code) => {
-
-        if (code !== 0) {
-
-            console.error(errorOutput);
-
-            return res.status(500).json({
-                error: "AI mortgage analysis failed."
-            });
+            output +=
+                data.toString();
         }
+    );
 
-        try {
 
-            const analysis = JSON.parse(output);
+    python.stderr.on(
+        "data",
+        (data) => {
 
-            res.json({
-                message: "AI mortgage analysis completed.",
-                analysis: analysis
-            });
-
-        } catch (error) {
-
-            console.error("Python output:", output);
-            console.error(error);
-
-            res.status(500).json({
-                error: "Could not read the AI analysis."
-            });
+            errorOutput +=
+                data.toString();
         }
-    });
+    );
 
-    python.stdin.write(JSON.stringify(req.body));
+
+    python.on(
+        "close",
+        (code) => {
+
+            if (code !== 0) {
+
+                console.error(
+                    errorOutput
+                );
+
+
+                return res.status(500).json({
+                    error:
+                        "Mortgage analysis failed."
+                });
+            }
+
+
+            try {
+
+                const analysis =
+                    JSON.parse(output);
+
+
+                res.json({
+                    message:
+                        "Mortgage analysis completed.",
+
+                    analysis:
+                        analysis
+                });
+
+            } catch (error) {
+
+                console.error(
+                    "Python output:",
+                    output
+                );
+
+                console.error(
+                    error
+                );
+
+
+                res.status(500).json({
+                    error:
+                        "Could not read the mortgage analysis."
+                });
+            }
+        }
+    );
+
+
+    python.stdin.write(
+        JSON.stringify(
+            req.body
+        )
+    );
+
+
     python.stdin.end();
 });
 
@@ -227,5 +341,8 @@ app.post("/analyze", (req, res) => {
 // --------------------------------------------------
 
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+
+    console.log(
+        `Server running on port ${PORT}`
+    );
 });
