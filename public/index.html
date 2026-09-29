@@ -3,517 +3,702 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>MortgageAI</title>
 
     <style>
+
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: #f5f7fa;
+            margin: 0;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            background: #f5f7fb;
             color: #172033;
-            min-height: 100vh;
         }
 
-        /* ---------- Navigation ---------- */
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* ---------------- NAV ---------------- */
 
         nav {
             height: 68px;
             background: white;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e6e9ef;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 6%;
+
+            padding: 0 5vw;
+
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 20px;
-            font-weight: 700;
+        .brand {
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
-        .logo-icon {
-            width: 34px;
-            height: 34px;
-            border-radius: 9px;
-            background: #2563eb;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
+        .brand span {
+            color: #315efb;
         }
 
         .nav-right {
-            color: #64748b;
             font-size: 14px;
+            color: #7b8495;
         }
 
+        /* ---------------- LAYOUT ---------------- */
 
-        /* ---------- Main layout ---------- */
-
-        .container {
-            width: 92%;
-            max-width: 1100px;
-            margin: 45px auto 80px;
+        .page {
+            max-width: 1500px;
+            margin: auto;
+            padding: 36px 4vw 80px;
         }
 
-        .page-header {
-            margin-bottom: 30px;
+        .hero {
+            margin-bottom: 28px;
         }
 
-        .page-header h1 {
-            font-size: 34px;
-            margin-bottom: 8px;
-            color: #0f172a;
+        .hero h1 {
+            margin: 0 0 8px;
+            font-size: 32px;
+            letter-spacing: -1px;
         }
 
-        .page-header p {
-            color: #64748b;
-            font-size: 16px;
+        .hero p {
+            margin: 0;
+            color: #6f7889;
+            line-height: 1.6;
         }
 
+        .dashboard {
+            display: grid;
+            grid-template-columns:
+                minmax(0, 1fr)
+                330px;
+            gap: 28px;
+            align-items: start;
+        }
 
-        /* ---------- General cards ---------- */
+        .main-column {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 92px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* ---------------- CARDS ---------------- */
 
         .card {
             background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 14px;
-            padding: 28px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+            border: 1px solid #e6e9ef;
+            border-radius: 18px;
+            padding: 26px;
+            box-shadow:
+                0 8px 30px rgba(20, 30, 55, 0.045);
         }
 
-        .card-header {
+        .section-heading {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 22px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
-        .card-header h2 {
-            font-size: 19px;
-            color: #0f172a;
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+
+            background: #edf1ff;
+            color: #315efb;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 13px;
+            font-weight: 800;
         }
 
-        .section-description {
-            color: #64748b;
-            font-size: 14px;
-            margin-top: 5px;
+        .section-heading h2 {
+            font-size: 18px;
+            margin: 0;
         }
 
+        .section-subtitle {
+            color: #7a8496;
+            font-size: 13px;
+            margin-top: -12px;
+            margin-bottom: 20px;
+        }
 
-        /* ---------- Upload ---------- */
+        /* ---------------- UPLOAD ---------------- */
 
-        .upload-area {
-            border: 2px dashed #cbd5e1;
-            border-radius: 12px;
-            padding: 32px;
+        .drop-zone {
+            border: 2px dashed #ccd3df;
+            border-radius: 16px;
+            padding: 42px 20px;
             text-align: center;
-            background: #f8fafc;
+            transition: 0.2s;
+            background: #fafbfe;
+        }
+
+        .drop-zone.dragging {
+            border-color: #315efb;
+            background: #f3f6ff;
         }
 
         .upload-icon {
-            font-size: 32px;
-            margin-bottom: 12px;
+            font-size: 35px;
+            margin-bottom: 10px;
         }
 
-        .upload-area h3 {
-            margin-bottom: 6px;
+        .drop-zone h3 {
+            margin: 0 0 6px;
             font-size: 17px;
         }
 
-        .upload-area p {
-            color: #64748b;
-            font-size: 14px;
-            margin-bottom: 18px;
-        }
-
-        input[type="file"] {
-            margin-bottom: 18px;
+        .drop-zone p {
+            color: #8a93a3;
+            font-size: 13px;
         }
 
         .primary-button {
             border: none;
-            background: #2563eb;
+            background: #315efb;
             color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
+
+            padding: 12px 18px;
+            border-radius: 10px;
+
+            font-weight: 700;
         }
 
         .primary-button:hover {
-            background: #1d4ed8;
+            background: #254bd7;
         }
 
         .primary-button:disabled {
-            background: #94a3b8;
+            background: #c6ccda;
             cursor: not-allowed;
         }
 
-        #status {
-            margin-top: 18px;
-            font-size: 14px;
-            font-weight: 500;
+        .secondary-button {
+            border: 1px solid #d8dde7;
+            background: white;
+            color: #293247;
+
+            padding: 11px 16px;
+            border-radius: 10px;
+
+            font-weight: 650;
         }
 
-        .success {
-            color: #15803d;
+        .secondary-button:hover {
+            background: #f7f8fb;
         }
 
-        .error {
-            color: #dc2626;
-        }
+        .selected-file {
+            margin-top: 16px;
+            padding: 13px 15px;
 
+            background: #f7f9fc;
+            border-radius: 10px;
 
-        /* ---------- Document success ---------- */
-
-        #documentSuccess {
             display: none;
-            margin-top: 20px;
-            padding: 15px 18px;
-            border-radius: 9px;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-        }
+            justify-content: space-between;
+            align-items: center;
 
-        .success-title {
-            color: #166534;
-            font-weight: 600;
             font-size: 14px;
         }
 
-        #documentName {
-            color: #64748b;
-            font-size: 13px;
-            margin-top: 4px;
+        .remove-file {
+            border: none;
+            background: transparent;
+            font-size: 19px;
+            color: #8a93a3;
         }
 
+        .upload-actions {
+            margin-top: 18px;
+            display: flex;
+            justify-content: flex-end;
+        }
 
-        /* ---------- Extracted fields ---------- */
+        /* ---------------- STATUS ---------------- */
 
-        #extractedSection {
+        .status {
+            display: none;
+            margin-top: 15px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        .status.loading {
+            display: block;
+            background: #f0f4ff;
+            color: #315efb;
+        }
+
+        .status.success {
+            display: block;
+            background: #eefaf2;
+            color: #227443;
+        }
+
+        .status.error {
+            display: block;
+            background: #fff0f0;
+            color: #b83b3b;
+        }
+
+        /* ---------------- EXTRACTION ---------------- */
+
+        #reviewSection,
+        #resultsSection,
+        #analysisSection {
             display: none;
         }
 
         .data-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+            gap: 14px;
         }
 
-        .data-item {
-            border: 1px solid #e2e8f0;
-            border-radius: 11px;
-            padding: 18px;
-            position: relative;
-            transition: 0.2s;
+        .data-field {
+            border: 1px solid #e3e7ee;
+            border-radius: 12px;
+            padding: 14px;
         }
 
-        .data-item:hover {
-            border-color: #cbd5e1;
-            box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
-        }
-
-        .data-top {
+        .field-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 8px;
         }
 
-        .data-label {
-            color: #64748b;
-            font-size: 13px;
-            font-weight: 500;
+        .field-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #747e90;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
         }
-
-        .data-value {
-            font-size: 21px;
-            font-weight: 650;
-            color: #0f172a;
-            margin-top: 8px;
-        }
-
-
-        /* ---------- Info button ---------- */
 
         .info-button {
-            width: 22px;
-            height: 22px;
+            width: 23px;
+            height: 23px;
             border-radius: 50%;
+
             border: none;
-            background: #e2e8f0;
-            color: #64748b;
-            font-family: Georgia, serif;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
-        }
+            background: #edf0f5;
+            color: #6d7685;
 
-        .info-button:hover {
-            background: #cbd5e1;
-            color: #334155;
-        }
-
-
-        /* ---------- Confidence ---------- */
-
-        .confidence-row {
-            margin-top: 11px;
-            display: flex;
-            align-items: center;
-            gap: 7px;
             font-size: 12px;
-            color: #64748b;
+            font-weight: 800;
         }
 
-        .confidence-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
+        .data-input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 19px;
+            font-weight: 700;
+            color: #172033;
+            background: transparent;
         }
 
-        .confidence-high {
-            background: #22c55e;
+        .confidence {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #929aaa;
         }
 
-        .confidence-medium {
-            background: #f59e0b;
-        }
-
-        .confidence-low {
-            background: #ef4444;
-        }
-
-
-        /* ---------- Confirm button ---------- */
-
-        .confirm-area {
-            margin-top: 24px;
+        .confirm-row {
             display: flex;
             justify-content: flex-end;
+            margin-top: 20px;
         }
 
-
-        /* ---------- Future calculation section ---------- */
-
-        #calculationSection {
-            display: none;
-        }
+        /* ---------------- METRICS ---------------- */
 
         .metric-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
             gap: 14px;
         }
 
         .metric {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 18px;
+            border: 1px solid #e4e8ef;
+            border-radius: 14px;
+            padding: 17px;
+            position: relative;
         }
 
         .metric-label {
-            color: #64748b;
+            color: #7b8494;
             font-size: 12px;
             margin-bottom: 8px;
         }
 
         .metric-value {
             font-size: 22px;
-            font-weight: 650;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
-
-        /* ---------- AI section ---------- */
-
-        #aiSection {
-            display: none;
+        .metric .info-button {
+            position: absolute;
+            right: 12px;
+            top: 12px;
         }
 
-        .ai-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .stress-box {
+            margin-top: 18px;
+            background: #f8f9fc;
+            border-radius: 14px;
+            padding: 18px;
         }
 
-        .ai-symbol {
-            width: 31px;
-            height: 31px;
-            border-radius: 8px;
-            background: #eef2ff;
+        .stress-box h3 {
+            margin: 0 0 14px;
+            font-size: 14px;
+        }
+
+        .stress-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .stress-item small {
+            display: block;
+            color: #838c9d;
+            margin-bottom: 5px;
+        }
+
+        .stress-item strong {
+            font-size: 16px;
+        }
+
+        /* ---------------- SIDEBAR ---------------- */
+
+        .summary-card {
+            text-align: center;
+        }
+
+        .summary-title {
+            text-align: left;
+            font-size: 13px;
+            font-weight: 750;
+            margin-bottom: 20px;
+        }
+
+        .money-ring {
+            width: 210px;
+            height: 210px;
+
+            margin: 5px auto 22px;
+
+            border-radius: 50%;
+
+            background:
+                conic-gradient(
+                    #315efb 0deg var(--principal-angle, 214deg),
+                    #e9edf5 var(--principal-angle, 214deg) 360deg
+                );
+
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #4f46e5;
+
+            position: relative;
         }
 
-        .mode-selector {
+        .money-ring::after {
+            content: "";
+            position: absolute;
+
+            width: 156px;
+            height: 156px;
+
+            background: white;
+            border-radius: 50%;
+        }
+
+        .ring-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .ring-content small {
+            display: block;
+            color: #858e9f;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .ring-content strong {
+            font-size: 21px;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .legend-item {
+            flex: 1;
+            text-align: left;
+        }
+
+        .legend-item small {
+            display: block;
+            color: #8a93a3;
+            margin-bottom: 4px;
+        }
+
+        .legend-item strong {
+            font-size: 14px;
+        }
+
+        .sidebar-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-top: 1px solid #edf0f4;
+            font-size: 13px;
+        }
+
+        .sidebar-stat span {
+            color: #7f8898;
+        }
+
+        .sidebar-stat strong {
+            color: #20293c;
+        }
+
+        .quick-actions h3 {
+            margin: 0 0 14px;
+            font-size: 14px;
+        }
+
+        .action-button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 9px;
+
+            border: 1px solid #e0e4eb;
+            background: white;
+            border-radius: 10px;
+
+            font-weight: 650;
+            color: #333d50;
+        }
+
+        .action-button:hover:not(:disabled) {
+            background: #f6f8fc;
+        }
+
+        .action-button:disabled {
+            color: #adb4c1;
+            cursor: not-allowed;
+        }
+
+        /* ---------------- AI ---------------- */
+
+        .mode-buttons {
             display: flex;
             gap: 10px;
-            margin: 20px 0;
+            margin-bottom: 18px;
         }
 
         .mode-button {
-            border: 1px solid #cbd5e1;
+            border: 1px solid #dce1ea;
             background: white;
-            padding: 10px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 9px;
+            font-weight: 700;
         }
 
         .mode-button.active {
-            background: #eff6ff;
-            border-color: #2563eb;
-            color: #1d4ed8;
+            background: #172033;
+            color: white;
+            border-color: #172033;
         }
 
-
-        /* ---------- Modal ---------- */
-
-        .modal-background {
+        .analysis-output {
             display: none;
+            margin-top: 24px;
+        }
+
+        .analysis-block {
+            border-top: 1px solid #e8ebf0;
+            padding: 20px 0;
+        }
+
+        .analysis-block h3 {
+            font-size: 14px;
+            margin: 0 0 9px;
+        }
+
+        .analysis-block p,
+        .analysis-block li {
+            color: #555f72;
+            line-height: 1.65;
+            font-size: 14px;
+        }
+
+        .analysis-block ul {
+            padding-left: 20px;
+        }
+
+        /* ---------------- MODAL ---------------- */
+
+        .modal {
             position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.45);
+            inset: 0;
+            background: rgba(15, 22, 35, 0.48);
+
+            display: none;
             align-items: center;
             justify-content: center;
+
+            z-index: 100;
             padding: 20px;
         }
 
-        .modal {
+        .modal-box {
+            width: min(500px, 100%);
             background: white;
-            width: 100%;
-            max-width: 520px;
-            border-radius: 14px;
-            padding: 26px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 22px;
-        }
-
-        .modal-header h2 {
-            font-size: 19px;
-        }
-
-        .close-button {
-            border: none;
-            background: transparent;
-            font-size: 24px;
-            cursor: pointer;
-            color: #64748b;
-        }
-
-        .modal-section {
+            gap: 15px;
             margin-bottom: 20px;
         }
 
+        .modal-header h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .modal-close {
+            border: none;
+            background: none;
+            font-size: 22px;
+        }
+
         .modal-label {
-            color: #64748b;
-            font-size: 12px;
-            font-weight: 600;
+            color: #8a93a3;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
-            margin-bottom: 7px;
+            letter-spacing: 0.5px;
+            font-size: 10px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .modal-section {
+            margin-bottom: 18px;
         }
 
         .modal-value {
-            font-size: 20px;
-            font-weight: 650;
+            font-size: 18px;
+            font-weight: 750;
         }
 
-        .evidence-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 14px;
-            color: #475569;
-            line-height: 1.55;
+        .modal-text {
+            color: #566073;
+            line-height: 1.6;
             font-size: 14px;
         }
 
-        .confidence-bar-background {
-            width: 100%;
-            height: 8px;
-            background: #e2e8f0;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-top: 8px;
-        }
+        /* ---------------- RESPONSIVE ---------------- */
 
-        .confidence-bar {
-            height: 100%;
-            background: #22c55e;
-            border-radius: 20px;
-        }
+        @media(max-width: 1000px) {
 
-
-        /* ---------- Responsive ---------- */
-
-        @media (max-width: 800px) {
-
-            .data-grid {
+            .dashboard {
                 grid-template-columns: 1fr;
             }
 
-            .metric-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .sidebar {
+                position: static;
+                order: -1;
             }
 
-            .page-header h1 {
-                font-size: 28px;
+            .money-ring {
+                width: 180px;
+                height: 180px;
+            }
+
+            .money-ring::after {
+                width: 134px;
+                height: 134px;
             }
         }
 
-        @media (max-width: 500px) {
+        @media(max-width: 700px) {
+
+            .page {
+                padding: 24px 16px 60px;
+            }
 
             nav {
-                padding: 0 20px;
+                padding: 0 18px;
             }
 
-            .nav-right {
-                display: none;
-            }
-
-            .container {
-                width: 94%;
-                margin-top: 30px;
-            }
-
-            .card {
-                padding: 20px;
-            }
-
+            .data-grid,
             .metric-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .stress-row {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
@@ -523,905 +708,2353 @@
 
 <body>
 
+<nav>
 
-    <!-- Navigation -->
+    <div class="brand">
+        Mortgage<span>AI</span>
+    </div>
 
-    <nav>
+    <div class="nav-right">
+        Mortgage Analysis Workspace
+    </div>
 
-        <div class="logo">
-
-            <div class="logo-icon">
-                M
-            </div>
-
-            MortgageAI
-
-        </div>
-
-        <div class="nav-right">
-            Intelligent Mortgage Analysis
-        </div>
-
-    </nav>
+</nav>
 
 
+<div class="page">
 
-    <main class="container">
+    <div class="hero">
 
+        <h1>Mortgage Analysis</h1>
 
-        <!-- Page heading -->
+        <p>
+            Upload a mortgage document, verify the extracted information,
+            calculate the mortgage scenario and generate an AI-assisted report.
+        </p>
 
-        <div class="page-header">
-
-            <h1>Mortgage Analysis</h1>
-
-            <p>
-                Upload a mortgage application to extract, verify,
-                and analyze the financial information.
-            </p>
-
-        </div>
+    </div>
 
 
+    <div class="dashboard">
 
-        <!-- Upload card -->
+        <!-- ================================================= -->
+        <!-- MAIN COLUMN -->
+        <!-- ================================================= -->
 
-        <section class="card">
+        <main class="main-column">
 
-            <div class="card-header">
 
-                <div>
+            <!-- UPLOAD -->
+
+            <section class="card">
+
+                <div class="section-heading">
+
+                    <div class="step">1</div>
 
                     <h2>Mortgage Document</h2>
 
-                    <p class="section-description">
-                        Upload a PDF mortgage application to begin.
-                    </p>
-
                 </div>
 
-            </div>
-
-
-            <div class="upload-area">
-
-                <div class="upload-icon">
-                    📄
-                </div>
-
-                <h3>Upload mortgage application</h3>
-
-                <p>
-                    PDF documents only
-                </p>
-
-
-                <input
-                    type="file"
-                    id="mortgageFile"
-                    accept=".pdf"
-                >
-
-                <br>
-
-
-                <button
-                    class="primary-button"
-                    id="uploadButton"
-                >
-                    Analyze Document
-                </button>
-
-
-                <div id="status"></div>
-
-            </div>
-
-
-            <div id="documentSuccess">
-
-                <div class="success-title">
-                    ✓ Document processed successfully
-                </div>
-
-                <div id="documentName"></div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- Extracted information -->
-
-        <section
-            class="card"
-            id="extractedSection"
-        >
-
-            <div class="card-header">
-
-                <div>
-
-                    <h2>Extracted Information</h2>
-
-                    <p class="section-description">
-                        Review the information identified from your document.
-                        Click the information icon to see where each value came from.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div
-                class="data-grid"
-                id="dataGrid"
-            >
-            </div>
-
-
-            <div class="confirm-area">
-
-                <button
-                    class="primary-button"
-                    id="confirmButton"
-                >
-                    Review & Confirm Information
-                </button>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- Mortgage calculations -->
-
-        <section
-            class="card"
-            id="calculationSection"
-        >
-
-            <div class="card-header">
-
-                <div>
-
-                    <h2>Mortgage Overview</h2>
-
-                    <p class="section-description">
-                        Calculated from your verified mortgage information.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div
-                class="metric-grid"
-                id="metricGrid"
-            >
-            </div>
-
-        </section>
-
-
-
-        <!-- AI Analysis -->
-
-        <section
-            class="card"
-            id="aiSection"
-        >
-
-            <div class="ai-header">
-
-                <div class="ai-symbol">
-                    ✦
-                </div>
-
-                <div>
-
-                    <h2>AI Mortgage Analysis</h2>
-
-                    <p class="section-description">
-                        Generate an explanation of your mortgage results.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="mode-selector">
-
-                <button
-                    class="mode-button active"
-                    data-mode="Serious"
-                >
-                    Serious
-                </button>
-
-                <button
-                    class="mode-button"
-                    data-mode="Surprise"
-                >
-                    Surprise
-                </button>
-
-            </div>
-
-
-            <button
-                class="primary-button"
-                id="analysisButton"
-            >
-                Generate AI Analysis
-            </button>
-
-
-            <div id="analysisResults"></div>
-
-        </section>
-
-
-    </main>
-
-
-
-    <!-- Information popup -->
-
-    <div
-        class="modal-background"
-        id="infoModal"
-    >
-
-        <div class="modal">
-
-            <div class="modal-header">
-
-                <h2 id="modalTitle">
-                    Field Information
-                </h2>
-
-                <button
-                    class="close-button"
-                    id="closeModal"
-                >
-                    ×
-                </button>
-
-            </div>
-
-
-            <div class="modal-section">
-
-                <div class="modal-label">
-                    Extracted Value
-                </div>
 
                 <div
-                    class="modal-value"
-                    id="modalValue"
+                    class="drop-zone"
+                    id="dropZone"
                 >
-                </div>
 
-            </div>
+                    <div class="upload-icon">↑</div>
 
+                    <h3>Drop your mortgage PDF here</h3>
 
-            <div class="modal-section">
+                    <p>
+                        or choose a PDF from your computer
+                    </p>
 
-                <div class="modal-label">
-                    Source From Document
-                </div>
-
-                <div
-                    class="evidence-box"
-                    id="modalEvidence"
-                >
-                </div>
-
-            </div>
-
-
-            <div class="modal-section">
-
-                <div class="modal-label">
-                    AI Confidence
-                </div>
-
-                <div id="modalConfidenceText"></div>
-
-                <div class="confidence-bar-background">
-
-                    <div
-                        class="confidence-bar"
-                        id="modalConfidenceBar"
+                    <button
+                        class="secondary-button"
+                        id="chooseFileButton"
                     >
+                        Choose File
+                    </button>
+
+                    <input
+                        type="file"
+                        id="fileInput"
+                        accept=".pdf,application/pdf"
+                        hidden
+                    >
+
+                </div>
+
+
+                <div
+                    class="selected-file"
+                    id="selectedFile"
+                >
+
+                    <span id="selectedFileName"></span>
+
+                    <button
+                        class="remove-file"
+                        id="removeFile"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="status"
+                    id="uploadStatus"
+                ></div>
+
+
+                <div class="upload-actions">
+
+                    <button
+                        class="primary-button"
+                        id="analyzeDocumentButton"
+                        disabled
+                    >
+                        Analyze Document
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- REVIEW -->
+
+            <section
+                class="card"
+                id="reviewSection"
+            >
+
+                <div class="section-heading">
+
+                    <div class="step">2</div>
+
+                    <h2>Review Extracted Information</h2>
+
+                </div>
+
+                <div class="section-subtitle">
+                    Verify or correct the values before running the mortgage calculation.
+                    Use ⓘ to view the source evidence and AI confidence.
+                </div>
+
+
+                <div
+                    class="data-grid"
+                    id="dataGrid"
+                ></div>
+
+
+                <div class="confirm-row">
+
+                    <button
+                        class="primary-button"
+                        id="calculateButton"
+                    >
+                        Confirm & Calculate
+                    </button>
+
+                </div>
+
+                <div
+                    class="status"
+                    id="calculateStatus"
+                ></div>
+
+            </section>
+
+
+            <!-- RESULTS -->
+
+            <section
+                class="card"
+                id="resultsSection"
+            >
+
+                <div class="section-heading">
+
+                    <div class="step">3</div>
+
+                    <h2>Mortgage Results</h2>
+
+                </div>
+
+                <div
+                    class="metric-grid"
+                    id="metricGrid"
+                ></div>
+
+
+                <div class="stress-box">
+
+                    <h3>Mortgage Stress Scenario</h3>
+
+                    <div class="stress-row">
+
+                        <div class="stress-item">
+                            <small>Modeled Rate</small>
+                            <strong id="stressRate">—</strong>
+                        </div>
+
+                        <div class="stress-item">
+                            <small>Monthly Payment</small>
+                            <strong id="stressPayment">—</strong>
+                        </div>
+
+                        <div class="stress-item">
+                            <small>GDS</small>
+                            <strong id="stressGds">—</strong>
+                        </div>
+
+                        <div class="stress-item">
+                            <small>TDS</small>
+                            <strong id="stressTds">—</strong>
+                        </div>
+
                     </div>
 
                 </div>
 
+            </section>
+
+
+            <!-- AI ANALYSIS -->
+
+            <section
+                class="card"
+                id="analysisSection"
+            >
+
+                <div class="section-heading">
+
+                    <div class="step">4</div>
+
+                    <h2>AI Mortgage Analysis</h2>
+
+                </div>
+
+
+                <div class="section-subtitle">
+                    Choose how you want the verified mortgage scenario explained.
+                </div>
+
+
+                <div class="mode-buttons">
+
+                    <button
+                        class="mode-button active"
+                        data-mode="Serious"
+                    >
+                        Serious
+                    </button>
+
+                    <button
+                        class="mode-button"
+                        data-mode="Surprise"
+                    >
+                        Surprise
+                    </button>
+
+                </div>
+
+
+                <button
+                    class="primary-button"
+                    id="generateAnalysisButton"
+                >
+                    Generate AI Analysis
+                </button>
+
+
+                <div
+                    class="status"
+                    id="analysisStatus"
+                ></div>
+
+
+                <div
+                    class="analysis-output"
+                    id="analysisOutput"
+                >
+
+                    <div class="analysis-block">
+
+                        <h3>Summary</h3>
+
+                        <p id="analysisSummary"></p>
+
+                    </div>
+
+
+                    <div class="analysis-block">
+
+                        <h3>Mortgage Results</h3>
+
+                        <p id="analysisResults"></p>
+
+                    </div>
+
+
+                    <div class="analysis-block">
+
+                        <h3>Stress Scenario</h3>
+
+                        <p id="analysisStress"></p>
+
+                    </div>
+
+
+                    <div class="analysis-block">
+
+                        <h3>Key Considerations</h3>
+
+                        <ul id="analysisRisks"></ul>
+
+                    </div>
+
+
+                    <div class="analysis-block">
+
+                        <h3>Final Analysis</h3>
+
+                        <p id="analysisFinal"></p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- ================================================= -->
+        <!-- SIDEBAR -->
+        <!-- ================================================= -->
+
+        <aside class="sidebar">
+
+
+            <section class="card summary-card">
+
+                <div class="summary-title">
+                    Live Mortgage Summary
+                </div>
+
+
+                <div
+                    class="money-ring"
+                    id="moneyRing"
+                >
+
+                    <div class="ring-content">
+
+                        <small>Mortgage Amount</small>
+
+                        <strong id="ringMortgage">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="legend">
+
+                    <div class="legend-item">
+
+                        <small>Principal</small>
+
+                        <strong id="principalLegend">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <small>Modeled Interest</small>
+
+                        <strong id="interestLegend">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="sidebar-stat">
+
+                    <span>Monthly Payment</span>
+
+                    <strong id="sideMonthly">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="sidebar-stat">
+
+                    <span>LTV</span>
+
+                    <strong id="sideLtv">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="sidebar-stat">
+
+                    <span>GDS</span>
+
+                    <strong id="sideGds">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="sidebar-stat">
+
+                    <span>TDS</span>
+
+                    <strong id="sideTds">
+                        —
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <section class="card quick-actions">
+
+                <h3>Quick Actions</h3>
+
+                <button
+                    class="action-button"
+                    id="jumpAnalysisButton"
+                    disabled
+                >
+                    Generate AI Analysis
+                </button>
+
+                <button
+                    class="action-button"
+                    id="downloadReportButton"
+                    disabled
+                >
+                    Generate Customer PDF
+                </button>
+
+                <button
+                    class="action-button"
+                    id="newAnalysisButton"
+                >
+                    New Analysis
+                </button>
+
+            </section>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- INFORMATION MODAL -->
+<!-- ================================================= -->
+
+<div
+    class="modal"
+    id="infoModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+                Information
+            </h2>
+
+            <button
+                class="modal-close"
+                id="modalClose"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-section">
+
+            <div
+                class="modal-label"
+                id="modalValueLabel"
+            >
+                Extracted Value
             </div>
+
+            <div
+                class="modal-value"
+                id="modalValue"
+            ></div>
+
+        </div>
+
+
+        <div class="modal-section">
+
+            <div
+                class="modal-label"
+                id="modalEvidenceLabel"
+            >
+                Source From Document
+            </div>
+
+            <div
+                class="modal-text"
+                id="modalEvidence"
+            ></div>
+
+        </div>
+
+
+        <div
+            class="modal-section"
+            id="confidenceSection"
+        >
+
+            <div class="modal-label">
+                AI Confidence
+            </div>
+
+            <div
+                class="modal-text"
+                id="modalConfidence"
+            ></div>
 
         </div>
 
     </div>
 
+</div>
 
 
-    <script>
+<script>
 
-        // Get important HTML elements
+    // ==================================================
+    // APPLICATION STATE
+    // ==================================================
 
-        const mortgageFile =
-            document.getElementById("mortgageFile");
+    let selectedMortgageFile = null;
 
-        const uploadButton =
-            document.getElementById("uploadButton");
+    let mortgageData = null;
 
-        const status =
-            document.getElementById("status");
+    let calculationResults = null;
 
-        const documentSuccess =
-            document.getElementById("documentSuccess");
+    let mortgageAnalysis = null;
 
-        const documentName =
-            document.getElementById("documentName");
-
-        const extractedSection =
-            document.getElementById("extractedSection");
-
-        const dataGrid =
-            document.getElementById("dataGrid");
+    let selectedMode = "Serious";
 
 
+    // ==================================================
+    // ELEMENTS
+    // ==================================================
 
-        // Information modal
+    const fileInput =
+        document.getElementById("fileInput");
 
-        const infoModal =
-            document.getElementById("infoModal");
+    const chooseFileButton =
+        document.getElementById("chooseFileButton");
 
-        const modalTitle =
-            document.getElementById("modalTitle");
+    const dropZone =
+        document.getElementById("dropZone");
 
-        const modalValue =
-            document.getElementById("modalValue");
+    const selectedFile =
+        document.getElementById("selectedFile");
 
-        const modalEvidence =
-            document.getElementById("modalEvidence");
+    const selectedFileName =
+        document.getElementById("selectedFileName");
 
-        const modalConfidenceText =
-            document.getElementById("modalConfidenceText");
+    const removeFile =
+        document.getElementById("removeFile");
 
-        const modalConfidenceBar =
-            document.getElementById("modalConfidenceBar");
+    const analyzeDocumentButton =
+        document.getElementById("analyzeDocumentButton");
 
-        const closeModal =
-            document.getElementById("closeModal");
+    const uploadStatus =
+        document.getElementById("uploadStatus");
+
+    const reviewSection =
+        document.getElementById("reviewSection");
+
+    const dataGrid =
+        document.getElementById("dataGrid");
+
+    const calculateButton =
+        document.getElementById("calculateButton");
+
+    const calculateStatus =
+        document.getElementById("calculateStatus");
+
+    const resultsSection =
+        document.getElementById("resultsSection");
+
+    const metricGrid =
+        document.getElementById("metricGrid");
+
+    const analysisSection =
+        document.getElementById("analysisSection");
+
+    const generateAnalysisButton =
+        document.getElementById("generateAnalysisButton");
+
+    const analysisStatus =
+        document.getElementById("analysisStatus");
+
+    const analysisOutput =
+        document.getElementById("analysisOutput");
+
+    const jumpAnalysisButton =
+        document.getElementById("jumpAnalysisButton");
+
+    const downloadReportButton =
+        document.getElementById("downloadReportButton");
+
+    const newAnalysisButton =
+        document.getElementById("newAnalysisButton");
 
 
+    // ==================================================
+    // FILE SELECTION
+    // ==================================================
 
-        // Store extracted mortgage information
+    chooseFileButton.addEventListener(
+        "click",
+        () => fileInput.click()
+    );
 
-        let mortgageData = null;
 
+    fileInput.addEventListener(
+        "change",
+        () => {
 
-
-        // Information describing each mortgage field
-
-        const fieldInformation = {
-
-            annual_income: {
-                label: "Annual Income",
-                type: "money"
-            },
-
-            house_price: {
-                label: "Purchase Price",
-                type: "money"
-            },
-
-            down_payment: {
-                label: "Down Payment",
-                type: "money"
-            },
-
-            interest_rate: {
-                label: "Interest Rate",
-                type: "percent"
-            },
-
-            amortization_years: {
-                label: "Amortization",
-                type: "years"
-            },
-
-            property_taxes: {
-                label: "Annual Property Taxes",
-                type: "money"
-            },
-
-            heating_cost: {
-                label: "Monthly Heating Cost",
-                type: "money"
-            },
-
-            condo_fees: {
-                label: "Monthly Condo Fees",
-                type: "money"
-            },
-
-            monthly_debt_payments: {
-                label: "Monthly Debt Payments",
-                type: "money"
+            if (fileInput.files.length > 0) {
+                selectFile(fileInput.files[0]);
             }
 
-        };
+        }
+    );
 
 
+    function selectFile(file) {
 
-        // Format money
+        if (!file.name.toLowerCase().endsWith(".pdf")) {
 
-        function formatMoney(value) {
-
-            if (value === null || value === undefined) {
-                return "Not found";
-            }
-
-            return "$" + Number(value).toLocaleString(
-                "en-CA",
-                {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                }
+            showStatus(
+                uploadStatus,
+                "Please select a PDF file.",
+                "error"
             );
 
+            return;
         }
 
+        selectedMortgageFile = file;
+
+        selectedFileName.textContent = file.name;
+
+        selectedFile.style.display = "flex";
+
+        analyzeDocumentButton.disabled = false;
+
+        showStatus(
+            uploadStatus,
+            "PDF ready for analysis.",
+            "success"
+        );
+    }
 
 
-        // Format different types of mortgage values
+    removeFile.addEventListener(
+        "click",
+        () => {
 
-        function formatValue(value, type) {
+            selectedMortgageFile = null;
 
-            if (value === null || value === undefined) {
-                return "Not found";
-            }
+            fileInput.value = "";
 
+            selectedFile.style.display = "none";
 
-            if (type === "money") {
-                return formatMoney(value);
-            }
+            analyzeDocumentButton.disabled = true;
 
-
-            if (type === "percent") {
-                return value + "%";
-            }
-
-
-            if (type === "years") {
-                return value + " years";
-            }
-
-
-            return value;
-
+            uploadStatus.style.display = "none";
         }
+    );
 
 
+    // ==================================================
+    // DRAG + DROP
+    // ==================================================
 
-        // Decide how the confidence should be displayed
+    ["dragenter", "dragover"].forEach(eventName => {
 
-        function getConfidenceInformation(confidence) {
+        dropZone.addEventListener(
+            eventName,
+            event => {
 
-            const percentage =
-                Math.round(confidence * 100);
+                event.preventDefault();
 
-
-            if (confidence >= 0.85) {
-
-                return {
-                    text: "High confidence",
-                    className: "confidence-high",
-                    percentage: percentage
-                };
-
+                dropZone.classList.add("dragging");
             }
+        );
+
+    });
 
 
-            if (confidence >= 0.60) {
+    ["dragleave", "drop"].forEach(eventName => {
 
-                return {
-                    text: "Medium confidence",
-                    className: "confidence-medium",
-                    percentage: percentage
-                };
+        dropZone.addEventListener(
+            eventName,
+            event => {
 
+                event.preventDefault();
+
+                dropZone.classList.remove("dragging");
             }
+        );
+
+    });
 
 
-            return {
-                text: "Low confidence",
-                className: "confidence-low",
-                percentage: percentage
-            };
+    dropZone.addEventListener(
+        "drop",
+        event => {
 
+            const files =
+                event.dataTransfer.files;
+
+            if (files.length > 0) {
+                selectFile(files[0]);
+            }
         }
+    );
 
 
+    // ==================================================
+    // UPLOAD + AI EXTRACTION
+    // ==================================================
 
-        // Display all extracted mortgage fields
+    analyzeDocumentButton.addEventListener(
+        "click",
+        async () => {
 
-        function displayMortgageData(data) {
+            if (!selectedMortgageFile) {
+                return;
+            }
 
-            // Clear previous results
-            dataGrid.innerHTML = "";
+            analyzeDocumentButton.disabled = true;
 
-
-            // Go through every field we want to display
-            for (const fieldName in fieldInformation) {
-
-                const information =
-                    fieldInformation[fieldName];
-
-                const field =
-                    data[fieldName];
-
-
-                if (!field) {
-                    continue;
-                }
+            showStatus(
+                uploadStatus,
+                "Analyzing mortgage document...",
+                "loading"
+            );
 
 
-                const formattedValue =
-                    formatValue(
-                        field.value,
-                        information.type
-                    );
+            const formData = new FormData();
+
+            formData.append(
+                "mortgagePdf",
+                selectedMortgageFile
+            );
 
 
-                const confidence =
-                    getConfidenceInformation(
-                        field.confidence
-                    );
+            try {
 
-
-                // Create the field card
-                const item =
-                    document.createElement("div");
-
-                item.className = "data-item";
-
-
-                item.innerHTML = `
-
-                    <div class="data-top">
-
-                        <div class="data-label">
-                            ${information.label}
-                        </div>
-
-                        <button
-                            class="info-button"
-                            type="button"
-                            aria-label="Show source information"
-                        >
-                            i
-                        </button>
-
-                    </div>
-
-
-                    <div class="data-value">
-                        ${formattedValue}
-                    </div>
-
-
-                    <div class="confidence-row">
-
-                        <span
-                            class="confidence-dot ${confidence.className}"
-                        >
-                        </span>
-
-                        ${confidence.text}
-
-                    </div>
-
-                `;
-
-
-                // Find the information button inside this card
-                const infoButton =
-                    item.querySelector(".info-button");
-
-
-                // Open the popup when the information button is clicked
-                infoButton.addEventListener(
-                    "click",
-                    () => {
-
-                        openInformationModal(
-                            information.label,
-                            formattedValue,
-                            field.evidence,
-                            confidence.percentage
-                        );
-
+                const response = await fetch(
+                    "/upload",
+                    {
+                        method: "POST",
+                        body: formData
                     }
                 );
 
 
-                // Add the field card to the webpage
-                dataGrid.appendChild(item);
-
-            }
+                const result = await response.json();
 
 
-            // Show the extracted information section
-            extractedSection.style.display = "block";
-
-        }
-
-
-
-        // Open the source information popup
-
-        function openInformationModal(
-            title,
-            value,
-            evidence,
-            confidence
-        ) {
-
-            modalTitle.textContent = title;
-
-            modalValue.textContent = value;
-
-            modalEvidence.textContent =
-                evidence || "No source evidence was provided.";
-
-            modalConfidenceText.textContent =
-                confidence + "% confidence";
-
-            modalConfidenceBar.style.width =
-                confidence + "%";
-
-
-            infoModal.style.display = "flex";
-
-        }
-
-
-
-        // Close the popup
-
-        closeModal.addEventListener(
-            "click",
-            () => {
-
-                infoModal.style.display = "none";
-
-            }
-        );
-
-
-
-        // Close popup when clicking outside of it
-
-        infoModal.addEventListener(
-            "click",
-            (event) => {
-
-                if (event.target === infoModal) {
-
-                    infoModal.style.display = "none";
-
+                if (!response.ok) {
+                    throw new Error(
+                        result.error ||
+                        "Document analysis failed."
+                    );
                 }
 
-            }
-        );
+
+                mortgageData =
+                    result.mortgageData;
 
 
-
-        // Handle analysis mode buttons
-
-        const modeButtons =
-            document.querySelectorAll(".mode-button");
+                renderMortgageData();
 
 
-        modeButtons.forEach(button => {
+                reviewSection.style.display =
+                    "block";
 
-            button.addEventListener("click", () => {
 
-                modeButtons.forEach(otherButton => {
-                    otherButton.classList.remove("active");
+                showStatus(
+                    uploadStatus,
+                    "Document analyzed successfully.",
+                    "success"
+                );
+
+
+                reviewSection.scrollIntoView({
+                    behavior: "smooth"
                 });
 
 
-                button.classList.add("active");
+            } catch (error) {
 
-            });
+                showStatus(
+                    uploadStatus,
+                    error.message,
+                    "error"
+                );
 
-        });
+            } finally {
+
+                analyzeDocumentButton.disabled =
+                    false;
+            }
+        }
+    );
 
 
+    // ==================================================
+    // EXTRACTION FIELDS
+    // ==================================================
 
-        // Upload and process mortgage document
+    const fieldLabels = {
 
-        uploadButton.addEventListener(
-            "click",
-            async () => {
+        annual_income:
+            "Annual Income",
+
+        house_price:
+            "Purchase Price",
+
+        down_payment:
+            "Down Payment",
+
+        interest_rate:
+            "Interest Rate",
+
+        amortization_years:
+            "Amortization",
+
+        property_taxes:
+            "Property Taxes",
+
+        heating_cost:
+            "Heating Cost",
+
+        condo_fees:
+            "Condo Fees",
+
+        monthly_debt_payments:
+            "Monthly Debt Payments"
+    };
 
 
-                // Make sure a PDF was selected
+    function formatFieldValue(
+        fieldName,
+        value
+    ) {
 
-                if (mortgageFile.files.length === 0) {
+        if (value === null ||
+            value === undefined) {
 
-                    alert("Please select a PDF first.");
+            return "Not found";
+        }
 
-                    return;
+
+        if (fieldName ===
+            "interest_rate") {
+
+            return value + "%";
+        }
+
+
+        if (fieldName ===
+            "amortization_years") {
+
+            return value + " years";
+        }
+
+
+        return money(value);
+    }
+
+
+    function renderMortgageData() {
+
+        dataGrid.innerHTML = "";
+
+
+        for (const [
+            fieldName,
+            field
+        ] of Object.entries(mortgageData)) {
+
+
+            const wrapper =
+                document.createElement("div");
+
+            wrapper.className =
+                "data-field";
+
+
+            const top =
+                document.createElement("div");
+
+            top.className =
+                "field-top";
+
+
+            const label =
+                document.createElement("div");
+
+            label.className =
+                "field-label";
+
+            label.textContent =
+                fieldLabels[fieldName] ||
+                fieldName;
+
+
+            const info =
+                document.createElement("button");
+
+            info.className =
+                "info-button";
+
+            info.textContent = "i";
+
+
+            info.addEventListener(
+                "click",
+                () => {
+
+                    showExtractionInfo(
+                        fieldLabels[fieldName],
+                        formatFieldValue(
+                            fieldName,
+                            field.value
+                        ),
+                        field.evidence,
+                        field.confidence
+                    );
 
                 }
+            );
 
 
-                const file =
-                    mortgageFile.files[0];
+            top.appendChild(label);
+            top.appendChild(info);
 
 
-                const formData =
-                    new FormData();
+            const input =
+                document.createElement("input");
+
+            input.className =
+                "data-input";
+
+            input.type = "number";
+
+            input.step = "any";
+
+            input.dataset.field =
+                fieldName;
+
+            input.value =
+                field.value ?? "";
 
 
-                formData.append(
-                    "mortgageFile",
-                    file
+            const confidence =
+                document.createElement("div");
+
+            confidence.className =
+                "confidence";
+
+            confidence.textContent =
+                `AI confidence: ${Math.round(
+                    field.confidence * 100
+                )}%`;
+
+
+            wrapper.appendChild(top);
+            wrapper.appendChild(input);
+            wrapper.appendChild(confidence);
+
+            dataGrid.appendChild(wrapper);
+        }
+    }
+
+
+    // ==================================================
+    // CALCULATE
+    // ==================================================
+
+    calculateButton.addEventListener(
+        "click",
+        async () => {
+
+            const inputs =
+                document.querySelectorAll(
+                    ".data-input"
                 );
 
 
-                // Update interface while processing
+            for (const input of inputs) {
 
-                status.textContent =
-                    "Processing mortgage document...";
+                const fieldName =
+                    input.dataset.field;
 
-                status.className = "";
-
-                uploadButton.disabled = true;
-
-                uploadButton.textContent =
-                    "Processing...";
-
-                extractedSection.style.display =
-                    "none";
-
-                documentSuccess.style.display =
-                    "none";
+                const value =
+                    input.value.trim();
 
 
-                try {
+                if (
+                    value === "" ||
+                    Number.isNaN(Number(value))
+                ) {
 
-
-                    // Send the PDF to the Node server
-
-                    const response =
-                        await fetch(
-                            "/upload",
-                            {
-                                method: "POST",
-                                body: formData
-                            }
-                        );
-
-
-                    // Read JSON returned by Node
-
-                    const result =
-                        await response.json();
-
-
-                    // Check whether processing failed
-
-                    if (!response.ok) {
-
-                        status.textContent =
-                            result.message;
-
-                        status.className =
-                            "error";
-
-                        return;
-
-                    }
-
-
-                    // Save the extracted mortgage information
-
-                    mortgageData =
-                        result.mortgageData;
-
-
-                    // Show successful document processing
-
-                    status.textContent = "";
-
-                    documentSuccess.style.display =
-                        "block";
-
-                    documentName.textContent =
-                        file.name;
-
-
-                    // Display extracted mortgage information
-
-                    displayMortgageData(
-                        mortgageData
+                    showStatus(
+                        calculateStatus,
+                        `Please enter a valid value for ${fieldLabels[fieldName]}.`,
+                        "error"
                     );
 
-
-                    // Scroll to the results
-
-                    extractedSection.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-
-
+                    return;
                 }
 
-                catch (error) {
+
+                mortgageData[fieldName].value =
+                    Number(value);
+            }
 
 
-                    console.error(error);
+            calculateButton.disabled =
+                true;
 
 
-                    status.textContent =
-                        "Something went wrong while processing the document.";
+            showStatus(
+                calculateStatus,
+                "Calculating mortgage scenario...",
+                "loading"
+            );
 
-                    status.className =
-                        "error";
+
+            try {
+
+                const response = await fetch(
+                    "/calculate",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+                        body:
+                            JSON.stringify(
+                                mortgageData
+                            )
+                    }
+                );
 
 
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.error ||
+                        "Mortgage calculation failed."
+                    );
                 }
 
-                finally {
+
+                calculationResults =
+                    result.calculationResults;
 
 
-                    uploadButton.disabled =
-                        false;
+                mortgageAnalysis = null;
 
-                    uploadButton.textContent =
-                        "Analyze Document";
+                renderCalculations();
+
+                updateSidebar();
 
 
-                }
+                resultsSection.style.display =
+                    "block";
 
+                analysisSection.style.display =
+                    "block";
+
+                analysisOutput.style.display =
+                    "none";
+
+                downloadReportButton.disabled =
+                    true;
+
+                jumpAnalysisButton.disabled =
+                    false;
+
+
+                showStatus(
+                    calculateStatus,
+                    "Mortgage calculated successfully.",
+                    "success"
+                );
+
+
+                resultsSection.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+
+            } catch (error) {
+
+                showStatus(
+                    calculateStatus,
+                    error.message,
+                    "error"
+                );
+
+            } finally {
+
+                calculateButton.disabled =
+                    false;
+            }
+        }
+    );
+
+
+    // ==================================================
+    // RESULTS
+    // ==================================================
+
+    function createMetric(
+        label,
+        value,
+        explanation
+    ) {
+
+        const metric =
+            document.createElement("div");
+
+        metric.className =
+            "metric";
+
+
+        const info =
+            document.createElement("button");
+
+        info.className =
+            "info-button";
+
+        info.textContent =
+            "i";
+
+
+        info.addEventListener(
+            "click",
+            () => {
+
+                showCalculationInfo(
+                    label,
+                    value,
+                    explanation
+                );
             }
         );
 
 
+        const labelElement =
+            document.createElement("div");
 
-        /*
-            The next step will connect these sections:
+        labelElement.className =
+            "metric-label";
 
-            Review & Confirm Information
-                    ↓
-            Python validator + calculator
-                    ↓
-            Mortgage Overview
+        labelElement.textContent =
+            label;
 
-            Then:
 
-            Serious / Surprise
-                    ↓
-            ai_analyst.py
-                    ↓
-            AI Mortgage Analysis
-        */
+        const valueElement =
+            document.createElement("div");
 
-    </script>
+        valueElement.className =
+            "metric-value";
+
+        valueElement.textContent =
+            value;
+
+
+        metric.appendChild(info);
+        metric.appendChild(labelElement);
+        metric.appendChild(valueElement);
+
+
+        return metric;
+    }
+
+
+    function renderCalculations() {
+
+        metricGrid.innerHTML = "";
+
+
+        const years =
+            mortgageData
+                .amortization_years
+                .value;
+
+
+        metricGrid.appendChild(
+            createMetric(
+                "Mortgage Amount",
+                money(
+                    calculationResults
+                        .mortgage_needed
+                ),
+                "Purchase price minus the verified down payment."
+            )
+        );
+
+
+        metricGrid.appendChild(
+            createMetric(
+                "Monthly Payment",
+                money(
+                    calculationResults
+                        .monthly_payment
+                ),
+                "Calculated by the Python mortgage engine using the mortgage principal, supplied interest rate and amortization period."
+            )
+        );
+
+
+        metricGrid.appendChild(
+            createMetric(
+                "Loan-to-Value (LTV)",
+                percent(
+                    calculationResults.ltv
+                ),
+                "Mortgage amount divided by purchase price, multiplied by 100."
+            )
+        );
+
+
+        metricGrid.appendChild(
+            createMetric(
+                `Modeled Interest Over ${years} Years`,
+                money(
+                    calculationResults
+                        .total_interest
+                ),
+                `Total scheduled payments minus the original mortgage principal. This is a modeling estimate that assumes the supplied interest rate remains unchanged throughout the ${years}-year amortization. Actual borrowing costs may differ as rates change or the mortgage is renewed.`
+            )
+        );
+
+
+        metricGrid.appendChild(
+            createMetric(
+                "GDS",
+                percent(
+                    calculationResults.gds
+                ),
+                "Gross Debt Service ratio compares the modeled monthly housing costs with gross monthly income."
+            )
+        );
+
+
+        metricGrid.appendChild(
+            createMetric(
+                "TDS",
+                percent(
+                    calculationResults.tds
+                ),
+                "Total Debt Service ratio compares modeled housing costs plus monthly debt payments with gross monthly income."
+            )
+        );
+
+
+        document.getElementById(
+            "stressRate"
+        ).textContent =
+            percent(
+                calculationResults
+                    .stress_test_rate
+            );
+
+
+        document.getElementById(
+            "stressPayment"
+        ).textContent =
+            money(
+                calculationResults
+                    .stress_monthly_payment
+            );
+
+
+        document.getElementById(
+            "stressGds"
+        ).textContent =
+            percent(
+                calculationResults
+                    .stress_gds
+            );
+
+
+        document.getElementById(
+            "stressTds"
+        ).textContent =
+            percent(
+                calculationResults
+                    .stress_tds
+            );
+    }
+
+
+    // ==================================================
+    // SIDEBAR
+    // ==================================================
+
+    function updateSidebar() {
+
+        const principal =
+            calculationResults
+                .mortgage_needed;
+
+        const interest =
+            calculationResults
+                .total_interest;
+
+        const total =
+            principal + interest;
+
+
+        const principalPercentage =
+            total > 0
+                ? principal / total
+                : 0;
+
+
+        const angle =
+            principalPercentage * 360;
+
+
+        document.getElementById(
+            "moneyRing"
+        ).style.setProperty(
+            "--principal-angle",
+            `${angle}deg`
+        );
+
+
+        document.getElementById(
+            "ringMortgage"
+        ).textContent =
+            money(principal);
+
+
+        document.getElementById(
+            "principalLegend"
+        ).textContent =
+            money(principal);
+
+
+        document.getElementById(
+            "interestLegend"
+        ).textContent =
+            money(interest);
+
+
+        document.getElementById(
+            "sideMonthly"
+        ).textContent =
+            money(
+                calculationResults
+                    .monthly_payment
+            );
+
+
+        document.getElementById(
+            "sideLtv"
+        ).textContent =
+            percent(
+                calculationResults.ltv
+            );
+
+
+        document.getElementById(
+            "sideGds"
+        ).textContent =
+            percent(
+                calculationResults.gds
+            );
+
+
+        document.getElementById(
+            "sideTds"
+        ).textContent =
+            percent(
+                calculationResults.tds
+            );
+    }
+
+
+    // ==================================================
+    // AI MODE
+    // ==================================================
+
+    document.querySelectorAll(
+        ".mode-button"
+    ).forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(
+                        ".mode-button"
+                    )
+                    .forEach(other => {
+
+                        other.classList.remove(
+                            "active"
+                        );
+                    });
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                selectedMode =
+                    button.dataset.mode;
+            }
+        );
+    });
+
+
+    // ==================================================
+    // AI ANALYSIS
+    // ==================================================
+
+    generateAnalysisButton.addEventListener(
+        "click",
+        generateAnalysis
+    );
+
+
+    jumpAnalysisButton.addEventListener(
+        "click",
+        () => {
+
+            analysisSection.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+    );
+
+
+    async function generateAnalysis() {
+
+        if (
+            !mortgageData ||
+            !calculationResults
+        ) {
+            return;
+        }
+
+
+        generateAnalysisButton.disabled =
+            true;
+
+
+        showStatus(
+            analysisStatus,
+            "Generating AI mortgage analysis...",
+            "loading"
+        );
+
+
+        try {
+
+            const response = await fetch(
+                "/analyze",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+                    body: JSON.stringify({
+
+                        mortgageData:
+                            mortgageData,
+
+                        calculationResults:
+                            calculationResults,
+
+                        mode:
+                            selectedMode
+                    })
+                }
+            );
+
+
+            const result =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.error ||
+                    "AI analysis failed."
+                );
+            }
+
+
+            mortgageAnalysis =
+                result.analysis;
+
+
+            renderAnalysis();
+
+
+            downloadReportButton.disabled =
+                false;
+
+
+            showStatus(
+                analysisStatus,
+                "AI analysis completed.",
+                "success"
+            );
+
+
+        } catch (error) {
+
+            showStatus(
+                analysisStatus,
+                error.message,
+                "error"
+            );
+
+        } finally {
+
+            generateAnalysisButton.disabled =
+                false;
+        }
+    }
+
+
+    function renderAnalysis() {
+
+        document.getElementById(
+            "analysisSummary"
+        ).textContent =
+            mortgageAnalysis.summary;
+
+
+        document.getElementById(
+            "analysisResults"
+        ).textContent =
+            mortgageAnalysis
+                .results_explanation;
+
+
+        document.getElementById(
+            "analysisStress"
+        ).textContent =
+            mortgageAnalysis
+                .stress_test_explanation;
+
+
+        const risks =
+            document.getElementById(
+                "analysisRisks"
+            );
+
+
+        risks.innerHTML = "";
+
+
+        mortgageAnalysis.risks.forEach(
+            risk => {
+
+                const li =
+                    document.createElement("li");
+
+                li.textContent =
+                    risk;
+
+                risks.appendChild(li);
+            }
+        );
+
+
+        document.getElementById(
+            "analysisFinal"
+        ).textContent =
+            mortgageAnalysis
+                .final_analysis;
+
+
+        analysisOutput.style.display =
+            "block";
+    }
+
+
+    // ==================================================
+    // PDF REPORT
+    // ==================================================
+
+    downloadReportButton.addEventListener(
+        "click",
+        generateCustomerReport
+    );
+
+
+    function generateCustomerReport() {
+
+        if (
+            !mortgageData ||
+            !calculationResults ||
+            !mortgageAnalysis
+        ) {
+
+            alert(
+                "Generate the AI analysis before creating the customer report."
+            );
+
+            return;
+        }
+
+
+        const reportWindow =
+            window.open(
+                "",
+                "_blank"
+            );
+
+
+        if (!reportWindow) {
+
+            alert(
+                "Your browser blocked the report window. Please allow pop-ups and try again."
+            );
+
+            return;
+        }
+
+
+        const years =
+            mortgageData
+                .amortization_years
+                .value;
+
+
+        const risks =
+            mortgageAnalysis
+                .risks
+                .map(
+                    risk =>
+                        `<li>${escapeHtml(risk)}</li>`
+                )
+                .join("");
+
+
+        const reportHtml = `
+        <!DOCTYPE html>
+
+        <html>
+
+        <head>
+
+            <title>Mortgage Analysis Report</title>
+
+            <style>
+
+                body {
+                    font-family: Arial, sans-serif;
+                    color: #172033;
+                    margin: 45px;
+                    line-height: 1.5;
+                }
+
+                .header {
+                    border-bottom: 3px solid #315efb;
+                    padding-bottom: 18px;
+                    margin-bottom: 28px;
+                }
+
+                .brand {
+                    font-size: 25px;
+                    font-weight: bold;
+                }
+
+                .brand span {
+                    color: #315efb;
+                }
+
+                h1 {
+                    font-size: 22px;
+                    margin-bottom: 5px;
+                }
+
+                h2 {
+                    font-size: 15px;
+                    margin-top: 28px;
+                    padding-bottom: 7px;
+                    border-bottom: 1px solid #ddd;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                td {
+                    padding: 7px 0;
+                    border-bottom: 1px solid #eee;
+                }
+
+                td:last-child {
+                    text-align: right;
+                    font-weight: bold;
+                }
+
+                p,
+                li {
+                    font-size: 13px;
+                }
+
+                .notice {
+                    margin-top: 32px;
+                    background: #f4f6fa;
+                    padding: 16px;
+                    font-size: 11px;
+                    color: #596274;
+                }
+
+                @media print {
+
+                    button {
+                        display: none;
+                    }
+
+                }
+
+            </style>
+
+        </head>
+
+
+        <body>
+
+            <div class="header">
+
+                <div class="brand">
+                    Mortgage<span>AI</span>
+                </div>
+
+                <h1>
+                    Mortgage Analysis Report
+                </h1>
+
+                <div>
+                    Generated ${new Date().toLocaleDateString()}
+                </div>
+
+            </div>
+
+
+            <h2>Mortgage Scenario</h2>
+
+            <table>
+
+                <tr>
+                    <td>Purchase Price</td>
+                    <td>
+                        ${money(
+                            mortgageData
+                                .house_price
+                                .value
+                        )}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Down Payment</td>
+                    <td>
+                        ${money(
+                            mortgageData
+                                .down_payment
+                                .value
+                        )}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Mortgage Amount</td>
+                    <td>
+                        ${money(
+                            calculationResults
+                                .mortgage_needed
+                        )}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Interest Rate</td>
+                    <td>
+                        ${percent(
+                            mortgageData
+                                .interest_rate
+                                .value
+                        )}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Amortization</td>
+                    <td>
+                        ${years} years
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Monthly Payment</td>
+                    <td>
+                        ${money(
+                            calculationResults
+                                .monthly_payment
+                        )}
+                    </td>
+                </tr>
+
+            </table>
+
+
+            <h2>Mortgage Ratios</h2>
+
+            <table>
+
+                <tr>
+                    <td>Loan-to-Value</td>
+                    <td>
+                        ${percent(
+                            calculationResults.ltv
+                        )}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>GDS</td>
+                    <td>
+                        ${percent(
+                            calculationResults.gds
+                        )}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>TDS</td>
+                    <td>
+                        ${percent(
+                            calculationResults.tds
+                        )}
+                    </td>
+                </tr>
+
+            </table>
+
+
+            <h2>Long-Term Model</h2>
+
+            <table>
+
+                <tr>
+                    <td>Original Principal</td>
+                    <td>
+                        ${money(
+                            calculationResults
+                                .mortgage_needed
+                        )}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Modeled Interest Over
+                        ${years} Years
+                    </td>
+                    <td>
+                        ${money(
+                            calculationResults
+                                .total_interest
+                        )}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Modeled Principal + Interest
+                    </td>
+                    <td>
+                        ${money(
+                            calculationResults
+                                .mortgage_needed +
+                            calculationResults
+                                .total_interest
+                        )}
+                    </td>
+                </tr>
+
+            </table>
+
+
+            <h2>Stress Scenario</h2>
+
+            <table>
+
+                <tr>
+                    <td>Modeled Rate</td>
+                    <td>
+                        ${percent(
+                            calculationResults
+                                .stress_test_rate
+                        )}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Monthly Payment</td>
+                    <td>
+                        ${money(
+                            calculationResults
+                                .stress_monthly_payment
+                        )}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>GDS</td>
+                    <td>
+                        ${percent(
+                            calculationResults
+                                .stress_gds
+                        )}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>TDS</td>
+                    <td>
+                        ${percent(
+                            calculationResults
+                                .stress_tds
+                        )}
+                    </td>
+                </tr>
+
+            </table>
+
+
+            <h2>Analysis Summary</h2>
+
+            <p>
+                ${escapeHtml(
+                    mortgageAnalysis.summary
+                )}
+            </p>
+
+
+            <h2>Results Explanation</h2>
+
+            <p>
+                ${escapeHtml(
+                    mortgageAnalysis
+                        .results_explanation
+                )}
+            </p>
+
+
+            <h2>Stress Scenario Analysis</h2>
+
+            <p>
+                ${escapeHtml(
+                    mortgageAnalysis
+                        .stress_test_explanation
+                )}
+            </p>
+
+
+            <h2>Key Considerations</h2>
+
+            <ul>
+                ${risks}
+            </ul>
+
+
+            <h2>Final Analysis</h2>
+
+            <p>
+                ${escapeHtml(
+                    mortgageAnalysis
+                        .final_analysis
+                )}
+            </p>
+
+
+            <div class="notice">
+
+                <strong>Important:</strong>
+
+                This report is an analytical estimate and is not a
+                mortgage approval, lending commitment, or financial
+                advice.
+
+                Long-term interest estimates assume the supplied
+                interest rate remains unchanged throughout the modeled
+                amortization period. Actual mortgage rates, payments,
+                borrowing costs and qualification outcomes may change.
+
+            </div>
+
+
+            <script>
+
+                window.onload = function () {
+                    window.print();
+                };
+
+            <\/script>
+
+        </body>
+
+        </html>
+        `;
+
+
+        reportWindow.document.open();
+
+        reportWindow.document.write(
+            reportHtml
+        );
+
+        reportWindow.document.close();
+    }
+
+
+    // ==================================================
+    // NEW ANALYSIS
+    // ==================================================
+
+    newAnalysisButton.addEventListener(
+        "click",
+        () => {
+
+            selectedMortgageFile = null;
+
+            mortgageData = null;
+
+            calculationResults = null;
+
+            mortgageAnalysis = null;
+
+
+            fileInput.value = "";
+
+            selectedFile.style.display =
+                "none";
+
+            reviewSection.style.display =
+                "none";
+
+            resultsSection.style.display =
+                "none";
+
+            analysisSection.style.display =
+                "none";
+
+            analysisOutput.style.display =
+                "none";
+
+
+            analyzeDocumentButton.disabled =
+                true;
+
+            jumpAnalysisButton.disabled =
+                true;
+
+            downloadReportButton.disabled =
+                true;
+
+
+            uploadStatus.style.display =
+                "none";
+
+
+            document.getElementById(
+                "ringMortgage"
+            ).textContent = "—";
+
+            document.getElementById(
+                "principalLegend"
+            ).textContent = "—";
+
+            document.getElementById(
+                "interestLegend"
+            ).textContent = "—";
+
+            document.getElementById(
+                "sideMonthly"
+            ).textContent = "—";
+
+            document.getElementById(
+                "sideLtv"
+            ).textContent = "—";
+
+            document.getElementById(
+                "sideGds"
+            ).textContent = "—";
+
+            document.getElementById(
+                "sideTds"
+            ).textContent = "—";
+
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    );
+
+
+    // ==================================================
+    // INFORMATION MODAL
+    // ==================================================
+
+    const infoModal =
+        document.getElementById(
+            "infoModal"
+        );
+
+    const modalTitle =
+        document.getElementById(
+            "modalTitle"
+        );
+
+    const modalValueLabel =
+        document.getElementById(
+            "modalValueLabel"
+        );
+
+    const modalEvidenceLabel =
+        document.getElementById(
+            "modalEvidenceLabel"
+        );
+
+    const modalValue =
+        document.getElementById(
+            "modalValue"
+        );
+
+    const modalEvidence =
+        document.getElementById(
+            "modalEvidence"
+        );
+
+    const modalConfidence =
+        document.getElementById(
+            "modalConfidence"
+        );
+
+    const confidenceSection =
+        document.getElementById(
+            "confidenceSection"
+        );
+
+
+    function showExtractionInfo(
+        title,
+        value,
+        evidence,
+        confidence
+    ) {
+
+        modalTitle.textContent =
+            title;
+
+        modalValueLabel.textContent =
+            "Extracted Value";
+
+        modalEvidenceLabel.textContent =
+            "Source From Document";
+
+        modalValue.textContent =
+            value;
+
+        modalEvidence.textContent =
+            evidence ||
+            "No evidence was provided.";
+
+        modalConfidence.textContent =
+            `${Math.round(
+                confidence * 100
+            )}%`;
+
+        confidenceSection.style.display =
+            "block";
+
+        infoModal.style.display =
+            "flex";
+    }
+
+
+    function showCalculationInfo(
+        title,
+        value,
+        explanation
+    ) {
+
+        modalTitle.textContent =
+            title;
+
+        modalValueLabel.textContent =
+            "Calculated Value";
+
+        modalEvidenceLabel.textContent =
+            "How This Was Calculated";
+
+        modalValue.textContent =
+            value;
+
+        modalEvidence.textContent =
+            explanation;
+
+        confidenceSection.style.display =
+            "none";
+
+        infoModal.style.display =
+            "flex";
+    }
+
+
+    document.getElementById(
+        "modalClose"
+    ).addEventListener(
+        "click",
+        closeModal
+    );
+
+
+    infoModal.addEventListener(
+        "click",
+        event => {
+
+            if (event.target === infoModal) {
+                closeModal();
+            }
+        }
+    );
+
+
+    function closeModal() {
+
+        infoModal.style.display =
+            "none";
+    }
+
+
+    // ==================================================
+    // HELPERS
+    // ==================================================
+
+    function money(value) {
+
+        return new Intl.NumberFormat(
+            "en-CA",
+            {
+                style: "currency",
+                currency: "CAD",
+                maximumFractionDigits: 2
+            }
+        ).format(value);
+    }
+
+
+    function percent(value) {
+
+        return `${Number(value).toFixed(2)}%`;
+    }
+
+
+    function showStatus(
+        element,
+        message,
+        type
+    ) {
+
+        element.textContent =
+            message;
+
+        element.className =
+            `status ${type}`;
+    }
+
+
+    function escapeHtml(value) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            value ?? "";
+
+        return div.innerHTML;
+    }
+
+</script>
 
 </body>
 

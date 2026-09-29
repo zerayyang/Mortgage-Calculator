@@ -1,3 +1,4 @@
+import sys
 import json
 import os
 from dotenv import load_dotenv
@@ -71,7 +72,7 @@ Use the tools to retrieve the verified mortgage data and calculated mortgage res
         # Check if this output item is a function call
         if item.type == "function_call":
 
-            print("AI requested tool:", item.name)
+            print("AI requested tool:", item.name, file=sys.stderr)
 
             # Run the mortgage data tool if the AI requested it
             if item.name == "get_mortgage_data":
