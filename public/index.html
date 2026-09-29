@@ -2369,6 +2369,27 @@
                 `;
 
 
+                const viewButton = document.createElement("button");
+                viewButton.type = "button";
+                viewButton.className = "mode-button";
+                viewButton.style.marginTop = "12px";
+                viewButton.textContent = "View saved file";
+                viewButton.addEventListener("click", () => openRecentClient(client));
+                clientElement.appendChild(viewButton);
+
+                if (client.mortgageData && client.calculationResults && client.analysis) {
+                    const reportButton = document.createElement("button");
+                    reportButton.type = "button";
+                    reportButton.className = "mode-button";
+                    reportButton.style.marginLeft = "8px";
+                    reportButton.textContent = "Open Report";
+                    reportButton.addEventListener("click", () => {
+                        openRecentClient(client);
+                        downloadReportButton.click();
+                    });
+                    clientElement.appendChild(reportButton);
+                }
+
                 recentClientList.appendChild(
                     clientElement
                 );
@@ -2417,7 +2438,19 @@
                 ),
 
             timestamp:
-                Date.now()
+                Date.now(),
+
+            mortgageData:
+                mortgageData,
+
+            calculationResults:
+                calculationResults,
+
+            analysis:
+                currentAnalysis,
+
+            mode:
+                selectedMode
 
         };
 
@@ -2451,6 +2484,58 @@
 
 
         renderRecentClients();
+
+    }
+
+
+    function openRecentClient(client) {
+
+        if (!client.mortgageData || !client.calculationResults) {
+            uploadStatus.className = "status error";
+            uploadStatus.textContent = "This older file only has a saved summary. Upload it again to save its full details for viewing.";
+            dropZone.scrollIntoView({ behavior: "smooth", block: "start" });
+            return;
+        }
+
+        selectedMortgageFile = { name: client.fileName };
+        mortgageData = JSON.parse(JSON.stringify(client.mortgageData));
+        calculationResults = JSON.parse(JSON.stringify(client.calculationResults));
+        currentAnalysis = client.analysis
+            ? JSON.parse(JSON.stringify(client.analysis))
+            : null;
+        selectedMode = client.mode || "Serious";
+
+        fileInput.value = "";
+        selectedFileName.textContent = client.fileName;
+        selectedFile.style.display = "flex";
+        analyzeDocumentButton.disabled = true;
+        uploadStatus.className = "status success";
+        uploadStatus.textContent = "Viewing saved file details. Choose a PDF to process a document again.";
+        calculateStatus.className = "status success";
+        calculateStatus.textContent = "Saved mortgage calculations loaded.";
+        analysisStatus.className = "status";
+        analysisStatus.textContent = "";
+
+        document.querySelectorAll(".mode-button[data-mode]").forEach(button => {
+            button.classList.toggle("active", button.dataset.mode === selectedMode);
+        });
+        renderMortgageData();
+        renderCalculationResults();
+        updateClientHeader();
+        updateDealSnapshot();
+        reviewSection.style.display = "block";
+        resultsSection.style.display = "block";
+        analysisSection.style.display = "block";
+        jumpAnalysisButton.disabled = false;
+        analysisOutput.style.display = currentAnalysis ? "block" : "none";
+        downloadReportButton.disabled = !currentAnalysis;
+        if (currentAnalysis) {
+            renderAnalysis();
+            analysisStatus.className = "status success";
+            analysisStatus.textContent = "Saved file analysis loaded.";
+        }
+        updateWorkflow(currentAnalysis ? "analysis" : "calculation");
+        reviewSection.scrollIntoView({ behavior: "smooth", block: "start" });
 
     }
 
@@ -2493,6 +2578,16 @@
     function selectMortgageFile(file) {
 
         selectedMortgageFile = file;
+        mortgageData = null;
+        calculationResults = null;
+        currentAnalysis = null;
+        reviewSection.style.display = "none";
+        resultsSection.style.display = "none";
+        analysisSection.style.display = "none";
+        analysisOutput.style.display = "none";
+        downloadReportButton.disabled = true;
+        jumpAnalysisButton.disabled = true;
+        updateWorkflow("document");
 
         selectedFileName.textContent =
             file.name;
@@ -2887,7 +2982,12 @@
 
 
                 calculationResults =
-                    result;
+                    result.calculationResults;
+
+                currentAnalysis = null;
+                analysisOutput.style.display = "none";
+                downloadReportButton.disabled = true;
+                analysisStatus.textContent = "";
 
 
                 renderCalculationResults();
@@ -3349,7 +3449,9 @@
 
 
                 currentAnalysis =
-                    result;
+                    result.analysis;
+
+                saveRecentClient();
 
 
                 renderAnalysis();
@@ -3754,6 +3856,12 @@
                     "_blank"
                 );
 
+
+            if (!reportWindow) {
+                analysisStatus.className = "status error";
+                analysisStatus.textContent = "Allow pop-ups for this page to open the client report.";
+                return;
+            }
 
             const risks =
                 currentAnalysis.risks
