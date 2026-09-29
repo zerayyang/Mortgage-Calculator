@@ -3,61 +3,1424 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Mortgage Analysis Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MortgageAI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #f5f7fa;
+            color: #172033;
+            min-height: 100vh;
+        }
+
+        /* ---------- Navigation ---------- */
+
+        nav {
+            height: 68px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .logo-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .nav-right {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+
+        /* ---------- Main layout ---------- */
+
+        .container {
+            width: 92%;
+            max-width: 1100px;
+            margin: 45px auto 80px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 34px;
+            margin-bottom: 8px;
+            color: #0f172a;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+
+        /* ---------- General cards ---------- */
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .card-header h2 {
+            font-size: 19px;
+            color: #0f172a;
+        }
+
+        .section-description {
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+
+        /* ---------- Upload ---------- */
+
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            background: #f8fafc;
+        }
+
+        .upload-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .upload-area h3 {
+            margin-bottom: 6px;
+            font-size: 17px;
+        }
+
+        .upload-area p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 18px;
+        }
+
+        .primary-button {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .primary-button:hover {
+            background: #1d4ed8;
+        }
+
+        .primary-button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        #status {
+            margin-top: 18px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .success {
+            color: #15803d;
+        }
+
+        .error {
+            color: #dc2626;
+        }
+
+
+        /* ---------- Document success ---------- */
+
+        #documentSuccess {
+            display: none;
+            margin-top: 20px;
+            padding: 15px 18px;
+            border-radius: 9px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+        }
+
+        .success-title {
+            color: #166534;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        #documentName {
+            color: #64748b;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+
+        /* ---------- Extracted fields ---------- */
+
+        #extractedSection {
+            display: none;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .data-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 11px;
+            padding: 18px;
+            position: relative;
+            transition: 0.2s;
+        }
+
+        .data-item:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
+        }
+
+        .data-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .data-label {
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .data-value {
+            font-size: 21px;
+            font-weight: 650;
+            color: #0f172a;
+            margin-top: 8px;
+        }
+
+
+        /* ---------- Info button ---------- */
+
+        .info-button {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: none;
+            background: #e2e8f0;
+            color: #64748b;
+            font-family: Georgia, serif;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .info-button:hover {
+            background: #cbd5e1;
+            color: #334155;
+        }
+
+
+        /* ---------- Confidence ---------- */
+
+        .confidence-row {
+            margin-top: 11px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .confidence-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+
+        .confidence-high {
+            background: #22c55e;
+        }
+
+        .confidence-medium {
+            background: #f59e0b;
+        }
+
+        .confidence-low {
+            background: #ef4444;
+        }
+
+
+        /* ---------- Confirm button ---------- */
+
+        .confirm-area {
+            margin-top: 24px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+
+        /* ---------- Future calculation section ---------- */
+
+        #calculationSection {
+            display: none;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        .metric {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .metric-label {
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 22px;
+            font-weight: 650;
+        }
+
+
+        /* ---------- AI section ---------- */
+
+        #aiSection {
+            display: none;
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ai-symbol {
+            width: 31px;
+            height: 31px;
+            border-radius: 8px;
+            background: #eef2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4f46e5;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .mode-button {
+            border: 1px solid #cbd5e1;
+            background: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .mode-button.active {
+            background: #eff6ff;
+            border-color: #2563eb;
+            color: #1d4ed8;
+        }
+
+
+        /* ---------- Modal ---------- */
+
+        .modal-background {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.45);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal {
+            background: white;
+            width: 100%;
+            max-width: 520px;
+            border-radius: 14px;
+            padding: 26px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .modal-header h2 {
+            font-size: 19px;
+        }
+
+        .close-button {
+            border: none;
+            background: transparent;
+            font-size: 24px;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .modal-section {
+            margin-bottom: 20px;
+        }
+
+        .modal-label {
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 7px;
+        }
+
+        .modal-value {
+            font-size: 20px;
+            font-weight: 650;
+        }
+
+        .evidence-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 14px;
+            color: #475569;
+            line-height: 1.55;
+            font-size: 14px;
+        }
+
+        .confidence-bar-background {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .confidence-bar {
+            height: 100%;
+            background: #22c55e;
+            border-radius: 20px;
+        }
+
+
+        /* ---------- Responsive ---------- */
+
+        @media (max-width: 800px) {
+
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metric-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            nav {
+                padding: 0 20px;
+            }
+
+            .nav-right {
+                display: none;
+            }
+
+            .container {
+                width: 94%;
+                margin-top: 30px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .metric-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
 </head>
+
 
 <body>
 
-    <h1>Mortgage Analysis Assistant</h1>
 
-    <p>Upload your mortgage document to begin.</p>
+    <!-- Navigation -->
 
-    <input type="file" id="mortgageFile" accept=".pdf">
+    <nav>
 
-    <button id="uploadButton">Upload PDF</button>
+        <div class="logo">
 
-    <p id="status"></p>
+            <div class="logo-icon">
+                M
+            </div>
+
+            MortgageAI
+
+        </div>
+
+        <div class="nav-right">
+            Intelligent Mortgage Analysis
+        </div>
+
+    </nav>
+
+
+
+    <main class="container">
+
+
+        <!-- Page heading -->
+
+        <div class="page-header">
+
+            <h1>Mortgage Analysis</h1>
+
+            <p>
+                Upload a mortgage application to extract, verify,
+                and analyze the financial information.
+            </p>
+
+        </div>
+
+
+
+        <!-- Upload card -->
+
+        <section class="card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>Mortgage Document</h2>
+
+                    <p class="section-description">
+                        Upload a PDF mortgage application to begin.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="upload-area">
+
+                <div class="upload-icon">
+                    📄
+                </div>
+
+                <h3>Upload mortgage application</h3>
+
+                <p>
+                    PDF documents only
+                </p>
+
+
+                <input
+                    type="file"
+                    id="mortgageFile"
+                    accept=".pdf"
+                >
+
+                <br>
+
+
+                <button
+                    class="primary-button"
+                    id="uploadButton"
+                >
+                    Analyze Document
+                </button>
+
+
+                <div id="status"></div>
+
+            </div>
+
+
+            <div id="documentSuccess">
+
+                <div class="success-title">
+                    ✓ Document processed successfully
+                </div>
+
+                <div id="documentName"></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Extracted information -->
+
+        <section
+            class="card"
+            id="extractedSection"
+        >
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>Extracted Information</h2>
+
+                    <p class="section-description">
+                        Review the information identified from your document.
+                        Click the information icon to see where each value came from.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="data-grid"
+                id="dataGrid"
+            >
+            </div>
+
+
+            <div class="confirm-area">
+
+                <button
+                    class="primary-button"
+                    id="confirmButton"
+                >
+                    Review & Confirm Information
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Mortgage calculations -->
+
+        <section
+            class="card"
+            id="calculationSection"
+        >
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>Mortgage Overview</h2>
+
+                    <p class="section-description">
+                        Calculated from your verified mortgage information.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="metric-grid"
+                id="metricGrid"
+            >
+            </div>
+
+        </section>
+
+
+
+        <!-- AI Analysis -->
+
+        <section
+            class="card"
+            id="aiSection"
+        >
+
+            <div class="ai-header">
+
+                <div class="ai-symbol">
+                    ✦
+                </div>
+
+                <div>
+
+                    <h2>AI Mortgage Analysis</h2>
+
+                    <p class="section-description">
+                        Generate an explanation of your mortgage results.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="mode-selector">
+
+                <button
+                    class="mode-button active"
+                    data-mode="Serious"
+                >
+                    Serious
+                </button>
+
+                <button
+                    class="mode-button"
+                    data-mode="Surprise"
+                >
+                    Surprise
+                </button>
+
+            </div>
+
+
+            <button
+                class="primary-button"
+                id="analysisButton"
+            >
+                Generate AI Analysis
+            </button>
+
+
+            <div id="analysisResults"></div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- Information popup -->
+
+    <div
+        class="modal-background"
+        id="infoModal"
+    >
+
+        <div class="modal">
+
+            <div class="modal-header">
+
+                <h2 id="modalTitle">
+                    Field Information
+                </h2>
+
+                <button
+                    class="close-button"
+                    id="closeModal"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="modal-section">
+
+                <div class="modal-label">
+                    Extracted Value
+                </div>
+
+                <div
+                    class="modal-value"
+                    id="modalValue"
+                >
+                </div>
+
+            </div>
+
+
+            <div class="modal-section">
+
+                <div class="modal-label">
+                    Source From Document
+                </div>
+
+                <div
+                    class="evidence-box"
+                    id="modalEvidence"
+                >
+                </div>
+
+            </div>
+
+
+            <div class="modal-section">
+
+                <div class="modal-label">
+                    AI Confidence
+                </div>
+
+                <div id="modalConfidenceText"></div>
+
+                <div class="confidence-bar-background">
+
+                    <div
+                        class="confidence-bar"
+                        id="modalConfidenceBar"
+                    >
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 
 
     <script>
-        // Get the PDF input and upload button from the page
-        const mortgageFile = document.getElementById("mortgageFile");
-        const uploadButton = document.getElementById("uploadButton");
-        const status = document.getElementById("status");
 
-        // Run this code when the user clicks Upload PDF
-        uploadButton.addEventListener("click", async () => {
+        // Get important HTML elements
 
-            // Make sure the user selected a PDF
-            if (mortgageFile.files.length === 0) {
-                alert("Please select a PDF first.");
-                return;
+        const mortgageFile =
+            document.getElementById("mortgageFile");
+
+        const uploadButton =
+            document.getElementById("uploadButton");
+
+        const status =
+            document.getElementById("status");
+
+        const documentSuccess =
+            document.getElementById("documentSuccess");
+
+        const documentName =
+            document.getElementById("documentName");
+
+        const extractedSection =
+            document.getElementById("extractedSection");
+
+        const dataGrid =
+            document.getElementById("dataGrid");
+
+
+
+        // Information modal
+
+        const infoModal =
+            document.getElementById("infoModal");
+
+        const modalTitle =
+            document.getElementById("modalTitle");
+
+        const modalValue =
+            document.getElementById("modalValue");
+
+        const modalEvidence =
+            document.getElementById("modalEvidence");
+
+        const modalConfidenceText =
+            document.getElementById("modalConfidenceText");
+
+        const modalConfidenceBar =
+            document.getElementById("modalConfidenceBar");
+
+        const closeModal =
+            document.getElementById("closeModal");
+
+
+
+        // Store extracted mortgage information
+
+        let mortgageData = null;
+
+
+
+        // Information describing each mortgage field
+
+        const fieldInformation = {
+
+            annual_income: {
+                label: "Annual Income",
+                type: "money"
+            },
+
+            house_price: {
+                label: "Purchase Price",
+                type: "money"
+            },
+
+            down_payment: {
+                label: "Down Payment",
+                type: "money"
+            },
+
+            interest_rate: {
+                label: "Interest Rate",
+                type: "percent"
+            },
+
+            amortization_years: {
+                label: "Amortization",
+                type: "years"
+            },
+
+            property_taxes: {
+                label: "Annual Property Taxes",
+                type: "money"
+            },
+
+            heating_cost: {
+                label: "Monthly Heating Cost",
+                type: "money"
+            },
+
+            condo_fees: {
+                label: "Monthly Condo Fees",
+                type: "money"
+            },
+
+            monthly_debt_payments: {
+                label: "Monthly Debt Payments",
+                type: "money"
             }
 
-            // Get the selected PDF
-            const file = mortgageFile.files[0];
-
-            // Create form data that can contain the PDF
-            const formData = new FormData();
-            formData.append("mortgageFile", file);
+        };
 
 
 
-            // Tell the user that the PDF is being processed
-            status.textContent = "Processing mortgage document...";
+        // Format money
 
-            // Send the PDF to the Node server
-            const response = await fetch("/upload", {
-                method: "POST",
-                body: formData
+        function formatMoney(value) {
+
+            if (value === null || value === undefined) {
+                return "Not found";
+            }
+
+            return "$" + Number(value).toLocaleString(
+                "en-CA",
+                {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }
+            );
+
+        }
+
+
+
+        // Format different types of mortgage values
+
+        function formatValue(value, type) {
+
+            if (value === null || value === undefined) {
+                return "Not found";
+            }
+
+
+            if (type === "money") {
+                return formatMoney(value);
+            }
+
+
+            if (type === "percent") {
+                return value + "%";
+            }
+
+
+            if (type === "years") {
+                return value + " years";
+            }
+
+
+            return value;
+
+        }
+
+
+
+        // Decide how the confidence should be displayed
+
+        function getConfidenceInformation(confidence) {
+
+            const percentage =
+                Math.round(confidence * 100);
+
+
+            if (confidence >= 0.85) {
+
+                return {
+                    text: "High confidence",
+                    className: "confidence-high",
+                    percentage: percentage
+                };
+
+            }
+
+
+            if (confidence >= 0.60) {
+
+                return {
+                    text: "Medium confidence",
+                    className: "confidence-medium",
+                    percentage: percentage
+                };
+
+            }
+
+
+            return {
+                text: "Low confidence",
+                className: "confidence-low",
+                percentage: percentage
+            };
+
+        }
+
+
+
+        // Display all extracted mortgage fields
+
+        function displayMortgageData(data) {
+
+            // Clear previous results
+            dataGrid.innerHTML = "";
+
+
+            // Go through every field we want to display
+            for (const fieldName in fieldInformation) {
+
+                const information =
+                    fieldInformation[fieldName];
+
+                const field =
+                    data[fieldName];
+
+
+                if (!field) {
+                    continue;
+                }
+
+
+                const formattedValue =
+                    formatValue(
+                        field.value,
+                        information.type
+                    );
+
+
+                const confidence =
+                    getConfidenceInformation(
+                        field.confidence
+                    );
+
+
+                // Create the field card
+                const item =
+                    document.createElement("div");
+
+                item.className = "data-item";
+
+
+                item.innerHTML = `
+
+                    <div class="data-top">
+
+                        <div class="data-label">
+                            ${information.label}
+                        </div>
+
+                        <button
+                            class="info-button"
+                            type="button"
+                            aria-label="Show source information"
+                        >
+                            i
+                        </button>
+
+                    </div>
+
+
+                    <div class="data-value">
+                        ${formattedValue}
+                    </div>
+
+
+                    <div class="confidence-row">
+
+                        <span
+                            class="confidence-dot ${confidence.className}"
+                        >
+                        </span>
+
+                        ${confidence.text}
+
+                    </div>
+
+                `;
+
+
+                // Find the information button inside this card
+                const infoButton =
+                    item.querySelector(".info-button");
+
+
+                // Open the popup when the information button is clicked
+                infoButton.addEventListener(
+                    "click",
+                    () => {
+
+                        openInformationModal(
+                            information.label,
+                            formattedValue,
+                            field.evidence,
+                            confidence.percentage
+                        );
+
+                    }
+                );
+
+
+                // Add the field card to the webpage
+                dataGrid.appendChild(item);
+
+            }
+
+
+            // Show the extracted information section
+            extractedSection.style.display = "block";
+
+        }
+
+
+
+        // Open the source information popup
+
+        function openInformationModal(
+            title,
+            value,
+            evidence,
+            confidence
+        ) {
+
+            modalTitle.textContent = title;
+
+            modalValue.textContent = value;
+
+            modalEvidence.textContent =
+                evidence || "No source evidence was provided.";
+
+            modalConfidenceText.textContent =
+                confidence + "% confidence";
+
+            modalConfidenceBar.style.width =
+                confidence + "%";
+
+
+            infoModal.style.display = "flex";
+
+        }
+
+
+
+        // Close the popup
+
+        closeModal.addEventListener(
+            "click",
+            () => {
+
+                infoModal.style.display = "none";
+
+            }
+        );
+
+
+
+        // Close popup when clicking outside of it
+
+        infoModal.addEventListener(
+            "click",
+            (event) => {
+
+                if (event.target === infoModal) {
+
+                    infoModal.style.display = "none";
+
+                }
+
+            }
+        );
+
+
+
+        // Handle analysis mode buttons
+
+        const modeButtons =
+            document.querySelectorAll(".mode-button");
+
+
+        modeButtons.forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                modeButtons.forEach(otherButton => {
+                    otherButton.classList.remove("active");
+                });
+
+
+                button.classList.add("active");
+
             });
 
-            // Read the response from the server
-            const result = await response.json();
-
-            // Show the result to the user
-            status.textContent = result.message;
         });
+
+
+
+        // Upload and process mortgage document
+
+        uploadButton.addEventListener(
+            "click",
+            async () => {
+
+
+                // Make sure a PDF was selected
+
+                if (mortgageFile.files.length === 0) {
+
+                    alert("Please select a PDF first.");
+
+                    return;
+
+                }
+
+
+                const file =
+                    mortgageFile.files[0];
+
+
+                const formData =
+                    new FormData();
+
+
+                formData.append(
+                    "mortgageFile",
+                    file
+                );
+
+
+                // Update interface while processing
+
+                status.textContent =
+                    "Processing mortgage document...";
+
+                status.className = "";
+
+                uploadButton.disabled = true;
+
+                uploadButton.textContent =
+                    "Processing...";
+
+                extractedSection.style.display =
+                    "none";
+
+                documentSuccess.style.display =
+                    "none";
+
+
+                try {
+
+
+                    // Send the PDF to the Node server
+
+                    const response =
+                        await fetch(
+                            "/upload",
+                            {
+                                method: "POST",
+                                body: formData
+                            }
+                        );
+
+
+                    // Read JSON returned by Node
+
+                    const result =
+                        await response.json();
+
+
+                    // Check whether processing failed
+
+                    if (!response.ok) {
+
+                        status.textContent =
+                            result.message;
+
+                        status.className =
+                            "error";
+
+                        return;
+
+                    }
+
+
+                    // Save the extracted mortgage information
+
+                    mortgageData =
+                        result.mortgageData;
+
+
+                    // Show successful document processing
+
+                    status.textContent = "";
+
+                    documentSuccess.style.display =
+                        "block";
+
+                    documentName.textContent =
+                        file.name;
+
+
+                    // Display extracted mortgage information
+
+                    displayMortgageData(
+                        mortgageData
+                    );
+
+
+                    // Scroll to the results
+
+                    extractedSection.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+
+                }
+
+                catch (error) {
+
+
+                    console.error(error);
+
+
+                    status.textContent =
+                        "Something went wrong while processing the document.";
+
+                    status.className =
+                        "error";
+
+
+                }
+
+                finally {
+
+
+                    uploadButton.disabled =
+                        false;
+
+                    uploadButton.textContent =
+                        "Analyze Document";
+
+
+                }
+
+            }
+        );
+
+
+
+        /*
+            The next step will connect these sections:
+
+            Review & Confirm Information
+                    ↓
+            Python validator + calculator
+                    ↓
+            Mortgage Overview
+
+            Then:
+
+            Serious / Surprise
+                    ↓
+            ai_analyst.py
+                    ↓
+            AI Mortgage Analysis
+        */
+
     </script>
 
 </body>
