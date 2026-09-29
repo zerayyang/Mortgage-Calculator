@@ -44,6 +44,10 @@
 
             background: var(--background);
             color: var(--text);
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
         }
 
         button,
@@ -55,6 +59,7 @@
             cursor: pointer;
         }
 
+
         /* ============================================= */
         /* NAVIGATION                                    */
         /* ============================================= */
@@ -62,7 +67,7 @@
         nav {
             height: 68px;
 
-            background: white;
+            background: var(--card);
             border-bottom: 1px solid var(--border);
 
             display: flex;
@@ -86,10 +91,228 @@
             color: var(--primary);
         }
 
-        .workspace-label {
-            color: var(--muted);
+
+        /* ============================================= */
+        /* THEME TOGGLE                                  */
+        /* ============================================= */
+
+        .theme-toggle {
+            width: 42px;
+            height: 42px;
+
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            background: var(--card);
+            color: var(--text);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+
+            transition:
+                background 0.2s,
+                transform 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+
+        /* ============================================= */
+        /* DARK MODE                                     */
+        /* ============================================= */
+
+        body.dark-mode {
+            --background: #0f1117;
+            --card: #181b23;
+            --border: #2a2f3a;
+            --text: #f2f4f8;
+            --muted: #9ca6b7;
+
+            --primary-light: #202a4d;
+
+            --success-bg: #152a20;
+            --warning-bg: #302714;
+        }
+
+        body.dark-mode .client-header,
+        body.dark-mode .card,
+        body.dark-mode .modal-box {
+            background: var(--card);
+        }
+
+        body.dark-mode .drop-zone {
+            background: #14171e;
+            border-color: #343a47;
+        }
+
+        body.dark-mode .drop-zone.dragging {
+            background: #1c2544;
+            border-color: var(--primary);
+        }
+
+        body.dark-mode .selected-file,
+        body.dark-mode .stress-panel,
+        body.dark-mode .legend-box {
+            background: #14171e;
+        }
+
+        body.dark-mode .data-field,
+        body.dark-mode .metric {
+            background: var(--card);
+            border-color: var(--border);
+        }
+
+        body.dark-mode .data-input {
+            color: var(--text);
+        }
+
+        body.dark-mode .secondary-button,
+        body.dark-mode .action-button,
+        body.dark-mode .mode-button {
+            background: #1d212b;
+            color: #e9edf5;
+            border-color: #343a47;
+        }
+
+        body.dark-mode .secondary-button:hover,
+        body.dark-mode .action-button:hover:not(:disabled) {
+            background: #252a35;
+        }
+
+        body.dark-mode .mode-button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        body.dark-mode .money-ring::after {
+            background: var(--card);
+        }
+
+        body.dark-mode .workflow-status {
+            background: #20242e;
+            color: #9ca6b7;
+        }
+
+        body.dark-mode .workflow-status.active {
+            background: #202a4d;
+            color: #7593ff;
+        }
+
+        body.dark-mode .workflow-status.complete {
+            background: #152a20;
+            color: #58c88a;
+        }
+
+        body.dark-mode .info-button {
+            background: #292e39;
+            color: #c0c7d3;
+        }
+
+        body.dark-mode .analysis-block p,
+        body.dark-mode .analysis-block li,
+        body.dark-mode .modal-text {
+            color: #c1c8d4;
+        }
+
+        body.dark-mode .snapshot-stat {
+            border-color: var(--border);
+        }
+
+
+        /* ============================================= */
+        /* RECENTLY VIEWED CLIENTS                       */
+        /* ============================================= */
+
+        .recent-clients h3 {
+            margin: 0 0 12px;
             font-size: 13px;
         }
+
+        .recent-client-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .recent-client {
+            padding: 13px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .recent-client:last-child {
+            border-bottom: none;
+        }
+
+        .recent-client-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-bottom: 7px;
+        }
+
+        .recent-avatar {
+            width: 34px;
+            height: 34px;
+
+            flex-shrink: 0;
+
+            border-radius: 9px;
+
+            background: var(--primary-light);
+            color: var(--primary);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .recent-client-info {
+            min-width: 0;
+        }
+
+        .recent-client-name {
+            font-size: 12px;
+            font-weight: 750;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .recent-client-time {
+            color: var(--muted);
+            font-size: 10px;
+            margin-top: 2px;
+        }
+
+        .recent-client-details {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .empty-recent {
+            color: var(--muted);
+
+            font-size: 12px;
+            line-height: 1.6;
+
+            padding: 5px 0;
+        }
+
 
         /* ============================================= */
         /* PAGE                                          */
@@ -100,13 +323,12 @@
             margin: auto;
             padding: 32px 4vw 80px;
         }
-
-        /* ============================================= */
+                /* ============================================= */
         /* CLIENT FILE HEADER                            */
         /* ============================================= */
 
         .client-header {
-            background: white;
+            background: var(--card);
             border: 1px solid var(--border);
             border-radius: 18px;
 
@@ -185,6 +407,7 @@
             background: var(--primary-light);
         }
 
+
         /* ============================================= */
         /* DASHBOARD                                     */
         /* ============================================= */
@@ -216,12 +439,13 @@
             gap: 18px;
         }
 
+
         /* ============================================= */
         /* CARD                                          */
         /* ============================================= */
 
         .card {
-            background: white;
+            background: var(--card);
 
             border: 1px solid var(--border);
             border-radius: 18px;
@@ -280,6 +504,7 @@
             margin-bottom: 20px;
         }
 
+
         /* ============================================= */
         /* BUTTONS                                       */
         /* ============================================= */
@@ -307,10 +532,10 @@
         }
 
         .secondary-button {
-            background: white;
-            color: #323c50;
+            background: var(--card);
+            color: var(--text);
 
-            border: 1px solid #dce1e9;
+            border: 1px solid var(--border);
             border-radius: 10px;
 
             padding: 11px 16px;
@@ -321,6 +546,7 @@
         .secondary-button:hover {
             background: #f7f8fa;
         }
+
 
         /* ============================================= */
         /* UPLOAD                                        */
@@ -407,6 +633,7 @@
             justify-content: flex-end;
         }
 
+
         /* ============================================= */
         /* STATUS                                        */
         /* ============================================= */
@@ -443,6 +670,7 @@
             color: var(--danger);
         }
 
+
         /* ============================================= */
         /* HIDDEN SECTIONS                               */
         /* ============================================= */
@@ -452,6 +680,7 @@
         #analysisSection {
             display: none;
         }
+
 
         /* ============================================= */
         /* EXTRACTED DATA                                */
@@ -472,7 +701,7 @@
 
             padding: 14px;
 
-            background: white;
+            background: var(--card);
         }
 
         .field-header {
@@ -536,6 +765,7 @@
             justify-content: flex-end;
         }
 
+
         /* ============================================= */
         /* RESULTS                                       */
         /* ============================================= */
@@ -580,6 +810,7 @@
             top: 11px;
         }
 
+
         /* ============================================= */
         /* STRESS                                        */
         /* ============================================= */
@@ -620,6 +851,7 @@
         .stress-item strong {
             font-size: 15px;
         }
+
 
         /* ============================================= */
         /* DEAL SNAPSHOT                                 */
@@ -670,7 +902,7 @@
 
             border-radius: 50%;
 
-            background: white;
+            background: var(--card);
         }
 
         .ring-content {
@@ -741,6 +973,7 @@
             color: var(--muted);
         }
 
+
         /* ============================================= */
         /* QUICK ACTIONS                                 */
         /* ============================================= */
@@ -758,10 +991,10 @@
 
             padding: 11px;
 
-            background: white;
-            color: #354054;
+            background: var(--card);
+            color: var(--text);
 
-            border: 1px solid #dfe4ec;
+            border: 1px solid var(--border);
             border-radius: 9px;
 
             font-weight: 650;
@@ -777,6 +1010,7 @@
             cursor: not-allowed;
         }
 
+
         /* ============================================= */
         /* ANALYSIS                                      */
         /* ============================================= */
@@ -791,10 +1025,11 @@
         .mode-button {
             padding: 9px 14px;
 
-            border: 1px solid #dce1e9;
+            border: 1px solid var(--border);
             border-radius: 9px;
 
-            background: white;
+            background: var(--card);
+            color: var(--text);
 
             font-weight: 700;
         }
@@ -813,7 +1048,7 @@
         }
 
         .analysis-block {
-            border-top: 1px solid #e9ecf1;
+            border-top: 1px solid var(--border);
 
             padding: 19px 0;
         }
@@ -836,6 +1071,7 @@
         .analysis-block ul {
             padding-left: 20px;
         }
+
 
         /* ============================================= */
         /* MODAL                                         */
@@ -861,7 +1097,7 @@
 
             padding: 24px;
 
-            background: white;
+            background: var(--card);
 
             border-radius: 17px;
 
@@ -885,6 +1121,7 @@
         .modal-close {
             border: none;
             background: none;
+            color: var(--text);
 
             font-size: 21px;
         }
@@ -917,6 +1154,7 @@
 
             line-height: 1.6;
         }
+
 
         /* ============================================= */
         /* RESPONSIVE                                    */
@@ -972,6 +1210,7 @@
         }
 
     </style>
+
 </head>
 
 
@@ -987,6 +1226,17 @@
     <div class="brand">
         Mortgage <span>Calculator</span>
     </div>
+
+    <!-- Night mode button replaces the old Agent Workspace text -->
+    <button
+        class="theme-toggle"
+        id="themeToggle"
+        type="button"
+        title="Switch to dark mode"
+        aria-label="Switch to dark mode"
+    >
+        🌙
+    </button>
 
 </nav>
 
@@ -1175,9 +1425,7 @@
                 </div>
 
             </section>
-
-
-            <!-- VERIFICATION -->
+                        <!-- VERIFICATION -->
 
             <section
                 class="card"
@@ -1613,7 +1861,7 @@
             </section>
 
 
-            <!-- QUICK ACTIONS -->
+            <!-- AGENT ACTIONS -->
 
             <section class="card quick-actions">
 
@@ -1646,6 +1894,28 @@
                 >
                     Start New Client File
                 </button>
+
+            </section>
+
+
+            <!-- RECENTLY VIEWED CLIENTS -->
+
+            <section class="card recent-clients">
+
+                <h3>
+                    Recently Viewed Clients
+                </h3>
+
+                <div
+                    class="recent-client-list"
+                    id="recentClientList"
+                >
+
+                    <div class="empty-recent">
+                        No recent client files yet.
+                    </div>
+
+                </div>
 
             </section>
 
@@ -1739,28 +2009,28 @@
     </div>
 
 </div>
-
-
 <script>
 
-    // ==================================================
-    // APPLICATION STATE
-    // ==================================================
+    /* ============================================= */
+    /* APP STATE                                     */
+    /* ============================================= */
 
     let selectedMortgageFile = null;
-
     let mortgageData = null;
-
     let calculationResults = null;
-
-    let mortgageAnalysis = null;
-
+    let currentAnalysis = null;
     let selectedMode = "Serious";
 
 
-    // ==================================================
-    // ELEMENTS
-    // ==================================================
+    /* ============================================= */
+    /* ELEMENTS                                      */
+    /* ============================================= */
+
+    const themeToggle =
+        document.getElementById("themeToggle");
+
+    const recentClientList =
+        document.getElementById("recentClientList");
 
     const fileInput =
         document.getElementById("fileInput");
@@ -1826,13 +2096,379 @@
         document.getElementById("newAnalysisButton");
 
 
-    // ==================================================
-    // FILE SELECTION
-    // ==================================================
+    /* ============================================= */
+    /* DARK MODE                                     */
+    /* ============================================= */
+
+    function setTheme(theme) {
+
+        if (theme === "dark") {
+
+            document.body.classList.add("dark-mode");
+
+            themeToggle.textContent = "☀️";
+            themeToggle.title = "Switch to light mode";
+            themeToggle.setAttribute(
+                "aria-label",
+                "Switch to light mode"
+            );
+
+        } else {
+
+            document.body.classList.remove("dark-mode");
+
+            themeToggle.textContent = "🌙";
+            themeToggle.title = "Switch to dark mode";
+            themeToggle.setAttribute(
+                "aria-label",
+                "Switch to dark mode"
+            );
+
+        }
+
+    }
+
+
+    const savedTheme =
+        localStorage.getItem("mortgageTheme");
+
+    if (savedTheme === "dark") {
+
+        setTheme("dark");
+
+    } else {
+
+        setTheme("light");
+
+    }
+
+
+    themeToggle.addEventListener(
+        "click",
+        () => {
+
+            const isDark =
+                document.body.classList.contains(
+                    "dark-mode"
+                );
+
+            const newTheme =
+                isDark
+                    ? "light"
+                    : "dark";
+
+            localStorage.setItem(
+                "mortgageTheme",
+                newTheme
+            );
+
+            setTheme(newTheme);
+
+        }
+    );
+
+
+    /* ============================================= */
+    /* RECENT CLIENT FILES                           */
+    /* ============================================= */
+
+    function getRecentClients() {
+
+        try {
+
+            return JSON.parse(
+                localStorage.getItem(
+                    "recentMortgageClients"
+                )
+            ) || [];
+
+        } catch (error) {
+
+            return [];
+
+        }
+
+    }
+
+
+    function formatRecentTime(timestamp) {
+
+        const difference =
+            Date.now() - timestamp;
+
+        const minutes =
+            Math.floor(
+                difference / 60000
+            );
+
+        if (minutes < 1) {
+
+            return "Viewed just now";
+
+        }
+
+        if (minutes < 60) {
+
+            return `Viewed ${minutes} min ago`;
+
+        }
+
+
+        const hours =
+            Math.floor(
+                minutes / 60
+            );
+
+        if (hours < 24) {
+
+            return `Viewed ${hours} hr ago`;
+
+        }
+
+
+        const days =
+            Math.floor(
+                hours / 24
+            );
+
+        if (days === 1) {
+
+            return "Viewed yesterday";
+
+        }
+
+        return `Viewed ${days} days ago`;
+
+    }
+
+
+    function getFileInitials(fileName) {
+
+        if (!fileName) {
+
+            return "MF";
+
+        }
+
+        const cleanName =
+            fileName
+                .replace(".pdf", "")
+                .trim();
+
+        const words =
+            cleanName.split(
+                /[\s_-]+/
+            );
+
+        if (words.length >= 2) {
+
+            return (
+                words[0][0] +
+                words[1][0]
+            ).toUpperCase();
+
+        }
+
+        return cleanName
+            .substring(0, 2)
+            .toUpperCase();
+
+    }
+
+
+    function renderRecentClients() {
+
+        const recentClients =
+            getRecentClients();
+
+        recentClientList.innerHTML = "";
+
+
+        if (recentClients.length === 0) {
+
+            recentClientList.innerHTML = `
+                <div class="empty-recent">
+                    No recent client files yet.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        recentClients.forEach(
+            client => {
+
+                const clientElement =
+                    document.createElement(
+                        "div"
+                    );
+
+                clientElement.className =
+                    "recent-client";
+
+
+                const propertyPrice =
+                    client.housePrice
+                        ? formatCurrency(
+                            client.housePrice
+                        )
+                        : "—";
+
+
+                const mortgageAmount =
+                    client.mortgageAmount
+                        ? formatCurrency(
+                            client.mortgageAmount
+                        )
+                        : "—";
+
+
+                clientElement.innerHTML = `
+
+                    <div class="recent-client-top">
+
+                        <div class="recent-avatar">
+                            ${escapeHtml(
+                                client.initials
+                            )}
+                        </div>
+
+                        <div class="recent-client-info">
+
+                            <div class="recent-client-name">
+                                ${escapeHtml(
+                                    client.fileName
+                                )}
+                            </div>
+
+                            <div class="recent-client-time">
+                                ${formatRecentTime(
+                                    client.timestamp
+                                )}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="recent-client-details">
+
+                        <span>
+                            Property ${propertyPrice}
+                        </span>
+
+                        <span>
+                            Mortgage ${mortgageAmount}
+                        </span>
+
+                    </div>
+
+                `;
+
+
+                recentClientList.appendChild(
+                    clientElement
+                );
+
+            }
+        );
+
+    }
+
+
+    function saveRecentClient() {
+
+        if (
+            !selectedMortgageFile ||
+            !mortgageData ||
+            !calculationResults
+        ) {
+
+            return;
+
+        }
+
+
+        const recentClients =
+            getRecentClients();
+
+
+        const client = {
+
+            fileName:
+                selectedMortgageFile.name,
+
+            initials:
+                getFileInitials(
+                    selectedMortgageFile.name
+                ),
+
+            housePrice:
+                Number(
+                    mortgageData.house_price.value
+                ),
+
+            mortgageAmount:
+                Number(
+                    calculationResults.mortgage_needed
+                ),
+
+            timestamp:
+                Date.now()
+
+        };
+
+
+        const withoutDuplicate =
+            recentClients.filter(
+                recent =>
+                    recent.fileName !==
+                    client.fileName
+            );
+
+
+        withoutDuplicate.unshift(
+            client
+        );
+
+
+        const limitedClients =
+            withoutDuplicate.slice(
+                0,
+                5
+            );
+
+
+        localStorage.setItem(
+            "recentMortgageClients",
+            JSON.stringify(
+                limitedClients
+            )
+        );
+
+
+        renderRecentClients();
+
+    }
+
+
+    renderRecentClients();
+
+
+    /* ============================================= */
+    /* FILE SELECTION                                */
+    /* ============================================= */
 
     chooseFileButton.addEventListener(
         "click",
-        () => fileInput.click()
+        () => {
+
+            fileInput.click();
+
+        }
     );
 
 
@@ -1840,54 +2476,39 @@
         "change",
         () => {
 
-            if (fileInput.files.length > 0) {
+            if (
+                fileInput.files.length > 0
+            ) {
 
-                selectFile(
+                selectMortgageFile(
                     fileInput.files[0]
                 );
+
             }
+
         }
     );
 
 
-    function selectFile(file) {
-
-        if (
-            !file.name
-                .toLowerCase()
-                .endsWith(".pdf")
-        ) {
-
-            showStatus(
-                uploadStatus,
-                "Please select a PDF file.",
-                "error"
-            );
-
-            return;
-        }
-
+    function selectMortgageFile(file) {
 
         selectedMortgageFile = file;
-
 
         selectedFileName.textContent =
             file.name;
 
-
         selectedFile.style.display =
             "flex";
-
 
         analyzeDocumentButton.disabled =
             false;
 
+        uploadStatus.className =
+            "status";
 
-        showStatus(
-            uploadStatus,
-            "Application ready to process.",
-            "success"
-        );
+        uploadStatus.textContent =
+            "";
+
     }
 
 
@@ -1905,89 +2526,96 @@
             analyzeDocumentButton.disabled =
                 true;
 
-            uploadStatus.style.display =
-                "none";
         }
     );
 
 
-    // ==================================================
-    // DRAG AND DROP
-    // ==================================================
+    dropZone.addEventListener(
+        "dragover",
+        event => {
 
-    ["dragenter", "dragover"]
-        .forEach(eventName => {
+            event.preventDefault();
 
-            dropZone.addEventListener(
-                eventName,
-                event => {
-
-                    event.preventDefault();
-
-                    dropZone.classList.add(
-                        "dragging"
-                    );
-                }
+            dropZone.classList.add(
+                "dragging"
             );
-        });
+
+        }
+    );
 
 
-    ["dragleave", "drop"]
-        .forEach(eventName => {
+    dropZone.addEventListener(
+        "dragleave",
+        () => {
 
-            dropZone.addEventListener(
-                eventName,
-                event => {
-
-                    event.preventDefault();
-
-                    dropZone.classList.remove(
-                        "dragging"
-                    );
-                }
+            dropZone.classList.remove(
+                "dragging"
             );
-        });
+
+        }
+    );
 
 
     dropZone.addEventListener(
         "drop",
         event => {
 
-            const files =
-                event.dataTransfer.files;
+            event.preventDefault();
 
-            if (files.length > 0) {
+            dropZone.classList.remove(
+                "dragging"
+            );
 
-                selectFile(
-                    files[0]
+
+            const file =
+                event.dataTransfer.files[0];
+
+
+            if (
+                file &&
+                (
+                    file.type ===
+                    "application/pdf" ||
+
+                    file.name
+                        .toLowerCase()
+                        .endsWith(".pdf")
+                )
+            ) {
+
+                selectMortgageFile(
+                    file
                 );
+
             }
+
         }
     );
 
 
-    // ==================================================
-    // DOCUMENT PROCESSING
-    // ==================================================
+    /* ============================================= */
+    /* PDF PROCESSING                                */
+    /* ============================================= */
 
     analyzeDocumentButton.addEventListener(
         "click",
         async () => {
 
             if (!selectedMortgageFile) {
+
                 return;
+
             }
 
 
+            uploadStatus.className =
+                "status loading";
+
+            uploadStatus.textContent =
+                "Processing mortgage application...";
+
             analyzeDocumentButton.disabled =
                 true;
-
-
-            showStatus(
-                uploadStatus,
-                "Processing mortgage application...",
-                "loading"
-            );
 
 
             const formData =
@@ -2020,13 +2648,13 @@
 
                     throw new Error(
                         result.error ||
-                        "Document processing failed."
+                        "Unable to process application."
                     );
+
                 }
 
 
-                mortgageData =
-                    result.mortgageData;
+                mortgageData = result;
 
 
                 renderMortgageData();
@@ -2036,51 +2664,49 @@
                     "block";
 
 
-                setWorkflowComplete(
-                    "documentWorkflow"
-                );
+                uploadStatus.className =
+                    "status success";
+
+                uploadStatus.textContent =
+                    "Application processed. Review the extracted information below.";
 
 
-                setWorkflowActive(
-                    "verificationWorkflow"
+                updateWorkflow(
+                    "verification"
                 );
 
 
                 updateClientHeader();
 
 
-                showStatus(
-                    uploadStatus,
-                    "Application processed successfully.",
-                    "success"
-                );
-
-
                 reviewSection.scrollIntoView({
-                    behavior: "smooth"
+                    behavior: "smooth",
+                    block: "start"
                 });
 
 
             } catch (error) {
 
-                showStatus(
-                    uploadStatus,
-                    error.message,
-                    "error"
-                );
+                uploadStatus.className =
+                    "status error";
+
+                uploadStatus.textContent =
+                    error.message;
 
             } finally {
 
                 analyzeDocumentButton.disabled =
                     false;
+
             }
+
         }
     );
 
 
-    // ==================================================
-    // EXTRACTED FIELDS
-    // ==================================================
+    /* ============================================= */
+    /* RENDER EXTRACTED DATA                         */
+    /* ============================================= */
 
     const fieldLabels = {
 
@@ -2088,7 +2714,7 @@
             "Annual Income",
 
         house_price:
-            "Purchase Price",
+            "House Price",
 
         down_payment:
             "Down Payment",
@@ -2109,7 +2735,8 @@
             "Condo Fees",
 
         monthly_debt_payments:
-            "Monthly Debt Payments"
+            "Monthly Debt"
+
     };
 
 
@@ -2118,169 +2745,110 @@
         dataGrid.innerHTML = "";
 
 
-        for (
-            const [fieldName, field]
-            of Object.entries(mortgageData)
-        ) {
+        Object.entries(
+            mortgageData
+        ).forEach(
+            ([key, field]) => {
 
-            const wrapper =
-                document.createElement("div");
-
-            wrapper.className =
-                "data-field";
-
-
-            const header =
-                document.createElement("div");
-
-            header.className =
-                "field-header";
-
-
-            const label =
-                document.createElement("div");
-
-            label.className =
-                "field-label";
-
-            label.textContent =
-                fieldLabels[fieldName] ||
-                fieldName;
-
-
-            const info =
-                document.createElement("button");
-
-            info.className =
-                "info-button";
-
-            info.textContent =
-                "i";
-
-
-            info.addEventListener(
-                "click",
-                () => {
-
-                    showExtractionInfo(
-
-                        fieldLabels[fieldName],
-
-                        formatFieldValue(
-                            fieldName,
-                            field.value
-                        ),
-
-                        field.evidence,
-
-                        field.confidence
+                const container =
+                    document.createElement(
+                        "div"
                     );
+
+
+                container.className =
+                    "data-field";
+
+
+                const confidence =
+                    Math.round(
+                        field.confidence * 100
+                    );
+
+
+                container.innerHTML = `
+
+                    <div class="field-header">
+
+                        <div class="field-label">
+                            ${fieldLabels[key]}
+                        </div>
+
+                        <button
+                            class="info-button"
+                            data-field="${key}"
+                        >
+                            i
+                        </button>
+
+                    </div>
+
+
+                    <input
+                        class="data-input"
+                        type="number"
+                        step="any"
+                        data-input-field="${key}"
+                        value="${field.value ?? ""}"
+                    >
+
+
+                    <div class="confidence">
+                        Extraction Confidence:
+                        ${confidence}%
+                    </div>
+
+                `;
+
+
+                dataGrid.appendChild(
+                    container
+                );
+
+            }
+        );
+
+
+        document
+            .querySelectorAll(
+                "[data-field]"
+            )
+            .forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            showExtractionInfo(
+                                button.dataset.field
+                            );
+
+                        }
+                    );
+
                 }
             );
 
-
-            header.appendChild(label);
-            header.appendChild(info);
-
-
-            const input =
-                document.createElement("input");
-
-            input.className =
-                "data-input";
-
-            input.type =
-                "number";
-
-            input.step =
-                "any";
-
-            input.dataset.field =
-                fieldName;
-
-            input.value =
-                field.value ?? "";
-
-
-            const confidence =
-                document.createElement("div");
-
-            confidence.className =
-                "confidence";
-
-            confidence.textContent =
-                `Extraction confidence: ${
-                    Math.round(
-                        field.confidence * 100
-                    )
-                }%`;
-
-
-            wrapper.appendChild(header);
-            wrapper.appendChild(input);
-            wrapper.appendChild(confidence);
-
-            dataGrid.appendChild(wrapper);
-        }
     }
 
 
-    // ==================================================
-    // VERIFY + CALCULATE
-    // ==================================================
+    /* ============================================= */
+    /* CALCULATIONS                                  */
+    /* ============================================= */
 
     calculateButton.addEventListener(
         "click",
         async () => {
 
-            const inputs =
-                document.querySelectorAll(
-                    ".data-input"
-                );
+            updateMortgageDataFromInputs();
 
 
-            for (const input of inputs) {
+            calculateStatus.className =
+                "status loading";
 
-                const fieldName =
-                    input.dataset.field;
-
-                const value =
-                    input.value.trim();
-
-
-                if (
-                    value === "" ||
-                    Number.isNaN(Number(value))
-                ) {
-
-                    showStatus(
-                        calculateStatus,
-
-                        `Please enter a valid value for ${
-                            fieldLabels[fieldName]
-                        }.`,
-
-                        "error"
-                    );
-
-                    return;
-                }
-
-
-                mortgageData[fieldName].value =
-                    Number(value);
-            }
-
-
-            calculateButton.disabled =
-                true;
-
-
-            showStatus(
-                calculateStatus,
-                "Calculating mortgage scenario...",
-                "loading"
-            );
+            calculateStatus.textContent =
+                "Calculating mortgage scenario...";
 
 
             try {
@@ -2312,23 +2880,17 @@
 
                     throw new Error(
                         result.error ||
-                        "Mortgage calculation failed."
+                        "Unable to calculate mortgage."
                     );
+
                 }
 
 
                 calculationResults =
-                    result.calculationResults;
+                    result;
 
 
-                mortgageAnalysis = null;
-
-
-                renderCalculations();
-
-                updateDealSnapshot();
-
-                updateClientHeader();
+                renderCalculationResults();
 
 
                 resultsSection.style.display =
@@ -2337,231 +2899,194 @@
                 analysisSection.style.display =
                     "block";
 
-                analysisOutput.style.display =
-                    "none";
-
-
-                downloadReportButton.disabled =
-                    true;
 
                 jumpAnalysisButton.disabled =
                     false;
 
 
-                setWorkflowComplete(
-                    "verificationWorkflow"
-                );
+                calculateStatus.className =
+                    "status success";
 
-                setWorkflowComplete(
-                    "calculationWorkflow"
-                );
-
-                setWorkflowActive(
-                    "analysisWorkflow"
-                );
+                calculateStatus.textContent =
+                    "Mortgage calculations complete.";
 
 
-                showStatus(
-                    calculateStatus,
-                    "Mortgage calculations complete.",
-                    "success"
+                updateWorkflow(
+                    "calculation"
                 );
+
+
+                updateDealSnapshot();
+
+
+                /* Save the successfully calculated file */
+                saveRecentClient();
 
 
                 resultsSection.scrollIntoView({
-                    behavior: "smooth"
+                    behavior: "smooth",
+                    block: "start"
                 });
 
 
             } catch (error) {
 
-                showStatus(
-                    calculateStatus,
-                    error.message,
-                    "error"
-                );
+                calculateStatus.className =
+                    "status error";
 
-            } finally {
+                calculateStatus.textContent =
+                    error.message;
 
-                calculateButton.disabled =
-                    false;
             }
+
         }
     );
 
 
-    // ==================================================
-    // CALCULATION CARDS
-    // ==================================================
+    function updateMortgageDataFromInputs() {
 
-    function createMetric(
-        label,
-        value,
-        explanation
-    ) {
+        document
+            .querySelectorAll(
+                "[data-input-field]"
+            )
+            .forEach(
+                input => {
 
-        const metric =
-            document.createElement("div");
-
-        metric.className =
-            "metric";
+                    const key =
+                        input.dataset.inputField;
 
 
-        const info =
-            document.createElement("button");
-
-        info.className =
-            "info-button";
-
-        info.textContent =
-            "i";
+                    const value =
+                        input.value.trim() === ""
+                            ? null
+                            : Number(
+                                input.value
+                            );
 
 
-        info.addEventListener(
-            "click",
-            () => {
+                    mortgageData[key].value =
+                        value;
 
-                showCalculationInfo(
-                    label,
-                    value,
-                    explanation
+                }
+            );
+
+    }
+
+
+    /* ============================================= */
+    /* CALCULATION DISPLAY                           */
+    /* ============================================= */
+
+    const calculationLabels = {
+
+        mortgage_needed:
+            "Mortgage Amount",
+
+        monthly_payment:
+            "Monthly Payment",
+
+        ltv:
+            "Loan-to-Value",
+
+        total_interest:
+            "Modeled Interest Over 25 Years",
+
+        gds:
+            "GDS",
+
+        tds:
+            "TDS"
+
+    };
+
+
+    function renderCalculationResults() {
+
+        metricGrid.innerHTML = "";
+
+
+        const metrics = [
+
+            "mortgage_needed",
+            "monthly_payment",
+            "ltv",
+            "total_interest",
+            "gds",
+            "tds"
+
+        ];
+
+
+        metrics.forEach(
+            key => {
+
+                const metric =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                metric.className =
+                    "metric";
+
+
+                metric.innerHTML = `
+
+                    <div class="metric-label">
+                        ${calculationLabels[key]}
+                    </div>
+
+                    <div class="metric-value">
+                        ${formatCalculationValue(
+                            key,
+                            calculationResults[key]
+                        )}
+                    </div>
+
+                    <button
+                        class="info-button"
+                        data-calculation="${key}"
+                    >
+                        i
+                    </button>
+
+                `;
+
+
+                metricGrid.appendChild(
+                    metric
                 );
+
             }
         );
 
 
-        const labelElement =
-            document.createElement("div");
-
-        labelElement.className =
-            "metric-label";
-
-        labelElement.textContent =
-            label;
-
-
-        const valueElement =
-            document.createElement("div");
-
-        valueElement.className =
-            "metric-value";
-
-        valueElement.textContent =
-            value;
-
-
-        metric.appendChild(info);
-        metric.appendChild(labelElement);
-        metric.appendChild(valueElement);
-
-
-        return metric;
-    }
-
-
-    function renderCalculations() {
-
-        metricGrid.innerHTML =
-            "";
-
-
-        const years =
-            mortgageData
-                .amortization_years
-                .value;
-
-
-        metricGrid.appendChild(
-            createMetric(
-
-                "Mortgage Amount",
-
-                money(
-                    calculationResults
-                        .mortgage_needed
-                ),
-
-                "Purchase price minus the verified down payment."
+        document
+            .querySelectorAll(
+                "[data-calculation]"
             )
-        );
+            .forEach(
+                button => {
 
+                    button.addEventListener(
+                        "click",
+                        () => {
 
-        metricGrid.appendChild(
-            createMetric(
+                            showCalculationInfo(
+                                button.dataset.calculation
+                            );
 
-                "Monthly Payment",
+                        }
+                    );
 
-                money(
-                    calculationResults
-                        .monthly_payment
-                ),
-
-                "Calculated using the mortgage principal, supplied interest rate and amortization period."
-            )
-        );
-
-
-        metricGrid.appendChild(
-            createMetric(
-
-                "Loan-to-Value (LTV)",
-
-                percent(
-                    calculationResults.ltv
-                ),
-
-                "Mortgage amount divided by purchase price, multiplied by 100."
-            )
-        );
-
-
-        metricGrid.appendChild(
-            createMetric(
-
-                `Modeled Interest Over ${years} Years`,
-
-                money(
-                    calculationResults
-                        .total_interest
-                ),
-
-                `Total scheduled payments minus the original mortgage principal. This model assumes the supplied rate remains unchanged throughout the ${years}-year amortization. Actual borrowing costs can differ.`
-            )
-        );
-
-
-        metricGrid.appendChild(
-            createMetric(
-
-                "GDS",
-
-                percent(
-                    calculationResults.gds
-                ),
-
-                "Gross Debt Service compares modeled monthly housing costs with gross monthly income."
-            )
-        );
-
-
-        metricGrid.appendChild(
-            createMetric(
-
-                "TDS",
-
-                percent(
-                    calculationResults.tds
-                ),
-
-                "Total Debt Service compares modeled housing costs plus monthly debt payments with gross monthly income."
-            )
-        );
+                }
+            );
 
 
         document.getElementById(
             "stressRate"
         ).textContent =
-            percent(
+            formatPercent(
                 calculationResults
                     .stress_test_rate
             );
@@ -2570,7 +3095,7 @@
         document.getElementById(
             "stressPayment"
         ).textContent =
-            money(
+            formatCurrency(
                 calculationResults
                     .stress_monthly_payment
             );
@@ -2579,7 +3104,7 @@
         document.getElementById(
             "stressGds"
         ).textContent =
-            percent(
+            formatPercent(
                 calculationResults
                     .stress_gds
             );
@@ -2588,74 +3113,85 @@
         document.getElementById(
             "stressTds"
         ).textContent =
-            percent(
+            formatPercent(
                 calculationResults
                     .stress_tds
             );
+
     }
 
 
-    // ==================================================
-    // DEAL SNAPSHOT
-    // ==================================================
+    /* ============================================= */
+    /* DEAL SNAPSHOT                                 */
+    /* ============================================= */
 
     function updateDealSnapshot() {
 
-        const principal =
-            calculationResults
-                .mortgage_needed;
+        const mortgage =
+            Number(
+                calculationResults
+                    .mortgage_needed
+            );
 
 
         const interest =
-            calculationResults
-                .total_interest;
+            Number(
+                calculationResults
+                    .total_interest
+            );
 
 
         const total =
-            principal + interest;
+            mortgage + interest;
 
 
-        const principalShare =
+        const principalAngle =
             total > 0
-                ? principal / total
+                ? (
+                    mortgage / total
+                ) * 360
                 : 0;
 
 
-        const angle =
-            principalShare * 360;
-
-
         document
-            .getElementById("moneyRing")
+            .getElementById(
+                "moneyRing"
+            )
             .style
             .setProperty(
                 "--principal-angle",
-                `${angle}deg`
+                `${principalAngle}deg`
             );
 
 
         document.getElementById(
             "ringMortgage"
         ).textContent =
-            money(principal);
+            formatCurrency(
+                mortgage
+            );
 
 
         document.getElementById(
             "principalLegend"
         ).textContent =
-            money(principal);
+            formatCurrency(
+                mortgage
+            );
 
 
         document.getElementById(
             "interestLegend"
         ).textContent =
-            money(interest);
+            formatCurrency(
+                interest
+            );
 
 
         document.getElementById(
             "sideMonthly"
         ).textContent =
-            money(
+            formatCurrency(
                 calculationResults
                     .monthly_payment
             );
@@ -2664,7 +3200,7 @@
         document.getElementById(
             "sideLtv"
         ).textContent =
-            percent(
+            formatPercent(
                 calculationResults.ltv
             );
 
@@ -2672,7 +3208,7 @@
         document.getElementById(
             "sideGds"
         ).textContent =
-            percent(
+            formatPercent(
                 calculationResults.gds
             );
 
@@ -2680,27 +3216,255 @@
         document.getElementById(
             "sideTds"
         ).textContent =
-            percent(
+            formatPercent(
                 calculationResults.tds
             );
+
     }
 
 
-    // ==================================================
-    // CLIENT HEADER
-    // ==================================================
+    /* ============================================= */
+    /* ANALYSIS MODE                                 */
+    /* ============================================= */
+
+    document
+        .querySelectorAll(
+            ".mode-button"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        document
+                            .querySelectorAll(
+                                ".mode-button"
+                            )
+                            .forEach(
+                                modeButton => {
+
+                                    modeButton.classList.remove(
+                                        "active"
+                                    );
+
+                                }
+                            );
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        selectedMode =
+                            button.dataset.mode;
+
+                    }
+                );
+
+            }
+        );
+
+
+    jumpAnalysisButton.addEventListener(
+        "click",
+        () => {
+
+            analysisSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }
+    );
+
+
+    /* ============================================= */
+    /* GENERATE ANALYSIS                             */
+    /* ============================================= */
+
+    generateAnalysisButton.addEventListener(
+        "click",
+        async () => {
+
+            if (
+                !mortgageData ||
+                !calculationResults
+            ) {
+
+                return;
+
+            }
+
+
+            analysisStatus.className =
+                "status loading";
+
+            analysisStatus.textContent =
+                "Generating file analysis...";
+
+
+            generateAnalysisButton.disabled =
+                true;
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/analyze",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    mortgageData,
+                                    calculationResults,
+                                    mode:
+                                        selectedMode
+                                })
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.error ||
+                        "Unable to generate analysis."
+                    );
+
+                }
+
+
+                currentAnalysis =
+                    result;
+
+
+                renderAnalysis();
+
+
+                analysisOutput.style.display =
+                    "block";
+
+
+                downloadReportButton.disabled =
+                    false;
+
+
+                analysisStatus.className =
+                    "status success";
+
+                analysisStatus.textContent =
+                    "File analysis complete.";
+
+
+                updateWorkflow(
+                    "analysis"
+                );
+
+
+            } catch (error) {
+
+                analysisStatus.className =
+                    "status error";
+
+                analysisStatus.textContent =
+                    error.message;
+
+            } finally {
+
+                generateAnalysisButton.disabled =
+                    false;
+
+            }
+
+        }
+    );
+
+
+    function renderAnalysis() {
+
+        document.getElementById(
+            "analysisSummary"
+        ).textContent =
+            currentAnalysis.summary;
+
+
+        document.getElementById(
+            "analysisResults"
+        ).textContent =
+            currentAnalysis
+                .results_explanation;
+
+
+        document.getElementById(
+            "analysisStress"
+        ).textContent =
+            currentAnalysis
+                .stress_test_explanation;
+
+
+        document.getElementById(
+            "analysisFinal"
+        ).textContent =
+            currentAnalysis
+                .final_analysis;
+
+
+        const riskList =
+            document.getElementById(
+                "analysisRisks"
+            );
+
+
+        riskList.innerHTML = "";
+
+
+        currentAnalysis.risks.forEach(
+            risk => {
+
+                const item =
+                    document.createElement(
+                        "li"
+                    );
+
+                item.textContent =
+                    risk;
+
+                riskList.appendChild(
+                    item
+                );
+
+            }
+        );
+
+    }
+
+
+    /* ============================================= */
+    /* CLIENT HEADER                                 */
+    /* ============================================= */
 
     function updateClientHeader() {
-
-        if (!mortgageData) {
-            return;
-        }
-
 
         document.getElementById(
             "clientAvatar"
         ).textContent =
-            "MF";
+            getFileInitials(
+                selectedMortgageFile.name
+            );
 
 
         document.getElementById(
@@ -2709,1093 +3473,727 @@
             "Current Mortgage File";
 
 
-        if (calculationResults) {
+        document.getElementById(
+            "clientDescription"
+        ).textContent =
+            selectedMortgageFile.name;
 
-            document.getElementById(
-                "clientDescription"
-            ).textContent =
-                `${money(
-                    mortgageData
-                        .house_price
-                        .value
-                )} property • ${
-                    money(
-                        calculationResults
-                            .mortgage_needed
-                    )
-                } mortgage`;
-
-        } else {
-
-            document.getElementById(
-                "clientDescription"
-            ).textContent =
-                "Application extracted • Verification required";
-        }
     }
 
 
-    // ==================================================
-    // ANALYSIS MODE
-    // ==================================================
+    /* ============================================= */
+    /* WORKFLOW                                      */
+    /* ============================================= */
 
-    document
-        .querySelectorAll(".mode-button")
-        .forEach(button => {
+    function updateWorkflow(stage) {
 
-            button.addEventListener(
-                "click",
-                () => {
+        const stages = {
 
-                    document
-                        .querySelectorAll(
-                            ".mode-button"
-                        )
-                        .forEach(other => {
+            document:
+                "documentWorkflow",
 
-                            other.classList.remove(
-                                "active"
-                            );
-                        });
+            verification:
+                "verificationWorkflow",
+
+            calculation:
+                "calculationWorkflow",
+
+            analysis:
+                "analysisWorkflow",
+
+            report:
+                "reportWorkflow"
+
+        };
 
 
-                    button.classList.add(
-                        "active"
+        const order = [
+            "document",
+            "verification",
+            "calculation",
+            "analysis",
+            "report"
+        ];
+
+
+        const currentIndex =
+            order.indexOf(stage);
+
+
+        order.forEach(
+            (item, index) => {
+
+                const element =
+                    document.getElementById(
+                        stages[item]
                     );
 
 
-                    selectedMode =
-                        button.dataset.mode;
+                element.classList.remove(
+                    "active",
+                    "complete"
+                );
+
+
+                if (index < currentIndex) {
+
+                    element.classList.add(
+                        "complete"
+                    );
+
+                } else if (
+                    index === currentIndex
+                ) {
+
+                    element.classList.add(
+                        "active"
+                    );
+
                 }
-            );
-        });
 
-
-    // ==================================================
-    // GENERATE ANALYSIS
-    // ==================================================
-
-    generateAnalysisButton.addEventListener(
-        "click",
-        generateAnalysis
-    );
-
-
-    jumpAnalysisButton.addEventListener(
-        "click",
-        () => {
-
-            analysisSection.scrollIntoView({
-                behavior: "smooth"
-            });
-        }
-    );
-
-
-    async function generateAnalysis() {
-
-        if (
-            !mortgageData ||
-            !calculationResults
-        ) {
-            return;
-        }
-
-
-        generateAnalysisButton.disabled =
-            true;
-
-
-        showStatus(
-            analysisStatus,
-            "Generating mortgage analysis...",
-            "loading"
-        );
-
-
-        try {
-
-            const response =
-                await fetch(
-                    "/analyze",
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body:
-                            JSON.stringify({
-
-                                mortgageData:
-                                    mortgageData,
-
-                                calculationResults:
-                                    calculationResults,
-
-                                mode:
-                                    selectedMode
-                            })
-                    }
-                );
-
-
-            const result =
-                await response.json();
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    result.error ||
-                    "Mortgage analysis failed."
-                );
             }
+        );
 
-
-            mortgageAnalysis =
-                result.analysis;
-
-
-            renderAnalysis();
-
-
-            downloadReportButton.disabled =
-                false;
-
-
-            setWorkflowComplete(
-                "analysisWorkflow"
-            );
-
-
-            setWorkflowActive(
-                "reportWorkflow"
-            );
-
-
-            showStatus(
-                analysisStatus,
-                "Analysis complete. Client report is ready.",
-                "success"
-            );
-
-
-        } catch (error) {
-
-            showStatus(
-                analysisStatus,
-                error.message,
-                "error"
-            );
-
-        } finally {
-
-            generateAnalysisButton.disabled =
-                false;
-        }
     }
 
 
-    function renderAnalysis() {
-
-        document.getElementById(
-            "analysisSummary"
-        ).textContent =
-            mortgageAnalysis.summary;
-
-
-        document.getElementById(
-            "analysisResults"
-        ).textContent =
-            mortgageAnalysis
-                .results_explanation;
-
-
-        document.getElementById(
-            "analysisStress"
-        ).textContent =
-            mortgageAnalysis
-                .stress_test_explanation;
-
-
-        const risks =
-            document.getElementById(
-                "analysisRisks"
-            );
-
-
-        risks.innerHTML =
-            "";
-
-
-        mortgageAnalysis
-            .risks
-            .forEach(risk => {
-
-                const li =
-                    document.createElement("li");
-
-                li.textContent =
-                    risk;
-
-                risks.appendChild(li);
-            });
-
-
-        document.getElementById(
-            "analysisFinal"
-        ).textContent =
-            mortgageAnalysis
-                .final_analysis;
-
-
-        analysisOutput.style.display =
-            "block";
-    }
-
-
-    // ==================================================
-    // CLIENT PDF
-    // ==================================================
-
-    downloadReportButton.addEventListener(
-        "click",
-        generateClientReport
-    );
-
-
-    function generateClientReport() {
-
-        if (
-            !mortgageData ||
-            !calculationResults ||
-            !mortgageAnalysis
-        ) {
-
-            alert(
-                "Generate the analysis before creating the client report."
-            );
-
-            return;
-        }
-
-
-        const reportWindow =
-            window.open("", "_blank");
-
-
-        if (!reportWindow) {
-
-            alert(
-                "Please allow pop-ups so the report can be generated."
-            );
-
-            return;
-        }
-
-
-        const years =
-            mortgageData
-                .amortization_years
-                .value;
-
-
-        const risks =
-            mortgageAnalysis
-                .risks
-                .map(
-                    risk =>
-                        `<li>${escapeHtml(risk)}</li>`
-                )
-                .join("");
-
-
-        const report = `
-        <!DOCTYPE html>
-
-        <html>
-
-        <head>
-
-            <title>
-                Mortgage Analysis Report
-            </title>
-
-            <style>
-
-                body {
-                    margin: 48px;
-
-                    font-family:
-                        Arial,
-                        sans-serif;
-
-                    color: #172033;
-
-                    line-height: 1.5;
-                }
-
-                .header {
-                    border-bottom:
-                        3px solid #315efb;
-
-                    padding-bottom: 18px;
-
-                    margin-bottom: 30px;
-                }
-
-                .brand {
-                    font-size: 24px;
-                    font-weight: bold;
-                }
-
-                .brand span {
-                    color: #315efb;
-                }
-
-                h1 {
-                    margin:
-                        12px 0
-                        4px;
-
-                    font-size: 22px;
-                }
-
-                h2 {
-                    margin-top: 28px;
-
-                    padding-bottom: 7px;
-
-                    border-bottom:
-                        1px solid #ddd;
-
-                    font-size: 15px;
-                }
-
-                table {
-                    width: 100%;
-
-                    border-collapse:
-                        collapse;
-                }
-
-                td {
-                    padding: 7px 0;
-
-                    border-bottom:
-                        1px solid #eee;
-
-                    font-size: 13px;
-                }
-
-                td:last-child {
-                    text-align: right;
-
-                    font-weight: bold;
-                }
-
-                p,
-                li {
-                    font-size: 13px;
-                }
-
-                .notice {
-                    margin-top: 32px;
-
-                    padding: 15px;
-
-                    background: #f4f6fa;
-
-                    color: #5c6575;
-
-                    font-size: 10px;
-                }
-
-                @media print {
-
-                    button {
-                        display: none;
-                    }
-                }
-
-            </style>
-
-        </head>
-
-
-        <body>
-
-            <div class="header">
-
-                <div class="brand">
-                    Mortgage
-                    <span>Calculator</span>
-                </div>
-
-                <h1>
-                    Mortgage Analysis Report
-                </h1>
-
-                <div>
-                    Prepared ${
-                        new Date()
-                            .toLocaleDateString()
-                    }
-                </div>
-
-            </div>
-
-
-            <h2>
-                Property & Financing
-            </h2>
-
-
-            <table>
-
-                <tr>
-                    <td>Purchase Price</td>
-
-                    <td>
-                        ${
-                            money(
-                                mortgageData
-                                    .house_price
-                                    .value
-                            )
-                        }
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Down Payment</td>
-
-                    <td>
-                        ${
-                            money(
-                                mortgageData
-                                    .down_payment
-                                    .value
-                            )
-                        }
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Mortgage Amount</td>
-
-                    <td>
-                        ${
-                            money(
-                                calculationResults
-                                    .mortgage_needed
-                            )
-                        }
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Interest Rate</td>
-
-                    <td>
-                        ${
-                            percent(
-                                mortgageData
-                                    .interest_rate
-                                    .value
-                            )
-                        }
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Amortization</td>
-
-                    <td>
-                        ${years} years
-                    </td>
-                </tr>
-
-            </table>
-
-
-            <h2>
-                Payment Summary
-            </h2>
-
-
-            <table>
-
-                <tr>
-                    <td>
-                        Estimated Monthly Payment
-                    </td>
-
-                    <td>
-                        ${
-                            money(
-                                calculationResults
-                                    .monthly_payment
-                            )
-                        }
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        Loan-to-Value
-                    </td>
-
-                    <td>
-                        ${
-                            percent(
-                                calculationResults
-                                    .ltv
-                            )
-                        }
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>GDS</td>
-
-                    <td>
-                        ${
-                            percent(
-                                calculationResults
-                                    .gds
-                            )
-                        }
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>TDS</td>
-
-                    <td>
-                        ${
-                            percent(
-                                calculationResults
-                                    .tds
-                            )
-                        }
-                    </td>
-                </tr>
-
-            </table>
-
-
-            <h2>
-                Long-Term Model
-            </h2>
-
-
-            <table>
-
-                <tr>
-                    <td>
-                        Mortgage Principal
-                    </td>
-
-                    <td>
-                        ${
-                            money(
-                                calculationResults
-                                    .mortgage_needed
-                            )
-                        }
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        Modeled Interest Over
-                        ${years} Years
-                    </td>
-
-                    <td>
-                        ${
-                            money(
-                                calculationResults
-                                    .total_interest
-                            )
-                        }
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        Modeled Principal +
-                        Interest
-                    </td>
-
-                    <td>
-                        ${
-                            money(
-                                calculationResults
-                                    .mortgage_needed
-                                +
-                                calculationResults
-                                    .total_interest
-                            )
-                        }
-                    </td>
-                </tr>
-
-            </table>
-
-
-            <h2>
-                Stress Scenario
-            </h2>
-
-
-            <table>
-
-                <tr>
-                    <td>
-                        Modeled Rate
-                    </td>
-
-                    <td>
-                        ${
-                            percent(
-                                calculationResults
-                                    .stress_test_rate
-                            )
-                        }
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        Modeled Monthly Payment
-                    </td>
-
-                    <td>
-                        ${
-                            money(
-                                calculationResults
-                                    .stress_monthly_payment
-                            )
-                        }
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        Stress GDS
-                    </td>
-
-                    <td>
-                        ${
-                            percent(
-                                calculationResults
-                                    .stress_gds
-                            )
-                        }
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        Stress TDS
-                    </td>
-
-                    <td>
-                        ${
-                            percent(
-                                calculationResults
-                                    .stress_tds
-                            )
-                        }
-                    </td>
-                </tr>
-
-            </table>
-
-
-            <h2>
-                Mortgage Summary
-            </h2>
-
-            <p>
-                ${
-                    escapeHtml(
-                        mortgageAnalysis.summary
-                    )
-                }
-            </p>
-
-
-            <h2>
-                Scenario Explanation
-            </h2>
-
-            <p>
-                ${
-                    escapeHtml(
-                        mortgageAnalysis
-                            .results_explanation
-                    )
-                }
-            </p>
-
-
-            <h2>
-                Stress Scenario
-            </h2>
-
-            <p>
-                ${
-                    escapeHtml(
-                        mortgageAnalysis
-                            .stress_test_explanation
-                    )
-                }
-            </p>
-
-
-            <h2>
-                Key Considerations
-            </h2>
-
-            <ul>
-                ${risks}
-            </ul>
-
-
-            <h2>
-                Analysis
-            </h2>
-
-            <p>
-                ${
-                    escapeHtml(
-                        mortgageAnalysis
-                            .final_analysis
-                    )
-                }
-            </p>
-
-
-            <div class="notice">
-
-                <strong>
-                    Important:
-                </strong>
-
-                This report provides an analytical mortgage
-                scenario and does not represent a mortgage
-                approval, lending commitment, or financial
-                advice.
-
-                Long-term interest calculations assume the
-                supplied interest rate remains unchanged
-                throughout the modeled amortization period.
-
-                Actual rates, payments, borrowing costs and
-                qualification outcomes may differ.
-
-            </div>
-
-
-            <script>
-
-                window.onload =
-                    function () {
-
-                        window.print();
-                    };
-
-            <\/script>
-
-        </body>
-
-        </html>
-        `;
-
-
-        reportWindow.document.open();
-
-        reportWindow.document.write(
-            report
-        );
-
-        reportWindow.document.close();
-
-
-        setWorkflowComplete(
-            "reportWorkflow"
-        );
-    }
-
-
-    // ==================================================
-    // WORKFLOW STATUS
-    // ==================================================
-
-    function setWorkflowComplete(id) {
-
-        const element =
-            document.getElementById(id);
-
-        element.classList.remove(
-            "active"
-        );
-
-        element.classList.add(
-            "complete"
-        );
-    }
-
-
-    function setWorkflowActive(id) {
-
-        const element =
-            document.getElementById(id);
-
-        element.classList.add(
-            "active"
-        );
-    }
-
-
-    // ==================================================
-    // NEW CLIENT
-    // ==================================================
-
-    newAnalysisButton.addEventListener(
-        "click",
-        () => {
-
-            window.location.reload();
-        }
-    );
-
-
-    // ==================================================
-    // INFORMATION MODAL
-    // ==================================================
+    /* ============================================= */
+    /* MODAL                                         */
+    /* ============================================= */
 
     const infoModal =
         document.getElementById(
             "infoModal"
         );
 
-    const modalTitle =
-        document.getElementById(
-            "modalTitle"
+
+    document
+        .getElementById(
+            "modalClose"
+        )
+        .addEventListener(
+            "click",
+            closeModal
         );
-
-    const modalValueLabel =
-        document.getElementById(
-            "modalValueLabel"
-        );
-
-    const modalEvidenceLabel =
-        document.getElementById(
-            "modalEvidenceLabel"
-        );
-
-    const modalValue =
-        document.getElementById(
-            "modalValue"
-        );
-
-    const modalEvidence =
-        document.getElementById(
-            "modalEvidence"
-        );
-
-    const modalConfidence =
-        document.getElementById(
-            "modalConfidence"
-        );
-
-    const confidenceSection =
-        document.getElementById(
-            "confidenceSection"
-        );
-
-
-    function showExtractionInfo(
-        title,
-        value,
-        evidence,
-        confidence
-    ) {
-
-        modalTitle.textContent =
-            title;
-
-        modalValueLabel.textContent =
-            "Extracted Value";
-
-        modalEvidenceLabel.textContent =
-            "Source From Document";
-
-        modalValue.textContent =
-            value;
-
-        modalEvidence.textContent =
-            evidence ||
-            "No supporting text was found.";
-
-        modalConfidence.textContent =
-            `${Math.round(
-                confidence * 100
-            )}%`;
-
-        confidenceSection.style.display =
-            "block";
-
-        infoModal.style.display =
-            "flex";
-    }
-
-
-    function showCalculationInfo(
-        title,
-        value,
-        explanation
-    ) {
-
-        modalTitle.textContent =
-            title;
-
-        modalValueLabel.textContent =
-            "Calculated Value";
-
-        modalEvidenceLabel.textContent =
-            "How This Was Calculated";
-
-        modalValue.textContent =
-            value;
-
-        modalEvidence.textContent =
-            explanation;
-
-        confidenceSection.style.display =
-            "none";
-
-        infoModal.style.display =
-            "flex";
-    }
-
-
-    document.getElementById(
-        "modalClose"
-    ).addEventListener(
-        "click",
-        () => {
-
-            infoModal.style.display =
-                "none";
-        }
-    );
 
 
     infoModal.addEventListener(
         "click",
         event => {
 
-            if (event.target === infoModal) {
+            if (
+                event.target ===
+                infoModal
+            ) {
 
-                infoModal.style.display =
-                    "none";
+                closeModal();
+
             }
+
         }
     );
 
 
-    // ==================================================
-    // FORMATTERS
-    // ==================================================
+    function closeModal() {
 
-    function money(value) {
+        infoModal.style.display =
+            "none";
+
+    }
+
+
+    function showExtractionInfo(key) {
+
+        const field =
+            mortgageData[key];
+
+
+        document.getElementById(
+            "modalTitle"
+        ).textContent =
+            fieldLabels[key];
+
+
+        document.getElementById(
+            "modalValueLabel"
+        ).textContent =
+            "Extracted Value";
+
+
+        document.getElementById(
+            "modalValue"
+        ).textContent =
+            field.value ?? "Not found";
+
+
+        document.getElementById(
+            "modalEvidenceLabel"
+        ).textContent =
+            "Source From Document";
+
+
+        document.getElementById(
+            "modalEvidence"
+        ).textContent =
+            field.evidence ||
+            "No supporting evidence was returned.";
+
+
+        document.getElementById(
+            "confidenceSection"
+        ).style.display =
+            "block";
+
+
+        document.getElementById(
+            "modalConfidence"
+        ).textContent =
+            `${Math.round(
+                field.confidence * 100
+            )}%`;
+
+
+        infoModal.style.display =
+            "flex";
+
+    }
+
+
+    function showCalculationInfo(key) {
+
+        const explanations = {
+
+            mortgage_needed:
+                "Purchase price minus down payment.",
+
+            monthly_payment:
+                "Monthly mortgage payment calculated from the mortgage principal, supplied interest rate, and amortization period.",
+
+            ltv:
+                "Mortgage amount divided by the property value, expressed as a percentage.",
+
+            total_interest:
+                "Modeled total interest over the full amortization period assuming the supplied interest rate remains unchanged.",
+
+            gds:
+                "Gross Debt Service ratio based on modeled housing costs relative to gross monthly income.",
+
+            tds:
+                "Total Debt Service ratio based on modeled housing costs plus supplied monthly debt obligations relative to gross monthly income."
+
+        };
+
+
+        document.getElementById(
+            "modalTitle"
+        ).textContent =
+            calculationLabels[key];
+
+
+        document.getElementById(
+            "modalValueLabel"
+        ).textContent =
+            "Calculated Value";
+
+
+        document.getElementById(
+            "modalValue"
+        ).textContent =
+            formatCalculationValue(
+                key,
+                calculationResults[key]
+            );
+
+
+        document.getElementById(
+            "modalEvidenceLabel"
+        ).textContent =
+            "How This Was Calculated";
+
+
+        document.getElementById(
+            "modalEvidence"
+        ).textContent =
+            explanations[key];
+
+
+        document.getElementById(
+            "confidenceSection"
+        ).style.display =
+            "none";
+
+
+        infoModal.style.display =
+            "flex";
+
+    }
+
+
+    /* ============================================= */
+    /* CLIENT REPORT                                 */
+    /* ============================================= */
+
+    downloadReportButton.addEventListener(
+        "click",
+        () => {
+
+            if (
+                !mortgageData ||
+                !calculationResults ||
+                !currentAnalysis
+            ) {
+
+                return;
+
+            }
+
+
+            const reportWindow =
+                window.open(
+                    "",
+                    "_blank"
+                );
+
+
+            const risks =
+                currentAnalysis.risks
+                    .map(
+                        risk =>
+                            `<li>${escapeHtml(
+                                risk
+                            )}</li>`
+                    )
+                    .join("");
+
+
+            reportWindow.document.write(`
+                <!DOCTYPE html>
+
+                <html>
+
+                <head>
+
+                    <title>
+                        Mortgage Analysis Report
+                    </title>
+
+                    <style>
+
+                        body {
+                            font-family:
+                                Arial,
+                                sans-serif;
+
+                            max-width: 850px;
+
+                            margin: 50px auto;
+
+                            padding: 0 30px;
+
+                            color: #172033;
+
+                            line-height: 1.6;
+                        }
+
+                        h1 {
+                            margin-bottom: 5px;
+                        }
+
+                        h2 {
+                            margin-top: 30px;
+
+                            border-bottom:
+                                1px solid #ddd;
+
+                            padding-bottom: 7px;
+                        }
+
+                        .brand {
+                            color: #315efb;
+
+                            font-weight: bold;
+                        }
+
+                        .grid {
+                            display: grid;
+
+                            grid-template-columns:
+                                1fr 1fr;
+
+                            gap: 12px;
+                        }
+
+                        .box {
+                            border:
+                                1px solid #ddd;
+
+                            border-radius: 8px;
+
+                            padding: 12px;
+                        }
+
+                        .box small {
+                            color: #777;
+
+                            display: block;
+                        }
+
+                        .disclaimer {
+                            margin-top: 35px;
+
+                            padding-top: 15px;
+
+                            border-top:
+                                1px solid #ddd;
+
+                            color: #777;
+
+                            font-size: 11px;
+                        }
+
+                    </style>
+
+                </head>
+
+                <body>
+
+                    <div class="brand">
+                        Mortgage Calculator
+                    </div>
+
+                    <h1>
+                        Mortgage Analysis Report
+                    </h1>
+
+                    <p>
+                        Client mortgage scenario summary
+                    </p>
+
+
+                    <h2>
+                        Financing Summary
+                    </h2>
+
+                    <div class="grid">
+
+                        <div class="box">
+
+                            <small>
+                                Property Price
+                            </small>
+
+                            ${formatCurrency(
+                                mortgageData
+                                    .house_price
+                                    .value
+                            )}
+
+                        </div>
+
+
+                        <div class="box">
+
+                            <small>
+                                Down Payment
+                            </small>
+
+                            ${formatCurrency(
+                                mortgageData
+                                    .down_payment
+                                    .value
+                            )}
+
+                        </div>
+
+
+                        <div class="box">
+
+                            <small>
+                                Mortgage Amount
+                            </small>
+
+                            ${formatCurrency(
+                                calculationResults
+                                    .mortgage_needed
+                            )}
+
+                        </div>
+
+
+                        <div class="box">
+
+                            <small>
+                                Monthly Payment
+                            </small>
+
+                            ${formatCurrency(
+                                calculationResults
+                                    .monthly_payment
+                            )}
+
+                        </div>
+
+
+                        <div class="box">
+
+                            <small>
+                                Interest Rate
+                            </small>
+
+                            ${formatPercent(
+                                mortgageData
+                                    .interest_rate
+                                    .value
+                            )}
+
+                        </div>
+
+
+                        <div class="box">
+
+                            <small>
+                                Amortization
+                            </small>
+
+                            ${mortgageData
+                                .amortization_years
+                                .value} years
+
+                        </div>
+
+                    </div>
+
+
+                    <h2>
+                        Debt Service Ratios
+                    </h2>
+
+                    <p>
+                        GDS:
+                        <strong>
+                            ${formatPercent(
+                                calculationResults.gds
+                            )}
+                        </strong>
+                    </p>
+
+                    <p>
+                        TDS:
+                        <strong>
+                            ${formatPercent(
+                                calculationResults.tds
+                            )}
+                        </strong>
+                    </p>
+
+
+                    <h2>
+                        Stress Scenario
+                    </h2>
+
+                    <p>
+                        Modeled rate:
+                        <strong>
+                            ${formatPercent(
+                                calculationResults
+                                    .stress_test_rate
+                            )}
+                        </strong>
+                    </p>
+
+                    <p>
+                        Modeled payment:
+                        <strong>
+                            ${formatCurrency(
+                                calculationResults
+                                    .stress_monthly_payment
+                            )}
+                        </strong>
+                    </p>
+
+
+                    <h2>
+                        File Summary
+                    </h2>
+
+                    <p>
+                        ${escapeHtml(
+                            currentAnalysis.summary
+                        )}
+                    </p>
+
+
+                    <h2>
+                        Key Considerations
+                    </h2>
+
+                    <ul>
+                        ${risks}
+                    </ul>
+
+
+                    <h2>
+                        Analysis
+                    </h2>
+
+                    <p>
+                        ${escapeHtml(
+                            currentAnalysis
+                                .final_analysis
+                        )}
+                    </p>
+
+
+                    <div class="disclaimer">
+
+                        This report is an analytical
+                        mortgage scenario and does not
+                        represent mortgage approval,
+                        lending approval, or financial
+                        advice.
+
+                        Long-term interest estimates
+                        assume the supplied interest
+                        rate remains unchanged throughout
+                        the modeled amortization period.
+
+                    </div>
+
+                </body>
+
+                </html>
+            `);
+
+
+            reportWindow.document.close();
+
+
+            updateWorkflow(
+                "report"
+            );
+
+
+            setTimeout(
+                () => {
+
+                    reportWindow.print();
+
+                },
+                300
+            );
+
+        }
+    );
+
+
+    /* ============================================= */
+    /* NEW CLIENT FILE                               */
+    /* ============================================= */
+
+    newAnalysisButton.addEventListener(
+        "click",
+        () => {
+
+            window.location.reload();
+
+        }
+    );
+
+
+    /* ============================================= */
+    /* FORMATTERS                                    */
+    /* ============================================= */
+
+    function formatCurrency(value) {
+
+        if (
+            value === null ||
+            value === undefined ||
+            Number.isNaN(
+                Number(value)
+            )
+        ) {
+
+            return "—";
+
+        }
+
 
         return new Intl.NumberFormat(
             "en-CA",
             {
                 style: "currency",
                 currency: "CAD",
-                maximumFractionDigits: 2
+                maximumFractionDigits: 0
             }
-        ).format(value);
+        ).format(
+            Number(value)
+        );
+
     }
 
 
-    function percent(value) {
+    function formatPercent(value) {
 
-        return `${
-            Number(value).toFixed(2)
-        }%`;
+        if (
+            value === null ||
+            value === undefined ||
+            Number.isNaN(
+                Number(value)
+            )
+        ) {
+
+            return "—";
+
+        }
+
+
+        return `${Number(
+            value
+        ).toFixed(2)}%`;
+
     }
 
 
-    function formatFieldValue(
-        fieldName,
+    function formatCalculationValue(
+        key,
         value
     ) {
 
         if (
-            value === null ||
-            value === undefined
+            key === "ltv" ||
+            key === "gds" ||
+            key === "tds"
         ) {
 
-            return "Not found";
+            return formatPercent(
+                value
+            );
+
         }
 
 
-        if (
-            fieldName ===
-            "interest_rate"
-        ) {
+        return formatCurrency(
+            value
+        );
 
-            return `${value}%`;
-        }
-
-
-        if (
-            fieldName ===
-            "amortization_years"
-        ) {
-
-            return `${value} years`;
-        }
-
-
-        return money(value);
-    }
-
-
-    function showStatus(
-        element,
-        message,
-        type
-    ) {
-
-        element.textContent =
-            message;
-
-        element.className =
-            `status ${type}`;
     }
 
 
     function escapeHtml(value) {
 
         const div =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         div.textContent =
-            value ?? "";
+            String(
+                value ?? ""
+            );
 
         return div.innerHTML;
+
     }
 
 </script>
