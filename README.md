@@ -50,7 +50,7 @@ npm install
 
 ### 3. Set up Python
 
-On macOS or Linux:
+**macOS or Linux:**
 
 ```bash
 python3 -m venv .venv
@@ -58,10 +58,19 @@ source .venv/bin/activate
 python3 -m pip install openai python-dotenv pydantic pymupdf
 ```
 
-Keep this environment activated when starting the server so it uses the correct Python dependencies.
+**Windows (Command Prompt):**
+
+```bat
+py -m venv .venv
+.venv\Scripts\activate.bat
+python -m pip install openai python-dotenv pydantic pymupdf
+```
+
+Keep the environment activated when starting the server.
+
+**Windows compatibility:** `server.js` currently launches Python using `"python3"`. If that command is unavailable on Windows, replace `"python3"` with `"python"` in all three Python launch calls.
 
 The separate Streamlit prototype in `Backend/app.py` also requires `streamlit`. It is not needed for the main Node.js web app.
-
 ### 4. Configure your API key
 
 Create a file named `.env` in the project’s main folder, alongside `server.js`:
