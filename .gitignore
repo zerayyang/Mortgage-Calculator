@@ -1,9 +1,18 @@
+# Mac files
 .DS_Store
+
+# Secrets
 .env
+.env.*
+!.env.example
+
+# Python cache
 __pycache__/
+*.pyc
+
+# Installed packages
 node_modules/
+
+# Uploaded documents and generated reports
 uploads/
-
-
-
-#files to be ignored by main git branch
+reports/
