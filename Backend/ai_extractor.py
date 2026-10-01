@@ -1,3 +1,4 @@
+from pathlib import Path
 import os
 
 from dotenv import load_dotenv
@@ -9,7 +10,7 @@ from models import MortgageExtraction
 
 # Load API key
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parents[1] / ".env")
 
 CHATGPT = OpenAI(
 
@@ -20,7 +21,7 @@ CHATGPT = OpenAI(
 
 # Load extraction agent instructions
 
-with open("agents/extractor.md", "r") as file:
+with open(Path(__file__).resolve().parent / "agents" / "extractor.md", "r", encoding="utf-8") as file:
 
     instructions_provided = file.read()
 

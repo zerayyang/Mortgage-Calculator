@@ -1,3 +1,7 @@
+from pathlib import Path
+
+SAMPLE_PDF = Path(__file__).resolve().parents[1] / "Samples" / "sample_mortgage_application.pdf"
+
 from pdf_reader import extract_pdf_text
 from pdf_fallback import extract_pdf_with_ai
 from ai_extractor import extract_mortgage_data
@@ -12,7 +16,7 @@ from ai_analyst import analyze_mortgage
 
 # hard coded the PDF file name for now for testing, but will change it to a variable later on so that the user can input the PDF file name
 
-pdf_text = extract_pdf_text("sample_mortgage_application.pdf")
+pdf_text = extract_pdf_text(str(SAMPLE_PDF))
 
 
 
@@ -22,7 +26,7 @@ if pdf_text is None:
 
     print("\nNo readable text found. Trying AI PDF reader...\n")
 
-    mortgage_data = extract_pdf_with_ai("sample_mortgage_application.pdf")
+    mortgage_data = extract_pdf_with_ai(str(SAMPLE_PDF))
 
 else:
 

@@ -1,3 +1,4 @@
+from pathlib import Path
 import sys
 import json
 import os
@@ -7,7 +8,7 @@ from models import MortgageAnalysis
 from analyst_tools import get_mortgage_data, get_calculation_results #fxn from analyst_tools.py to convert the structured data into a dictionary for the AI to analyze
 
 # Load environment variables from the .env file
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parents[1] / ".env")
 
 # Create the OpenAI client using the API key stored in .env
 CHATGPT = OpenAI(
@@ -15,7 +16,7 @@ CHATGPT = OpenAI(
 )
 
 # Load the instructions for the mortgage analysis agent
-with open("agents/analyst.md", "r") as file:
+with open(Path(__file__).resolve().parent / "agents" / "analyst.md", "r", encoding="utf-8") as file:
     analyst_instructions = file.read()
 
 

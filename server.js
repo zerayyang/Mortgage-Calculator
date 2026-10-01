@@ -14,7 +14,10 @@ const PORT = 3000;
 
 app.use(express.json({ limit: "10mb" }));
 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
+
+const uploadsDir = path.join(__dirname, "uploads");
+fs.mkdirSync(uploadsDir, { recursive: true });
 
 
 // --------------------------------------------------
@@ -24,7 +27,7 @@ app.use(express.static("public"));
 const storage = multer.diskStorage({
 
     destination: function (req, file, cb) {
-        cb(null, "uploads/");
+        cb(null, uploadsDir);
     },
 
     filename: function (req, file, cb) {
@@ -72,8 +75,9 @@ app.post(
 
         execFile(
             "python3",
-            ["web_processor.py", pdfPath],
+            [path.join(__dirname, "Backend", "web_processor.py"), pdfPath],
             {
+                cwd: __dirname,
                 maxBuffer: 1024 * 1024 * 10
             },
             (error, stdout, stderr) => {
@@ -144,7 +148,8 @@ app.post("/calculate", (req, res) => {
 
     const python = spawn(
         "python3",
-        ["web_calculator.py"]
+        [path.join(__dirname, "Backend", "web_calculator.py")],
+        { cwd: __dirname }
     );
 
 
@@ -244,7 +249,8 @@ app.post("/analyze", (req, res) => {
 
     const python = spawn(
         "python3",
-        ["web_analyst.py"]
+        [path.join(__dirname, "Backend", "web_analyst.py")],
+        { cwd: __dirname }
     );
 
 
